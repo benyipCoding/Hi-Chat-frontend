@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
 import { getTemp } from '@/utils/api';
+import { LineWithText } from '@/utils/styles/LineWithText';
 
 type Variant = 'LOGIN' | 'REGISTER';
 type AuthFormDefaultValues = {
@@ -95,14 +96,14 @@ const AuthForm = () => {
         />
       </form>
 
-      <div className="lineWithText mt-10 mx-5 h-[2px] relative">
+      <LineWithText className="mt-10 mx-5 h-[2px] relative">
         <p
           className="absolute bottom-[-10px] left-[50%] translate-x-[-50%] text-white w-[300px] text-center text-sm md:text-[16px] font-sans cursor-pointer underline"
           onClick={toggleVariant}
         >
           {variant === 'LOGIN' ? 'Create an account!' : 'Already has account?'}
         </p>
-      </div>
+      </LineWithText>
     </div>
   );
 };
