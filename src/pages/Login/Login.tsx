@@ -5,6 +5,8 @@ import { AuthForm } from '@/components/Forms';
 import PureLogo from '@/components/Logo';
 
 const Login: React.FC = () => {
+  // console.log('@@@@', process.env.REACT_APP_API_URL);
+
   return (
     <div className="login-bg w-full h-full bg-cover bg-center flex">
       <motion.div

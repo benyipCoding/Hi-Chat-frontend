@@ -2,6 +2,7 @@ import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useState, useCallback } from 'react';
 import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
+import { getTemp } from '@/utils/api';
 
 type Variant = 'LOGIN' | 'REGISTER';
 type AuthFormDefaultValues = {
@@ -33,6 +34,12 @@ const AuthForm = () => {
     // axios
     if (variant === 'LOGIN') {
       // login handler
+      getTemp()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoading(false));
     } else {
       // register handler
       console.log(data);
