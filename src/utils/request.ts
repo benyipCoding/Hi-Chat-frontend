@@ -1,5 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
+export type ErrorData = {
+  data: string;
+  message: string;
+  status: number;
+  code: string;
+};
+
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const axiosInstance = axios.create({
@@ -28,11 +35,13 @@ axiosInstance.interceptors.response.use(
   function (error: AxiosError) {
     // HttpStatus > 200 will trigger this function
     // actions against response error
-    const errorData = {
-      data: error.response?.data || 'Internal Exceptions',
+    const errorData: ErrorData = {
+      data:
+        (error.response?.data as { data: string }).data ||
+        'Internal Exceptions',
       message: error.message,
-      status: error.response?.status,
-      code: error.code,
+      status: error.response?.status as number,
+      code: error.code as string,
     };
     return Promise.reject(errorData);
   }

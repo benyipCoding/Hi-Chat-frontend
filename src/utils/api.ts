@@ -1,6 +1,7 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import axiosInstance from './request';
 
+// test endpoint
 export const getTemp = () => {
   return axiosInstance.get(`/temp/123`);
 };

@@ -4,6 +4,8 @@ import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
 import { postRegisterUser } from '@/utils/api';
 import { LineWithText } from '@/utils/styles/LineWithText';
+import { toast } from 'react-toastify';
+import { ErrorData } from '@/utils/request';
 
 type Variant = 'LOGIN' | 'REGISTER';
 export type AuthFormDefaultValues = {
@@ -35,21 +37,15 @@ const AuthForm = () => {
     // axios
     if (variant === 'LOGIN') {
       // login handler
-      // getTemp()
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch((err) => console.log(err))
-      //   .finally(() => setIsLoading(false));
     } else {
       // register handler
-      // console.log(data);
       postRegisterUser(data as AuthFormDefaultValues)
         .then((res) => {
-          console.log(res);
+          console.log('Register Success', res);
+          toast.success('Success');
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((err: ErrorData) => {
+          toast.error(err.data);
         })
         .finally(() => setIsLoading(false));
     }
