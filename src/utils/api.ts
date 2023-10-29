@@ -1,14 +1,10 @@
-import axios from 'axios';
-
-const baseURL = import.meta.env.VITE_APP_BASE_URL;
-
-const axiosInstance = axios.create({
-  baseURL,
-  //   withCredentials: true,
-});
-
-export default axiosInstance;
+import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
+import axiosInstance from './request';
 
 export const getTemp = () => {
   return axiosInstance.get(`/temp/123`);
+};
+
+export const postRegisterUser = (data: AuthFormDefaultValues) => {
+  return axiosInstance.post('/auth/register', data);
 };

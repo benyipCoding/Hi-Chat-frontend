@@ -2,11 +2,11 @@ import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useState, useCallback } from 'react';
 import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
-import { getTemp } from '@/utils/api';
+import { postRegisterUser } from '@/utils/api';
 import { LineWithText } from '@/utils/styles/LineWithText';
 
 type Variant = 'LOGIN' | 'REGISTER';
-type AuthFormDefaultValues = {
+export type AuthFormDefaultValues = {
   userName: string;
   email: string;
   password: string;
@@ -35,15 +35,23 @@ const AuthForm = () => {
     // axios
     if (variant === 'LOGIN') {
       // login handler
-      getTemp()
+      // getTemp()
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((err) => console.log(err))
+      //   .finally(() => setIsLoading(false));
+    } else {
+      // register handler
+      // console.log(data);
+      postRegisterUser(data as AuthFormDefaultValues)
         .then((res) => {
           console.log(res);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err);
+        })
         .finally(() => setIsLoading(false));
-    } else {
-      // register handler
-      console.log(data);
     }
   };
 
