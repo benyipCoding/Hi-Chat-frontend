@@ -6,6 +6,7 @@ import { postRegisterUser, postSignIn } from '@/utils/api';
 import { LineWithText } from '@/utils/styles/LineWithText';
 import { toast } from 'react-toastify';
 import { ErrorData } from '@/utils/types';
+import { useNavigate } from 'react-router-dom';
 
 type Variant = 'LOGIN' | 'REGISTER';
 export type AuthFormDefaultValues = {
@@ -18,6 +19,7 @@ export type KeyOfDefaultValues = keyof AuthFormDefaultValues;
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigator = useNavigate();
 
   const {
     register,
@@ -41,6 +43,7 @@ const AuthForm = () => {
         .then((res) => {
           console.log(res.data);
           toast.success(res.message);
+          navigator('/');
         })
         .catch((err) => {
           toast.error(err.data.message);
@@ -109,7 +112,7 @@ const AuthForm = () => {
         />
       </form>
 
-      <LineWithText className="mt-10 mx-5 h-[2px] relative">
+      <LineWithText className="mt-10 mx-5 h-[2px] relative" color="red">
         <p
           className="absolute bottom-[-10px] left-[50%] translate-x-[-50%] text-white w-[300px] text-center text-sm md:text-[16px] font-sans cursor-pointer underline"
           onClick={toggleVariant}

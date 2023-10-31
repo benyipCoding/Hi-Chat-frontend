@@ -7,6 +7,12 @@ export type RegisterResponse = { email: string; id: string; name: string };
 
 export type SignInResponse = { accessToken: string; refreshToken: string };
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+
 export type ErrorData = {
   data: string;
   message: string;

@@ -1,6 +1,6 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import { request } from './request';
-import { RegisterResponse, SignInResponse } from './types';
+import { RegisterResponse, SignInResponse, User } from './types';
 
 export const postRegisterUser = (data: AuthFormDefaultValues) => {
   return request<RegisterResponse>({
@@ -15,5 +15,12 @@ export const postSignIn = (data: AuthFormDefaultValues) => {
     method: 'post',
     url: '/auth/signIn',
     data,
+  });
+};
+
+export const getUserInfo = () => {
+  return request<User>({
+    method: 'get',
+    url: '/user/profile',
   });
 };

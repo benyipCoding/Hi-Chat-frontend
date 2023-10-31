@@ -1,18 +1,37 @@
+import { PropsWithChildren, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from '@/pages/Login/Login';
-import Register from '@/pages/Register/Register';
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Redirect from './pages/Redirect/Redirect';
+import Home from './pages/Home/Home';
+import { AuthContext } from './context/AuthContext';
+import { User } from './utils/types';
+
+type AppWithProvidersProps = {
+  user?: User;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+};
+
+const AppWithProviders: React.FC<PropsWithChildren & AppWithProvidersProps> = ({
+  children,
+  user,
+  setUser,
+}) => {
+  return (
+    <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 function App() {
+  const [user, setUser] = useState<User>();
+
   return (
-    <>
+    <AppWithProviders user={user} setUser={setUser}>
       <Routes>
-        <Route path="/" element={<Redirect />}></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
       </Routes>
       <ToastContainer
         position="top-center"
@@ -25,7 +44,7 @@ function App() {
         draggable
         pauseOnHover
       />
-    </>
+    </AppWithProviders>
   );
 }
 
