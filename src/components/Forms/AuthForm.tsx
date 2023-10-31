@@ -2,15 +2,15 @@ import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useState, useCallback } from 'react';
 import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
-import { postRegisterUser } from '@/utils/api';
+import { postRegisterUser, postSignIn } from '@/utils/api';
 import { LineWithText } from '@/utils/styles/LineWithText';
 import { toast } from 'react-toastify';
-import { ErrorData } from '@/utils/request';
+import { ErrorData } from '@/utils/types';
 
 type Variant = 'LOGIN' | 'REGISTER';
 export type AuthFormDefaultValues = {
   userName: string;
-  email: string;
+  email?: string;
   password: string;
 };
 export type KeyOfDefaultValues = keyof AuthFormDefaultValues;
@@ -37,12 +37,21 @@ const AuthForm = () => {
     // axios
     if (variant === 'LOGIN') {
       // login handler
+      postSignIn(data as AuthFormDefaultValues)
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.message);
+        })
+        .catch((err) => {
+          toast.error(err.data.message);
+        })
+        .finally(() => setIsLoading(false));
     } else {
       // register handler
       postRegisterUser(data as AuthFormDefaultValues)
         .then((res) => {
-          console.log('Register Success', res);
-          toast.success('Success');
+          console.log('Register Success');
+          toast.success(res.message);
         })
         .catch((err: ErrorData) => {
           toast.error(err.data);

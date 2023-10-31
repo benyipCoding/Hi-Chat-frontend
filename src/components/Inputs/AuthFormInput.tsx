@@ -46,7 +46,7 @@ const AuthFormInput: React.FC<AuthFormInputProps> = ({
           },
         })}
         className={clsx(
-          'flex-1 leading-8 rounded-md border-0 shadow-sm ring-1 ring-inset outline-none py-1 focus:ring-2 focus:ring-inset px-2 ring-orange-300 placeholder:text-gray-300 text-white',
+          'flex-1 leading-8 rounded-md border-0 shadow-sm ring-1 ring-inset outline-none py-1 focus:ring-2 focus:ring-inset px-2 ring-orange-300 placeholder:text-gray-400 text-black',
           errors[name] && 'focus:ring-rose-500'
         )}
         placeholder={placeholder}

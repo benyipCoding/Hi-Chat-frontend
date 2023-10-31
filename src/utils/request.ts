@@ -1,11 +1,5 @@
-import axios, { AxiosError } from 'axios';
-
-export type ErrorData = {
-  data: string;
-  message: string;
-  status: number;
-  code: string;
-};
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { CustomAxiosResponse, ErrorData } from './types';
 
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
@@ -48,3 +42,8 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
+
+// customize response type version
+export function request<T>(config: AxiosRequestConfig) {
+  return axiosInstance.request<T, CustomAxiosResponse<T>>(config);
+}
