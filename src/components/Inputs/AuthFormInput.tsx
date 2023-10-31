@@ -32,6 +32,7 @@ const AuthFormInput: React.FC<AuthFormInputProps> = ({
       >
         {`${label}:`}
       </label>
+
       <InputWithLinear
         type={type}
         id={name}
