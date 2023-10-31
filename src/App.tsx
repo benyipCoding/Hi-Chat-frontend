@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from '@/pages/Login/Login';
 import Register from '@/pages/Register/Register';
-import Test from './pages/Test/Test';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Redirect from './pages/Redirect/Redirect';
@@ -13,7 +13,6 @@ function App() {
         <Route path="/" element={<Redirect />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/test" element={<Test />} />
       </Routes>
       <ToastContainer
         position="top-center"
