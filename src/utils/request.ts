@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { CustomAxiosResponse, ErrorData } from './types';
+import { CustomAxiosResponse, ErrorData, Tokens } from './types';
+import { delLocalStorage, getLocalStorage } from './helpers';
 
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
@@ -12,10 +13,14 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config) {
     // actions before sending request
+    // console.log('before sending request...');
+    const token: Tokens = JSON.parse(getLocalStorage() as string);
+    if (token) config.headers.Authorization = `Bearer ${token.accessToken}`;
     return config;
   },
   function (error) {
     // actions against request error
+    console.log('request error...');
     return Promise.reject(error);
   }
 );
@@ -37,6 +42,10 @@ axiosInstance.interceptors.response.use(
       status: error.response?.status as number,
       code: error.code as string,
     };
+    if (errorData.status === 401) {
+      console.log('remove token');
+      delLocalStorage();
+    }
     return Promise.reject(errorData);
   }
 );

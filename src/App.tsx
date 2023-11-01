@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home/Home';
 import { AuthContext } from './context/AuthContext';
 import { User } from './utils/types';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+// import Test from './pages/Test/Test';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -30,8 +32,8 @@ function App() {
   return (
     <AppWithProviders user={user} setUser={setUser}>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route element={<AuthenticatedRoute children={<Home />} />}></Route>
       </Routes>
       <ToastContainer
         position="top-center"

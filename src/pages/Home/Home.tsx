@@ -1,13 +1,11 @@
 // import React from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '@/context/AuthContext';
+import { PropsWithChildren } from 'react';
 
-const Home = () => {
-  const { user, updateAuthUser } = useContext(AuthContext);
-
+const Home: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="bg-pink-300 w-full h-full flex">
-      <span className="m-auto">Home</span>
+    <div className="bg-pink-300">
+      home
+      <div>{children}</div>
     </div>
   );
 };
