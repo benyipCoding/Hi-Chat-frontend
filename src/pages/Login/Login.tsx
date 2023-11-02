@@ -3,8 +3,17 @@ import { motion } from 'framer-motion';
 import { popIn } from '@/utils/motion';
 import { AuthForm } from '@/components/Forms';
 import PureLogo from '@/components/Logo';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
 
 const Login: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) navigate('/conversations', { replace: true });
+  }, [user]);
+
   return (
     <div className="login-bg w-full h-full bg-cover bg-center flex">
       <motion.div

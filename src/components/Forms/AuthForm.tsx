@@ -20,6 +20,7 @@ export type KeyOfDefaultValues = keyof AuthFormDefaultValues;
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const {
@@ -50,7 +51,9 @@ const AuthForm = () => {
         .catch((err: ErrorData) => {
           toast.error(err.data);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       // register handler
       postRegisterUser(data as AuthFormDefaultValues)
@@ -109,7 +112,7 @@ const AuthForm = () => {
           errors={errors}
         />
         <Button
-          label={variant === 'LOGIN' ? 'SIGN IN' : 'SIGN UP'}
+          label={variant === 'LOGIN' ? `SIGN IN` : 'SIGN UP'}
           type="submit"
           disabled={isLoading}
         />
