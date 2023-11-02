@@ -1,9 +1,13 @@
-import { AuthContext } from '@/context/AuthContext';
-import { PropsWithChildren, useContext } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { PropsWithChildren } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedRoute: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div>AuthenticatedRoute</div>;
+  const { user, loading } = useAuth();
+
+  if (loading) return <></>; // Maybe add a Loader page for loading status
+  if (user) return <>{children}</>;
+  return <Navigate to="/login" replace />;
 };
 
 export default AuthenticatedRoute;

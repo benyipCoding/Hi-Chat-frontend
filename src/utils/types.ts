@@ -10,7 +10,7 @@ export type SignInResponse = { accessToken: string; refreshToken: string };
 export type User = {
   name: string;
   email: string;
-};
+} | null;
 
 export type ErrorData = {
   data: string;

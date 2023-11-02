@@ -1,13 +1,14 @@
 import { PropsWithChildren, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Login from '@/pages/Login/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './pages/Home/Home';
+import Layout from './pages/Layout/Layout';
 import { AuthContext } from './context/AuthContext';
 import { User } from './utils/types';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
-// import Test from './pages/Test/Test';
+import Conversations from './pages/Conversations/Conversations';
+import NotFound from './pages/NotFound';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -32,12 +33,16 @@ function App() {
   return (
     <AppWithProviders user={user} setUser={setUser}>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route element={<AuthenticatedRoute children={<Home />} />}></Route>
+        <Route element={<AuthenticatedRoute children={<Layout />} />}>
+          <Route path="conversations" element={<Conversations />} />
+        </Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -1,14 +1,13 @@
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import { useState, useCallback, useContext, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { AuthFormInput } from '@/components/Inputs';
 import { Button } from '@/components/Buttons';
-import { getUserInfo, postRegisterUser, postSignIn } from '@/utils/api';
+import { postRegisterUser, postSignIn } from '@/utils/api';
 import { LineWithText } from '@/utils/styles/LineWithText';
 import { toast } from 'react-toastify';
 import { ErrorData } from '@/utils/types';
 import { useNavigate } from 'react-router-dom';
 import { setLocalStorage } from '@/utils/helpers';
-import { AuthContext } from '@/context/AuthContext';
 
 type Variant = 'LOGIN' | 'REGISTER';
 export type AuthFormDefaultValues = {
@@ -22,7 +21,6 @@ const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { user, updateAuthUser } = useContext(AuthContext);
 
   const {
     register,
@@ -47,11 +45,7 @@ const AuthForm = () => {
           toast.success(res.message);
           // save token
           setLocalStorage(res.data);
-          const userInfo = await getUserInfo().then((res) => res.data);
-          console.log(userInfo);
-          updateAuthUser(userInfo);
-
-          navigate('/', { replace: true });
+          navigate('/conversations', { replace: true });
         })
         .catch((err: ErrorData) => {
           toast.error(err.data);
