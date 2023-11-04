@@ -13,45 +13,50 @@ const NavigateBar = () => {
   };
 
   return (
-    <BlurGlassDiv className={`h-16 shadow-lg shadow-black rounded-b-sm`}>
-      <div className="h-full flex flex-row">
-        {NavMenuList.map((menu, index) => {
-          const isCurrent = currentIndex === index;
+    <BlurGlassDiv
+      className={`h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1`}
+    >
+      {/* <div className="h-full flex flex-row"> */}
+      {NavMenuList.map((menu, index) => {
+        const isCurrent = currentIndex === index;
 
-          return (
-            <section
-              className="text-[22px] w-[25%] cursor-pointer p-1 text-[#b5bac1]"
-              key={index}
-              onClick={() => toggleTab(index)}
+        return (
+          <section
+            className="text-[22px] w-[25%] cursor-pointer p-1 text-[#b5bac1] lg:w-full"
+            key={index}
+            onClick={() => toggleTab(index)}
+          >
+            <div
+              className={clsx(
+                'h-full flex flex-col justify-center items-center gap-1 hover:bg-[#00000048] rounded-md lg:h-14',
+                isCurrent && 'bg-[#00000048]'
+              )}
             >
-              <div
+              <DynamicComponent
+                is={isCurrent ? menu.iconFilled : menu.iconOutlined}
+                styles={[
+                  'text-[25px] lg:text-[32px]',
+                  isCurrent && `${glowingColor}`,
+                ]}
+                resource={IconsMap}
+                inlineStyle={{ filter: `${dropShadow}` }}
+              />
+              <span
                 className={clsx(
-                  'h-full flex flex-col justify-center items-center gap-1 hover:bg-[#00000048] rounded-md',
-                  isCurrent && 'bg-[#00000048]'
+                  'text-[14px] lg:hidden',
+                  isCurrent && `${glowingColor}`
                 )}
+                style={{
+                  filter: isCurrent ? `${dropShadow}` : '',
+                }}
               >
-                <DynamicComponent
-                  is={isCurrent ? menu.iconFilled : menu.iconOutlined}
-                  styles={['text-[25px]', isCurrent && `${glowingColor}`]}
-                  resource={IconsMap}
-                  inlineStyle={{ filter: `${dropShadow}` }}
-                />
-                <span
-                  className={clsx(
-                    'text-[14px]',
-                    isCurrent && `${glowingColor}`
-                  )}
-                  style={{
-                    filter: isCurrent ? `${dropShadow}` : '',
-                  }}
-                >
-                  {menu.label}
-                </span>
-              </div>
-            </section>
-          );
-        })}
-      </div>
+                {menu.label}
+              </span>
+            </div>
+          </section>
+        );
+      })}
+      {/* </div> */}
     </BlurGlassDiv>
   );
 };

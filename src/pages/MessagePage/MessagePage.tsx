@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MessagePage = () => {
-  return <div>MessagePage</div>;
+  return <div className="lg:flex-1">MessagePage</div>;
 };
 
 export default MessagePage;
