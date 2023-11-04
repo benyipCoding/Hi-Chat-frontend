@@ -3,29 +3,29 @@ import clsx from 'clsx';
 import { IconsMapType, NavMenuItem } from './types';
 
 export const IconsMap: IconsMapType = {
-  MessageOutlined: (styles) => (
-    <Icons.MessageOutlined className={clsx(...styles)} />
+  MessageOutlined: (_, styles) => (
+    <Icons.MessageOutlined className={clsx(...[styles])} />
   ),
-  MessageFilled: (styles) => (
-    <Icons.MessageFilled className={clsx(...styles)} />
+  MessageFilled: (inlineStyle, styles) => (
+    <Icons.MessageFilled className={clsx(...[styles])} style={inlineStyle} />
   ),
-  ContactsOutlined: (styles) => (
-    <Icons.ContactsOutlined className={clsx(...styles)} />
+  ContactsOutlined: (_, styles) => (
+    <Icons.ContactsOutlined className={clsx(...[styles])} />
   ),
-  ContactsFilled: (styles) => (
-    <Icons.ContactsFilled className={clsx(...styles)} />
+  ContactsFilled: (inlineStyle, styles) => (
+    <Icons.ContactsFilled className={clsx(...[styles])} style={inlineStyle} />
   ),
-  CompassOutlined: (styles) => (
-    <Icons.CompassOutlined className={clsx(...styles)} />
+  CompassOutlined: (_, styles) => (
+    <Icons.CompassOutlined className={clsx(...[styles])} />
   ),
-  CompassFilled: (styles) => (
-    <Icons.CompassFilled className={clsx(...styles)} />
+  CompassFilled: (inlineStyle, styles) => (
+    <Icons.CompassFilled className={clsx(...[styles])} style={inlineStyle} />
   ),
-  ProfileOutlined: (styles) => (
-    <Icons.ProfileOutlined className={clsx(...styles)} />
+  ProfileOutlined: (_, styles) => (
+    <Icons.ProfileOutlined className={clsx(...[styles])} />
   ),
-  ProfileFilled: (styles) => (
-    <Icons.ProfileFilled className={clsx(...styles)} />
+  ProfileFilled: (inlineStyle, styles) => (
+    <Icons.ProfileFilled className={clsx(...[styles])} style={inlineStyle} />
   ),
 };
 

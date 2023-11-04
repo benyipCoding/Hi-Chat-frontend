@@ -9,6 +9,7 @@ import { User } from './utils/types';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import NotFound from './pages/NotFound';
+import MessagePage from './pages/MessagePage/MessagePage';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -36,6 +37,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route element={<AuthenticatedRoute children={<Layout />} />}>
+          <Route path="messages" element={<MessagePage />} />
           <Route path="conversations" element={<Conversations />} />
         </Route>
         <Route path="*" element={<NotFound />}></Route>

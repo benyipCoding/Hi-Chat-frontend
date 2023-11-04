@@ -1,4 +1,3 @@
-import './Login.scss';
 import { motion } from 'framer-motion';
 import { popIn } from '@/utils/motion';
 import { AuthForm } from '@/components/Forms';

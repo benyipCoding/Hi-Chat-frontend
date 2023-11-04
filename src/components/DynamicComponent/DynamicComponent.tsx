@@ -1,18 +1,21 @@
-import React, { ReactNode } from 'react';
-import { IconName } from '../NavigateBar/types';
+import React from 'react';
+import { IconName, IconsMapType } from '../NavigateBar/types';
+import { ClassArray } from 'clsx';
 
 interface DynamicComponentProps {
   is: IconName;
-  styles: string[];
-  resource: Record<string, (styles: string[]) => ReactNode>;
+  styles: ClassArray;
+  resource: IconsMapType;
+  inlineStyle?: React.CSSProperties | undefined;
 }
 
 const DynamicComponent: React.FC<DynamicComponentProps> = ({
   is,
   styles,
   resource,
+  inlineStyle,
 }) => {
-  const componentToRender = resource[is](styles);
+  const componentToRender = resource[is](inlineStyle, styles);
   return <>{componentToRender}</>;
 };
 

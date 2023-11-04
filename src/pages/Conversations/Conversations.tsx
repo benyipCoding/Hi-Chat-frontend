@@ -1,6 +1,6 @@
 const Conversations = () => {
   return (
-    <div className="text-white">
+    <div className="">
       <p className="">123</p>
       <p>Conversations</p>
       <p>Conversations</p>
@@ -44,6 +44,7 @@ const Conversations = () => {
       <p>Conversations</p>
       <p>Conversations</p>
       <p>Conversations</p>
+      <p className="">123</p>
     </div>
   );
 };

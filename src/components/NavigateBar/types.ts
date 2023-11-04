@@ -1,7 +1,11 @@
 import { ReactNode } from 'react';
+import { ClassArray } from 'clsx';
 
 export type IconsMapType = {
-  [key: string]: (styles: string[]) => ReactNode;
+  [key: string]: (
+    inlineStyle: React.CSSProperties | undefined,
+    ...styles: ClassArray
+  ) => ReactNode;
 };
 export type IconName = keyof IconsMapType;
 

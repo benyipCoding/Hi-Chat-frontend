@@ -11,4 +11,24 @@ body {
 .blur-glass {
   background-color: rgba($color: #f4f8fa, $alpha: 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -moz-backdrop-filter: blur(10px);
+  -ms-backdrop-filter: blur(10px);
+}
+
+.login-bg {
+  background: url('./assets/login/universe_BG.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.star-bg {
+  background: url('./assets/conversation/夜空.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+  @media (min-width: 768px) {
+    background: url('./assets/login/universe_BG.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
 }
