@@ -27,7 +27,7 @@ const NavigateBar = () => {
 
   return (
     <BlurGlassDiv
-      className={`h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1`}
+      className={`h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1 xl:w-[100px] xl:gap-4`}
     >
       {NavMenuList.map((menu, index) => {
         const isCurrent = currentIndex === index;
@@ -40,14 +40,14 @@ const NavigateBar = () => {
           >
             <div
               className={clsx(
-                'h-full flex flex-col justify-center items-center gap-1 hover:bg-[#00000048] rounded-md lg:h-14',
+                'h-full flex flex-col justify-center items-center gap-1 hover:bg-[#00000048] rounded-md lg:h-14 xl:h-[100px]',
                 isCurrent && 'bg-[#00000048]'
               )}
             >
               <DynamicComponent
                 is={isCurrent ? menu.iconFilled : menu.iconOutlined}
                 styles={[
-                  'text-[25px] lg:text-[32px]',
+                  'text-[25px] lg:text-[32px] xl:text-[40px]',
                   isCurrent && `${glowingColor}`,
                 ]}
                 resource={IconsMap}
@@ -55,7 +55,7 @@ const NavigateBar = () => {
               />
               <span
                 className={clsx(
-                  'text-[14px] lg:sr-only',
+                  'text-[14px] lg:hidden xl:block xl:text-[16px]',
                   isCurrent && `${glowingColor}`
                 )}
                 style={{
