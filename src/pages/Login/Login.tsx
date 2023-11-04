@@ -17,7 +17,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-bg w-full h-full bg-cover bg-center flex">
       <motion.div
-        className="w-[320px] md:w-[450px] m-auto rounded-xl backdrop-blur-[10px] bg-opacity-20 bg-[#f4f8fa] flex flex-col overflow-hidden shadow-sm shadow-black py-10 gap-5 md:gap-10"
+        className="w-[320px] md:w-[450px] m-auto rounded-xl blur-glass flex flex-col overflow-hidden shadow-sm shadow-black py-10 gap-5 md:gap-10"
         variants={popIn()}
         initial="hidden"
         whileInView="show"

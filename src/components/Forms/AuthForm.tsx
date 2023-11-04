@@ -43,10 +43,9 @@ const AuthForm = () => {
       // login handler
       postSignIn(data as AuthFormDefaultValues)
         .then(async (res) => {
-          toast.success(res.message);
           // save token
           setLocalStorage(res.data);
-          navigate('/conversations', { replace: true });
+          navigate('/conversations', { replace: true, state: '/login' });
         })
         .catch((err: ErrorData) => {
           toast.error(err.data);
