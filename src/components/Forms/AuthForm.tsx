@@ -45,7 +45,7 @@ const AuthForm = () => {
         .then(async (res) => {
           // save token
           setLocalStorage(res.data);
-          navigate('/conversations', { replace: true, state: '/login' });
+          navigate('/messages', { replace: true, state: '/login' });
         })
         .catch((err: ErrorData) => {
           toast.error(err.data);

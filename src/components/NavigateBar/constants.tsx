@@ -34,20 +34,24 @@ export const NavMenuList: NavMenuItem[] = [
     label: 'Message',
     iconOutlined: 'MessageOutlined',
     iconFilled: 'MessageFilled',
+    path: '/messages',
   },
   {
     label: 'Contacts',
     iconOutlined: 'ContactsOutlined',
     iconFilled: 'ContactsFilled',
+    path: '/contacts',
   },
   {
     label: 'Discovery',
     iconOutlined: 'CompassOutlined',
     iconFilled: 'CompassFilled',
+    path: '/discovery',
   },
   {
     label: 'Profile',
     iconOutlined: 'ProfileOutlined',
     iconFilled: 'ProfileFilled',
+    path: '/profile',
   },
 ];

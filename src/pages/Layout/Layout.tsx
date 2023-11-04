@@ -12,7 +12,6 @@ const Layout = () => {
         {/* Head */}
         <BlurGlassDiv className="text-white h-12 flex justify-center items-center shadow-md shadow-[#403637] rounded-md mb-2 lg:hidden">
           <PureLogo height={30} extraClass="lg:hidden" />
-          tittle
         </BlurGlassDiv>
         {/* Body */}
         <BlurGlassDiv className="flex-1 rounded-t-sm overflow-y-auto shadow-md text-white lg:flex-none lg:w-60 xl:w-80 lg:pt-3 lg:flex lg:flex-col">

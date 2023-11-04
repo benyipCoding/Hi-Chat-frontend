@@ -13,4 +13,5 @@ export type NavMenuItem = {
   label: string;
   iconOutlined: IconName;
   iconFilled: IconName;
+  path: string;
 };

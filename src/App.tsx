@@ -10,6 +10,9 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import NotFound from './pages/NotFound';
 import MessagePage from './pages/MessagePage/MessagePage';
+import ContactPage from './pages/ContactPage/ContactPage';
+import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -38,6 +41,9 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route element={<AuthenticatedRoute children={<Layout />} />}>
           <Route path="messages" element={<MessagePage />} />
+          <Route path="contacts" element={<ContactPage />} />
+          <Route path="discovery" element={<DiscoveryPage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="conversations" element={<Conversations />} />
         </Route>
         <Route path="*" element={<NotFound />}></Route>

@@ -1,22 +1,34 @@
 import DynamicComponent from '@/components/DynamicComponent/DynamicComponent';
 import { IconsMap, NavMenuList } from './constants';
 import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NavigateBar = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const dropShadow: string = 'drop-shadow(0 0 12px #ec9131)';
   const glowingColor: string = 'text-[#ec9131]';
-  const toggleTab = (index: number) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const toggleTab = (index: number, path: string) => {
     setCurrentIndex(index);
+    navigate(path);
   };
+
+  useEffect(() => {
+    const target = NavMenuList.find((item) => item.path === location.pathname);
+    if (!target) throw new Error('Missing nav menu item');
+    const index = NavMenuList.indexOf(target);
+    if (currentIndex === index) return;
+    setCurrentIndex(index);
+  }, [location.pathname, currentIndex]);
 
   return (
     <BlurGlassDiv
       className={`h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1`}
     >
-      {/* <div className="h-full flex flex-row"> */}
       {NavMenuList.map((menu, index) => {
         const isCurrent = currentIndex === index;
 
@@ -24,7 +36,7 @@ const NavigateBar = () => {
           <section
             className="text-[22px] w-[25%] cursor-pointer p-1 text-[#b5bac1] lg:w-full"
             key={index}
-            onClick={() => toggleTab(index)}
+            onClick={() => toggleTab(index, menu.path)}
           >
             <div
               className={clsx(
@@ -43,7 +55,7 @@ const NavigateBar = () => {
               />
               <span
                 className={clsx(
-                  'text-[14px] lg:hidden',
+                  'text-[14px] lg:sr-only',
                   isCurrent && `${glowingColor}`
                 )}
                 style={{
@@ -56,7 +68,6 @@ const NavigateBar = () => {
           </section>
         );
       })}
-      {/* </div> */}
     </BlurGlassDiv>
   );
 };
