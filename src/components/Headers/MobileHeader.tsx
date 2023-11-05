@@ -22,7 +22,7 @@ const MobileHeader = () => {
   };
 
   return (
-    <BlurGlassDiv className="text-white h-12 sm:h-14 flex justify-center items-center shadow-md shadow-[#403637] rounded-md mb-2 lg:hidden">
+    <BlurGlassDiv className="mobile-transition text-white h-12 sm:h-14 flex justify-center items-center shadow-md shadow-[#403637] rounded-md mb-2 lg:hidden">
       <PureLogo height={30} extraClass="lg:hidden" />
       <button className="border bg-rose-500 ml-5" onClick={testFn}>
         Test Button

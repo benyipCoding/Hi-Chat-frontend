@@ -1,6 +1,6 @@
 import Avatar from '@/components/Avatar/Avatar';
 import AvatarDesc from '@/components/Avatar/AvatarDesc';
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const MessagePage = () => {
   // Mock Data
@@ -8,6 +8,14 @@ const MessagePage = () => {
     src: `/images/avatar/${item}.jpeg`,
     userName: `haha${item}`,
   }));
+
+  useEffect(() => {
+    console.log('loaded');
+
+    return () => {
+      console.log('before destory');
+    };
+  }, []);
 
   return (
     <div className="lg:flex-1 p-2 flex flex-col gap-2">
@@ -18,7 +26,6 @@ const MessagePage = () => {
         >
           <Avatar src={item.src} userName={item.userName} />
           <AvatarDesc userName={item.userName} lastMessage="123456" />
-          {/* <Outlet /> */}
         </section>
       ))}
     </div>

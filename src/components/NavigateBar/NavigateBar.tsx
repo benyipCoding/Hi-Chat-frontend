@@ -27,7 +27,7 @@ const NavigateBar = () => {
 
   return (
     <BlurGlassDiv
-      className={`h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1 xl:w-[100px] xl:gap-4`}
+      className={`mobile-transition h-16 shadow-lg shadow-black rounded-b-sm flex flex-row lg:h-full lg:flex-col lg:w-16 lg:rounded-md lg:gap-1 xl:w-[100px] xl:gap-4`}
     >
       {NavMenuList.map((menu, index) => {
         const isCurrent = currentIndex === index;
