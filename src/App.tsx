@@ -7,7 +7,6 @@ import Layout from './pages/Layout/Layout';
 import { AuthContext } from './context/AuthContext';
 import { User } from './utils/types';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
-import Conversations from './pages/Conversations/Conversations';
 import NotFound from './pages/NotFound';
 import MessagePage from './pages/MessagePage/MessagePage';
 import ContactPage from './pages/ContactPage/ContactPage';
@@ -40,11 +39,10 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route element={<AuthenticatedRoute children={<Layout />} />}>
-          <Route path="messages" element={<MessagePage />} />
+          <Route path="messages" element={<MessagePage />}></Route>
           <Route path="contacts" element={<ContactPage />} />
           <Route path="discovery" element={<DiscoveryPage />} />
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="conversations" element={<Conversations />} />
         </Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

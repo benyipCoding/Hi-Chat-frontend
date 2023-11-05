@@ -1,51 +1,10 @@
+import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
+
 const Conversations = () => {
   return (
-    <div className="">
-      <p className="">123</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p>Conversations</p>
-      <p className="">123</p>
-    </div>
+    <BlurGlassDiv className="h-full rounded-md" id="message-outlet">
+      123
+    </BlurGlassDiv>
   );
 };
 

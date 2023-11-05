@@ -19,7 +19,7 @@ const NavigateBar = () => {
 
   useEffect(() => {
     const target = NavMenuList.find((item) => item.path === location.pathname);
-    if (!target) throw new Error('Missing nav menu item');
+    if (!target) return;
     const index = NavMenuList.indexOf(target);
     if (currentIndex === index) return;
     setCurrentIndex(index);
