@@ -18,10 +18,10 @@ export type UserList = User[];
 
 export type Conversation = {
   id?: number;
-  creator: User;
-  recipient: User;
-  createdAt: number;
-  lastMessageSent?: string;
+  members?: User[];
+  createAt?: number;
+  cover: string;
+  name: string;
 };
 
 export type ErrorData = {
