@@ -1,7 +1,9 @@
 import Avatar from '@/components/Avatar/Avatar';
 import AvatarDesc from '@/components/Avatar/AvatarDesc';
+import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
 import { Conversation } from '@/utils/types';
+import { useContext } from 'react';
 
 const MessagePage = () => {
   // Mock Data
@@ -11,11 +13,10 @@ const MessagePage = () => {
     id: item,
   }));
   const { swipeToDetail } = useTranslate();
+  const divList = useContext(CommonContext);
 
   const onClickSection = (conversation: Conversation) => {
-    const subDivs = document.querySelectorAll<HTMLDivElement>('#root>div>div');
-
-    swipeToDetail(subDivs);
+    swipeToDetail(divList!);
     console.log(conversation);
   };
 

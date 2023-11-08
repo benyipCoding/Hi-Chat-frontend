@@ -1,13 +1,15 @@
+import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
 import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { LeftOutlined } from '@ant-design/icons';
+import { useContext } from 'react';
 
 const Conversations = () => {
   const { swipeToList } = useTranslate();
+  const divList = useContext(CommonContext);
 
   const swipeBack = () => {
-    const subDivs = document.querySelectorAll<HTMLDivElement>('#root>div>div');
-    swipeToList(subDivs);
+    swipeToList(divList!);
   };
 
   return (
@@ -19,7 +21,10 @@ const Conversations = () => {
         />
         Conversation Title
       </BlurGlassDiv>
-      <BlurGlassDiv className="h-full rounded-md p-2">123</BlurGlassDiv>
+      <BlurGlassDiv className="h-full rounded-md p-2 text-white flex flex-col gap-2">
+        <div className="rounded-md bg-[#0000005e] h-[80%] p-2">Screen</div>
+        <div className="rounded-md bg-[#0000005e] h-[20%] p-2">Input</div>
+      </BlurGlassDiv>
     </div>
   );
 };
