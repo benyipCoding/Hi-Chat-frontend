@@ -38,3 +38,23 @@ body {
     transition: 0.4s ease-in-out;
   }
 }
+
+#root > div > div {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.5, #a520ca),
+      color-stop(1, #2681cc)
+    );
+    border-radius: 10px;
+  }
+}

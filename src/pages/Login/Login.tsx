@@ -10,7 +10,7 @@ const Login: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) navigate('/conversations', { replace: true });
+    if (user) navigate('/messages', { replace: true });
   }, [user]);
 
   return (

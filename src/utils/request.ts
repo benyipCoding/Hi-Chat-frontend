@@ -2,7 +2,8 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { CustomAxiosResponse, ErrorData, Tokens } from './types';
 import { delLocalStorage, getLocalStorage } from './helpers';
 
-const baseURL = import.meta.env.VITE_APP_BASE_URL;
+const baseURL = window.location.origin + '/api';
+console.log({ baseURL });
 
 const axiosInstance = axios.create({
   baseURL,
