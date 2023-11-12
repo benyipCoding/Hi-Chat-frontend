@@ -21,7 +21,7 @@ const MessagePage = () => {
   };
 
   return (
-    <div className="lg:flex-1 p-2 flex flex-col gap-2">
+    <div className="lg:flex-1 p-2 flex flex-col gap-2 overflow-y-auto">
       {arr.map((item, index) => (
         <section
           className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"

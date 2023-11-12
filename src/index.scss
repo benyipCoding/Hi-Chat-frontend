@@ -39,7 +39,7 @@ body {
   }
 }
 
-#root > div > div {
+#root div {
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -52,9 +52,9 @@ body {
       linear,
       left bottom,
       left top,
-      color-stop(0.5, #a520ca),
-      color-stop(1, #2681cc)
-    );
+      color-stop(0.5, #7c3aed),
+      color-stop(1, #5046e5)
+    ) !important;
     border-radius: 10px;
   }
 }

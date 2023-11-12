@@ -8,7 +8,7 @@ export type RegisterResponse = { email: string; id: string; name: string };
 export type SignInResponse = { accessToken: string; refreshToken: string };
 
 export type User = {
-  id: number;
+  id?: number;
   name: string;
   email?: string;
   avatar: string;
@@ -18,7 +18,7 @@ export type UserList = User[];
 
 export type Conversation = {
   id?: number;
-  members?: User[];
+  users?: User[];
   createAt?: number;
   cover: string;
   name: string;

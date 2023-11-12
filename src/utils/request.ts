@@ -3,7 +3,7 @@ import { CustomAxiosResponse, ErrorData, Tokens } from './types';
 import { delLocalStorage, getLocalStorage } from './helpers';
 
 const baseURL = window.location.origin + '/api';
-console.log({ baseURL });
+// console.log({ baseURL });
 
 const axiosInstance = axios.create({
   baseURL,
@@ -54,6 +54,6 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 // customize response type version
-export function request<T>(config: AxiosRequestConfig) {
+export function request<T = string>(config: AxiosRequestConfig) {
   return axiosInstance.request<T, CustomAxiosResponse<T>>(config);
 }

@@ -24,3 +24,17 @@ export const getUserInfo = () => {
     url: '/user/profile',
   });
 };
+
+export const getFriendList = () => {
+  return request<User[]>({
+    method: 'get',
+    url: '/user/friendList',
+  });
+};
+
+export const getMockFriends = () => {
+  return request({
+    method: 'get',
+    url: '/user/mockFriends',
+  });
+};

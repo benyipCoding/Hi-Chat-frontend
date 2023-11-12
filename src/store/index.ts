@@ -1,7 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+// import conversationReducer from './conversationSlice';
+import friendsReducer from './friendsSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    // conversation: conversationReducer,
+    friends: friendsReducer,
+  },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),
   devTools: true,

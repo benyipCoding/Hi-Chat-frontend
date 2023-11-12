@@ -12,7 +12,8 @@ import MessagePage from './pages/MessagePage/MessagePage';
 import ContactPage from './pages/ContactPage/ContactPage';
 import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-
+import { store } from '@/store';
+import { Provider as ReduxProvider } from 'react-redux';
 type AppWithProvidersProps = {
   user?: User;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
@@ -24,9 +25,11 @@ const AppWithProviders: React.FC<PropsWithChildren & AppWithProvidersProps> = ({
   setUser,
 }) => {
   return (
-    <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
-      {children}
-    </AuthContext.Provider>
+    <ReduxProvider store={store}>
+      <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
+        {children}
+      </AuthContext.Provider>
+    </ReduxProvider>
   );
 };
 
