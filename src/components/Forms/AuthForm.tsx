@@ -41,7 +41,11 @@ const AuthForm = () => {
     // axios
     if (variant === 'LOGIN') {
       // login handler
-      postSignIn(data as AuthFormDefaultValues)
+      const trimData: AuthFormDefaultValues = {
+        userName: data.userName.trim(),
+        password: data.password,
+      };
+      postSignIn(trimData)
         .then(async (res) => {
           // save token
           setLocalStorage(res.data);
@@ -55,7 +59,12 @@ const AuthForm = () => {
         });
     } else {
       // register handler
-      postRegisterUser(data as AuthFormDefaultValues)
+      const trimData: AuthFormDefaultValues = {
+        userName: data.userName.trim(),
+        password: data.password,
+        email: data.email.trim(),
+      };
+      postRegisterUser(trimData)
         .then((res) => {
           console.log('Register Success');
           toast.success(res.message);

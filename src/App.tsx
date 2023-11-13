@@ -14,21 +14,28 @@ import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { store } from '@/store';
 import { Provider as ReduxProvider } from 'react-redux';
+import { SocketContext, socket } from '@/context/SocketContext';
+import { Socket } from 'socket.io-client';
+
 type AppWithProvidersProps = {
   user?: User;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+  socket: Socket;
 };
 
 const AppWithProviders: React.FC<PropsWithChildren & AppWithProvidersProps> = ({
   children,
   user,
   setUser,
+  socket,
 }) => {
   return (
     <ReduxProvider store={store}>
-      <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
-        {children}
-      </AuthContext.Provider>
+      <SocketContext.Provider value={socket}>
+        <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
+          {children}
+        </AuthContext.Provider>
+      </SocketContext.Provider>
     </ReduxProvider>
   );
 };
@@ -37,7 +44,7 @@ function App() {
   const [user, setUser] = useState<User>();
 
   return (
-    <AppWithProviders user={user} setUser={setUser}>
+    <AppWithProviders user={user} setUser={setUser} socket={socket}>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />}></Route>
         <Route path="/login" element={<Login />}></Route>

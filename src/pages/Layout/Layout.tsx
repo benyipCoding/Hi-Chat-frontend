@@ -5,15 +5,22 @@ import MobileHeader from '@/components/Headers/MobileHeader';
 import NavigateContent from '@/components/NavigateContent/NavigateContent';
 import Conversations from '../Conversations/Conversations';
 import { CommonContext } from '@/context/CommonContext';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { SocketContext } from '@/context/SocketContext';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
     useState<NodeListOf<HTMLDivElement>>();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
+    socket.connect();
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (
