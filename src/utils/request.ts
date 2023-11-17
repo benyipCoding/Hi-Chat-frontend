@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { CustomAxiosResponse, ErrorData, Tokens } from './types';
-import { delLocalStorage, getLocalStorage } from './helpers';
+import { delLocalStorage, getLocalStorage, setLocalStorage } from './helpers';
 
 const baseURL = window.location.origin + '/api';
 // console.log({ baseURL });
@@ -15,8 +15,10 @@ axiosInstance.interceptors.request.use(
   function (config) {
     // actions before sending request
     // console.log('before sending request...');
-    const token: Tokens = JSON.parse(getLocalStorage() as string);
-    if (token) config.headers.Authorization = `Bearer ${token.accessToken}`;
+    const tokens: Tokens = JSON.parse(getLocalStorage() as string);
+    if (tokens) {
+      config.headers.Authorization = `Bearer ${tokens.accessToken}`;
+    }
     return config;
   },
   function (error) {
@@ -30,6 +32,12 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function (response) {
     // actions for success response
+    // jwt tokens rotation
+    const tokens = response.headers.tokens;
+    if (tokens) {
+      const parseTokens = JSON.parse(tokens);
+      setLocalStorage(parseTokens);
+    }
     return response.data;
   },
   function (error: AxiosError) {

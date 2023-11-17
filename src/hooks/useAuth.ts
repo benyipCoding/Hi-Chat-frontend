@@ -16,7 +16,6 @@ export function useAuth() {
       .then((res) => {
         updateAuthUser(res.data);
         if (location.state === '/login') {
-          console.log(res.data);
           toast.success(`Welcom ${res.data?.name}`);
         }
       })
