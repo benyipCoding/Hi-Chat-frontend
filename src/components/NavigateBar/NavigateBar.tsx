@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const NavigateBar = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const dropShadow: string = 'drop-shadow(0 0 12px #ec9131)';
+  const dropShadow: string = 'drop-shadow(0px 0px 12px #ec9131)';
   const glowingColor: string = 'text-[#ec9131]';
   const navigate = useNavigate();
   const location = useLocation();
