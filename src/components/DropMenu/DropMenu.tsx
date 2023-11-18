@@ -57,7 +57,7 @@ const DropMenu = () => {
       variants={zoomIn(0, 0.2)}
       initial="hidden"
       whileInView="show"
-      className={`bg-gradient-to-b from-blue-200 to-cyan-200 absolute w-[160px] sm:w-[250px] rounded-md p-2 sm:p-3 overflow-x-hidden text-blue-900 flex flex-col gap-2 font-[600]`}
+      className={`bg-gradient-to-b from-blue-200 to-cyan-200 absolute w-[160px] sm:w-[250px] rounded-md p-2 sm:p-3 overflow-x-hidden text-blue-900 flex flex-col gap-2 font-[600] sm:text-[20px]`}
       ref={menu}
     >
       {dropMenuList.map((menu, index) => (

@@ -19,25 +19,22 @@ export enum DropMenuAction {
 
 export const DropMenuList: DropMenuType[] = [
   {
-    icon: <WechatFilled className="text-[20px]" />,
+    icon: <WechatFilled className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.GROUP_CHAT,
     onClick: () => {},
   },
   {
-    icon: <UserAddOutlined className="text-[20px]" />,
+    icon: <UserAddOutlined className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.ADD_FRIENDS,
     onClick: () => {},
   },
   {
-    icon: <LogoutOutlined className="text-[20px]" />,
+    icon: <LogoutOutlined className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.LOGOUT,
-    onClick: async () => {
-      try {
-        await postLogout();
-        window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
+    onClick: () => {
+      postLogout()
+        .then(() => window.location.reload())
+        .catch((err) => console.log(err));
     },
   },
 ];
