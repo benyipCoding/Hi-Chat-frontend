@@ -14,7 +14,7 @@ export const socket = io(host, {
   autoConnect: false,
   auth: (cb) => {
     const token: Tokens = JSON.parse(getLocalStorage() as string);
-    cb({ token: token.accessToken });
+    cb({ token: token?.accessToken });
   },
 });
 

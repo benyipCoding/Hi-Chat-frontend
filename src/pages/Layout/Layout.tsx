@@ -7,11 +7,15 @@ import Conversations from '../Conversations/Conversations';
 import { CommonContext } from '@/context/CommonContext';
 import { useContext, useEffect, useState } from 'react';
 import { SocketContext } from '@/context/SocketContext';
+import DropMenu from '@/components/DropMenu/DropMenu';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
     useState<NodeListOf<HTMLDivElement>>();
   const socket = useContext(SocketContext);
+  const { isOpen } = useSelector((state: RootState) => state.dropMenu);
 
   useEffect(() => {
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
@@ -35,6 +39,8 @@ const Layout = () => {
           <NavigateContent />
           {/* Footer */}
           <NavigateBar />
+          {/* DropMenu */}
+          {isOpen && <DropMenu />}
         </div>
       </CommonContext.Provider>
     </ThemeProvider>

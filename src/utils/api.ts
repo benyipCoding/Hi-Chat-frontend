@@ -38,3 +38,10 @@ export const getMockFriends = () => {
     url: '/user/mockFriends',
   });
 };
+
+export const postLogout = () => {
+  return request({
+    method: 'post',
+    url: '/auth/logout',
+  });
+};
