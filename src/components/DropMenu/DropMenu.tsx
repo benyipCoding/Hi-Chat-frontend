@@ -48,7 +48,7 @@ const DropMenu = () => {
   useClickOutSideEvent(menu, dispatch);
 
   const clickMenuItem = async (menu: DropMenuType) => {
-    menu.onClick();
+    menu.onClick(dispatch);
     dispatch(toggle(false));
   };
 

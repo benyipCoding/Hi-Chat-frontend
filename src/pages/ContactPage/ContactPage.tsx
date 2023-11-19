@@ -8,6 +8,8 @@ import { Button, Empty } from 'antd';
 import { useTranslate } from '@/hooks/useTranslate';
 import { User } from '@/utils/types';
 import { CommonContext } from '@/context/CommonContext';
+import { toggleVisible } from '@/store/drawerSlice';
+// import { setCurrent } from '@/store/conversationSlice';
 
 const ContactPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,8 +18,8 @@ const ContactPage = () => {
   const divs = useContext(CommonContext);
 
   const swipeToFriendsProfile = (friend: User) => {
-    console.log(friend);
     swipeToDetail(divs!);
+    console.log(friend);
   };
 
   useEffect(() => {
@@ -59,7 +61,10 @@ const ContactPage = () => {
           }
           className="h-full flex flex-col justify-center items-center"
         >
-          <Button className="bg-gradient-to-r from-violet-600 to-indigo-600">
+          <Button
+            className="bg-gradient-to-r from-violet-600 to-indigo-600"
+            onClick={() => dispatch(toggleVisible(true))}
+          >
             <span className="text-white">Start chat now</span>
           </Button>
         </Empty>

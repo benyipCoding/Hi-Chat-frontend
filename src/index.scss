@@ -39,9 +39,10 @@ body {
   }
 }
 
-#root div {
+#root div,
+.scroll-bar {
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
   &::-webkit-scrollbar-track {
     border-radius: 10px;

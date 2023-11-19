@@ -17,11 +17,23 @@ export type User = {
 export type UserList = User[];
 
 export type Conversation = {
-  id?: number;
-  users?: User[];
-  createAt?: number;
+  id: number;
+  users: string[]; // user ids array
+  createAt: number;
   cover: string;
   name: string;
+  lastMessage: string;
+  lastMessageAt: Date;
+  messages: number[]; // message ids array
+};
+
+export type Message = {
+  id: number;
+  content: string;
+  image?: string;
+  createAt: Date;
+  sender: string;
+  seenByUsers?: string[];
 };
 
 export type ErrorData = {

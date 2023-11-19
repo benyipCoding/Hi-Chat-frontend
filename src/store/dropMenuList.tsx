@@ -4,11 +4,13 @@ import {
   UserAddOutlined,
   WechatFilled,
 } from '@ant-design/icons';
+import { AppDispatch } from '.';
+import { toggleVisible } from './drawerSlice';
 
 export type DropMenuType = {
   icon: React.ReactNode;
   label: string;
-  onClick: () => void;
+  onClick: (dispatch: AppDispatch) => void;
 };
 
 export enum DropMenuAction {
@@ -26,7 +28,9 @@ export const DropMenuList: DropMenuType[] = [
   {
     icon: <UserAddOutlined className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.ADD_FRIENDS,
-    onClick: () => {},
+    onClick: (dispatch: AppDispatch) => {
+      dispatch(toggleVisible(true));
+    },
   },
   {
     icon: <LogoutOutlined className="text-[20px] sm:text-[26px]" />,

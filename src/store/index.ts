@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import conversationReducer from './conversationSlice';
+import conversationReducer from './conversationSlice';
 import friendsReducer from './friendsSlice';
 import dropMenuReducer from './dropMenuSlice';
+import drawerReducer from './drawerSlice';
 
 export const store = configureStore({
   reducer: {
-    // conversation: conversationReducer,
+    conversation: conversationReducer,
     friends: friendsReducer,
     dropMenu: dropMenuReducer,
+    drawer: drawerReducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),

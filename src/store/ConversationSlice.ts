@@ -1,20 +1,28 @@
 import { Conversation } from '@/utils/types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ConversationState {
   conversations: Conversation[];
   loading: boolean;
+  currentConversation: Conversation | null;
 }
 
 const initialState: ConversationState = {
   conversations: [],
   loading: false,
+  currentConversation: null,
 };
 
 export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrent(state, action: PayloadAction<Conversation>) {
+      state.currentConversation = action.payload;
+    },
+  },
 });
+
+export const { setCurrent } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

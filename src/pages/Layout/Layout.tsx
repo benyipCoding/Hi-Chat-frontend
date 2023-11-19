@@ -10,6 +10,7 @@ import { SocketContext } from '@/context/SocketContext';
 import DropMenu from '@/components/DropMenu/DropMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import Drawer from '@/components/Drawer/Drawer';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -37,10 +38,12 @@ const Layout = () => {
           <MobileHeader />
           {/* Body */}
           <NavigateContent />
-          {/* Footer */}
+          {/* Mobile Footer | Side bar navigation */}
           <NavigateBar />
           {/* DropMenu */}
           {isOpen && <DropMenu />}
+          {/* Dialog or Drawer */}
+          <Drawer />
         </div>
       </CommonContext.Provider>
     </ThemeProvider>
