@@ -9,8 +9,6 @@ const Drawer = () => {
   const { visible } = useSelector((state: RootState) => state.drawer);
   const dispatch = useDispatch<AppDispatch>();
 
-  //   const onSearch = () => {};
-
   return (
     <DrawerAntd
       title="Add friends"

@@ -45,3 +45,9 @@ export const postLogout = () => {
     url: '/auth/logout',
   });
 };
+
+export const getStrangerList = () => {
+  return request<User[]>({
+    url: '/user/all-stranger',
+  });
+};

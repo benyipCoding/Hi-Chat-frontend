@@ -8,13 +8,13 @@ export type RegisterResponse = { email: string; id: string; name: string };
 export type SignInResponse = { accessToken: string; refreshToken: string };
 
 export type User = {
-  id?: number;
+  id: string;
   name: string;
   email?: string;
-  avatar: string;
-} | null;
+  avatar?: string;
+};
 
-export type UserList = User[];
+export type UserWithChecked = User & { checked: boolean };
 
 export type Conversation = {
   id: number;

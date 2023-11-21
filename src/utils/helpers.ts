@@ -36,3 +36,20 @@ export function addAlphaToHexColor(hexColor: string, alpha: number): string {
 
   return newHexColor;
 }
+
+export function generateRandomColor() {
+  // 生成随机的R、G、B分量
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+
+  // 将RGB分量转换为16进制，并确保它们的字符串表示始终为两位
+  const redHex = red.toString(16).padStart(2, '0');
+  const greenHex = green.toString(16).padStart(2, '0');
+  const blueHex = blue.toString(16).padStart(2, '0');
+
+  // 拼接得到最终的16进制颜色字符串
+  const hexColor = '#' + redHex + greenHex + blueHex;
+
+  return hexColor;
+}
