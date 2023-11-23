@@ -7,15 +7,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 
 import UserList from '../List/UserList';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { allOrNone } from '@/store/friendsSlice';
+import { Modal } from 'antd';
+import { AuthContext } from '@/context/AuthContext';
+import { postFriendInvitation } from '@/utils/api';
+import { toast } from 'react-toastify';
 
 const AddFriends = () => {
+  const { user } = useContext(AuthContext);
   const { visible } = useSelector((state: RootState) => state.drawer);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [inputVal, setInputVal] = useState<string>('');
-  const onInput = (e: React.FormEvent<HTMLInputElement>) => {
-    setInputVal((e.target as HTMLInputElement).value);
-  };
+  const [helloText, setHelloText] = useState<string>(
+    `Hi,I'm ${user?.name}. Nice to meet you!`
+  );
+
   const { strangers } = useSelector((state: RootState) => state.friends);
   const isShowBtn = useMemo<boolean>(
     () => strangers.filter((s) => s.checked).length !== 0,
@@ -26,11 +33,21 @@ const AddFriends = () => {
   const selectAllOrNone = () => {
     dispatch(allOrNone());
   };
-
   useEffect(() => {
     if (visible) return;
     setInputVal('');
   }, [visible]);
+
+  const onConfirm = async () => {
+    console.log(strangers);
+    console.log(helloText);
+    const userIds = strangers.filter((u) => u.checked).map((u) => u.id);
+
+    postFriendInvitation({ userIds, helloText })
+      .then(() => toast.success('Invitations sent'))
+      .catch((err) => toast.error(err))
+      .finally(() => setIsModalOpen(false));
+  };
 
   return (
     <div className="h-full flex flex-col relative">
@@ -39,7 +56,7 @@ const AddFriends = () => {
         <Input
           placeholder="Please input user name."
           type="text"
-          onInput={onInput}
+          onInput={(e) => setInputVal((e.target as HTMLInputElement).value)}
           value={inputVal}
         />
         <CheckCircleOutlined
@@ -61,11 +78,48 @@ const AddFriends = () => {
           <motion.button
             whileTap={{ scale: 0.9 }}
             className="bg-[#0284c7] h-[70%] w-[80%] flex items-center justify-center rounded-full text-white text-[20px]"
+            onClick={() => setIsModalOpen(true)}
           >
             Send invitation
           </motion.button>
         </BlurGlassDiv>
       )}
+
+      <Modal
+        title={
+          <p className="relative px-3 text-lg">
+            <span className="w-[5px] h-[80%] bg-[#0284c7] absolute left-0 rounded-full top-[50%] translate-y-[-50%]"></span>
+            SEND GREETINGS
+          </p>
+        }
+        open={isModalOpen}
+        closeIcon={false}
+        footer={
+          <>
+            <motion.button
+              className="text-[#0284c7] py-2 px-3 rounded-md border mr-3 border-[#0284c7]"
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </motion.button>
+            <motion.button
+              className="bg-[#0284c7] text-white py-2 px-3 rounded-md"
+              whileTap={{ scale: 0.9 }}
+              onClick={onConfirm}
+            >
+              Confirm
+            </motion.button>
+          </>
+        }
+      >
+        <Input
+          type="text"
+          placeholder="Say hello to your friends?"
+          value={helloText}
+          onInput={(e) => setHelloText((e.target as HTMLInputElement).value)}
+        />
+      </Modal>
     </div>
   );
 };

@@ -51,3 +51,14 @@ export const getStrangerList = () => {
     url: '/user/all-stranger',
   });
 };
+
+export const postFriendInvitation = (data: {
+  userIds: string[];
+  helloText: string;
+}) => {
+  return request({
+    method: 'post',
+    url: '/friends/invitation',
+    data,
+  });
+};

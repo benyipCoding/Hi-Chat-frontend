@@ -3,15 +3,13 @@ import AvatarDesc from '@/components/Avatar/AvatarDesc';
 import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
 import { Conversation } from '@/utils/types';
+import { Empty } from 'antd';
+import clsx from 'clsx';
 import { useContext } from 'react';
 
 const MessagePage = () => {
   // Mock Data
-  const arr: Conversation[] = [1, 2, 3, 4, 5, 6].map((item) => ({
-    cover: `/images/avatar/${item}.jpeg`,
-    name: `haha${item}`,
-    id: item,
-  }));
+  const arr: Conversation[] = [];
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
 
@@ -21,7 +19,12 @@ const MessagePage = () => {
   };
 
   return (
-    <div className="lg:flex-1 p-2 flex flex-col gap-2 overflow-y-auto">
+    <div
+      className={clsx(
+        'lg:flex-1 p-2 flex flex-col gap-2 overflow-y-auto',
+        arr.length === 0 && 'h-full'
+      )}
+    >
       {arr.map((item, index) => (
         <section
           className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"
@@ -32,6 +35,11 @@ const MessagePage = () => {
           <AvatarDesc userName={item.name} lastMessage="123456" />
         </section>
       ))}
+      {arr.length === 0 && (
+        <div className="m-auto">
+          <Empty description={<div className="text-white">No data</div>} />
+        </div>
+      )}
     </div>
   );
 };
