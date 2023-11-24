@@ -13,13 +13,14 @@ import { Modal } from 'antd';
 import { AuthContext } from '@/context/AuthContext';
 import { postFriendInvitation } from '@/utils/api';
 import { toast } from 'react-toastify';
+import { toggleVisible } from '@/store/drawerSlice';
 
 const AddFriends = () => {
   const { user } = useContext(AuthContext);
   const { visible } = useSelector((state: RootState) => state.drawer);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [inputVal, setInputVal] = useState<string>('');
-  const [helloText, setHelloText] = useState<string>(
+  const [greetings, setGreetings] = useState<string>(
     `Hi,I'm ${user?.name}. Nice to meet you!`
   );
 
@@ -39,14 +40,18 @@ const AddFriends = () => {
   }, [visible]);
 
   const onConfirm = async () => {
-    console.log(strangers);
-    console.log(helloText);
     const userIds = strangers.filter((u) => u.checked).map((u) => u.id);
 
-    postFriendInvitation({ userIds, helloText })
-      .then(() => toast.success('Invitations sent'))
+    postFriendInvitation({ userIds, greetings })
+      .then((res) => {
+        console.log(res);
+        toast.success(`${res.data} Invitations sent`);
+      })
       .catch((err) => toast.error(err))
-      .finally(() => setIsModalOpen(false));
+      .finally(() => {
+        setIsModalOpen(false);
+        dispatch(toggleVisible(false));
+      });
   };
 
   return (
@@ -116,8 +121,8 @@ const AddFriends = () => {
         <Input
           type="text"
           placeholder="Say hello to your friends?"
-          value={helloText}
-          onInput={(e) => setHelloText((e.target as HTMLInputElement).value)}
+          value={greetings}
+          onInput={(e) => setGreetings((e.target as HTMLInputElement).value)}
         />
       </Modal>
     </div>

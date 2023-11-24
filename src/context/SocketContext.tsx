@@ -29,7 +29,10 @@ socket.on(SocketEvent.ERROR, (e) => {
   toast.error(e.message);
 });
 socket.on(SocketEvent.MESSAGE, (e) => {
-  console.log(e);
+  console.log('this is message event', e);
+});
+socket.on(SocketEvent.FRIEND_REQUEST, (e) => {
+  console.log('this is friend request event', e);
 });
 
 export const SocketContext = createContext<Socket>(socket);

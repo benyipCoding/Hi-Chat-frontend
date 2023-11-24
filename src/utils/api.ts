@@ -54,9 +54,9 @@ export const getStrangerList = () => {
 
 export const postFriendInvitation = (data: {
   userIds: string[];
-  helloText: string;
+  greetings: string;
 }) => {
-  return request({
+  return request<number>({
     method: 'post',
     url: '/friends/invitation',
     data,

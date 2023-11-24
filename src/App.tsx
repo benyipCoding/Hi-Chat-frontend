@@ -16,6 +16,7 @@ import { store } from '@/store';
 import { Provider as ReduxProvider } from 'react-redux';
 import { SocketContext, socket } from '@/context/SocketContext';
 import { Socket } from 'socket.io-client';
+import Test from './pages/Test/Test';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -54,6 +55,7 @@ function App() {
           <Route path="discovery" element={<DiscoveryPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
+        <Route path="/test" element={<Test />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <ToastContainer
