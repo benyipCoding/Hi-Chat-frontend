@@ -2,7 +2,6 @@ import { AppDispatch, RootState } from '@/store';
 import { fetchFriendsThunk } from '@/store/friendsSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Input } from '@/components/Inputs';
 import EmptyState from '@/components/EmptyState';
 import UserItem from '@/components/List/UserItem';
@@ -14,27 +13,20 @@ const ContactPage = () => {
   const { friends } = useSelector((state: RootState) => state.friends);
   const [searchInput, setSearchInput] = useState<string>('');
 
-  // const swipeToFriendsProfile = (friend: User) => {
-  //   swipeToDetail(divs!);
-  //   console.log(friend);
-  // };
-
   useEffect(() => {
     dispatch(fetchFriendsThunk());
   }, []);
 
   return (
     <div className="h-full flex flex-col">
-      <div className="p-3">
-        <Input
-          background={`${addAlphaToHexColor('#edeff6', 0.9)}`}
-          type="text"
-          placeholder="search"
-          value={searchInput}
-          onInput={(e) => setSearchInput((e.target as HTMLInputElement).value)}
-          icon={<IoSearch />}
-        />
-      </div>
+      <Input
+        background={`${addAlphaToHexColor('#edeff6', 0.9)}`}
+        type="text"
+        placeholder="search"
+        value={searchInput}
+        onInput={(e) => setSearchInput((e.target as HTMLInputElement).value)}
+        icon={<IoSearch />}
+      />
 
       <div className="w-full flex-1 p-2 overflow-y-auto flex flex-col">
         {friends?.length ? (

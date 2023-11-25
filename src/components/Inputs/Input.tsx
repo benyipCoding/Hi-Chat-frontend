@@ -7,7 +7,6 @@ interface InputProps {
   value: string;
   icon?: React.ReactNode;
   background?: string;
-  fixed?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,10 +16,9 @@ const Input: React.FC<InputProps> = ({
   value,
   icon,
   background = '',
-  fixed = false,
 }) => {
   return (
-    <>
+    <div className={clsx('w-full relative', icon && 'p-3')}>
       {icon && (
         <span className="absolute left-5 top-5 text-[gray] text-xl">
           {icon}
@@ -30,18 +28,16 @@ const Input: React.FC<InputProps> = ({
         type={type}
         className={clsx(
           'form-input w-full block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6',
-          icon && `pl-10`,
-          fixed && `fixed top-2 left-[50%] translate-x-[-50%] z-10`
+          icon && `pl-10`
         )}
         placeholder={placeholder}
         onInput={(e) => onInput(e)}
         value={value}
         style={{
           backgroundColor: `${background}`,
-          width: `${fixed ? '95%' : ''}`,
         }}
       />
-    </>
+    </div>
   );
 };
 
