@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-
 import UserList from '../List/UserList';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { allOrNone } from '@/store/friendsSlice';
