@@ -11,7 +11,7 @@ const Drawer = () => {
 
   return (
     <DrawerAntd
-      title="Add friends"
+      title={<span className="text-slate-900">Add friends</span>}
       placement="bottom"
       onClose={() => dispatch(toggleVisible(false))}
       open={visible}

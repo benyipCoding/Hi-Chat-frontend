@@ -3,7 +3,7 @@ import AvatarDesc from '../Avatar/AvatarDesc';
 import { useTranslate } from '@/hooks/useTranslate';
 import { User } from '@/utils/types';
 import { CommonContext } from '@/context/CommonContext';
-import Avatar from '../Avatar/Avatar';
+import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 
 interface UserItemProps {
   user: User;
@@ -23,10 +23,7 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
       key={user?.email}
       onClick={() => swipeToFriendsProfile(user)}
     >
-      <Avatar
-        src={user?.avatar || `/images/avatar/1.jpeg`}
-        userName={user?.name}
-      />
+      <Avatar src={user?.avatar || defaultAvatar} userName={user?.name} />
       <AvatarDesc
         userName={user?.name || ''}
         lastMessage="123456"

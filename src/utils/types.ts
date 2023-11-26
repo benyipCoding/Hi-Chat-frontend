@@ -48,12 +48,12 @@ export type Tokens = {
   refreshToken: string;
 };
 
-export type Invitation = {
-  avatar: string;
-  message: string;
-  createAt: Date;
-  status: FriendshipStatus;
-};
+// export type Invitation = {
+//   avatar: string;
+//   message: string;
+//   createAt: Date;
+//   status: FriendshipStatus;
+// };
 
 export enum FriendshipStatus {
   ACCEPT = 'accept',
@@ -63,7 +63,7 @@ export enum FriendshipStatus {
   SEEN = 'seen',
 }
 
-export type InvitationRecord = {
+export type Invitation = {
   id: number;
   sender: User;
   receiver: User;

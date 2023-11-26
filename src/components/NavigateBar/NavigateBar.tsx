@@ -35,7 +35,7 @@ const NavigateBar = () => {
 
         return (
           <section
-            className="text-[22px] w-[25%] cursor-pointer p-1 text-[#b5bac1] lg:w-full"
+            className="text-[22px] w-[25%] cursor-pointer p-1 lg:w-full text-[#b5bac1]"
             key={index}
             onClick={() => toggleTab(index, menu.path)}
           >
@@ -49,7 +49,7 @@ const NavigateBar = () => {
                 <DynamicComponent
                   is={isCurrent ? menu.iconFilled : menu.iconOutlined}
                   styles={[
-                    'text-[25px] lg:text-[32px] xl:text-[40px]',
+                    'text-[25px] lg:text-[32px] xl:text-[40px] text-[#b5bac1]',
                     isCurrent && `${glowingColor}`,
                   ]}
                   resource={IconsMap}

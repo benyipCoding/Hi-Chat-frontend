@@ -6,8 +6,6 @@ export const theme: ThemeConfig = {
     fontSize: 16,
   },
   components: {
-    Collapse: {
-      // contentBg: 'transparent',
-    },
+    Collapse: {},
   },
 };

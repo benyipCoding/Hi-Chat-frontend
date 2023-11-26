@@ -1,33 +1,50 @@
+import { Invitation } from '@/utils/types';
 import { Collapse, CollapseProps } from 'antd';
+import UserItem from '../List/UserItem';
+import { addAlphaToHexColor } from '@/utils/helpers';
+// #region
+type GetItemsParams = {
+  panelStyle: React.CSSProperties;
+  invitations: Invitation[];
+};
 
-const text = `123123`;
-
-const getItems: (panelStyle: React.CSSProperties) => CollapseProps['items'] = (
-  panelStyle
+const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
+  params
 ) => {
   return [
     {
-      key: '1',
+      key: 'friends',
       label: 'Friends',
-      children: <p>{text}</p>,
-      style: panelStyle,
+      children: <p>123123</p>,
+      style: params.panelStyle,
     },
     {
-      key: '2',
+      key: 'invitations',
       label: 'Invitations',
-      children: <>{text}</>,
-      style: panelStyle,
+      children: (
+        <>
+          {params.invitations.map((invitation) => (
+            <UserItem user={invitation.receiver} key={invitation.id} />
+          ))}
+        </>
+      ),
+      style: params.panelStyle,
     },
   ];
 };
+// #endregion
 
-const ContactCollapse = () => {
+interface ContactCollapseProps {
+  invitations: Invitation[];
+}
+
+const ContactCollapse: React.FC<ContactCollapseProps> = ({ invitations }) => {
   const panelStyle: React.CSSProperties = {
-    borderBottom: '1px solid #ec9131',
-    borderColor: '#ec9131',
+    borderBottom: '1px solid',
+    borderColor: `${addAlphaToHexColor('#ec9131', 0.7)}`,
   };
 
-  const items = getItems(panelStyle);
+  const items = getItems({ panelStyle, invitations });
 
   const onChange = (key: string | string[]) => {
     console.log(key);

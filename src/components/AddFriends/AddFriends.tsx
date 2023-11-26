@@ -91,7 +91,7 @@ const AddFriends = () => {
 
       <Modal
         title={
-          <p className="relative px-3 text-lg">
+          <p className="relative px-3 text-lg text-slate-800">
             <span className="w-[5px] h-[80%] bg-[#0284c7] absolute left-0 rounded-full top-[50%] translate-y-[-50%]"></span>
             SEND GREETINGS
           </p>

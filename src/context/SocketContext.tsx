@@ -1,6 +1,8 @@
+import { store } from '@/store';
+import { addInvitationsRecord } from '@/store/friendsSlice';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
-import { Tokens } from '@/utils/types';
+import { Invitation, Tokens } from '@/utils/types';
 import { createContext } from 'react';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
@@ -37,6 +39,10 @@ socket.on(SocketEvent.MESSAGE, (e) => {
 
 socket.on(SocketEvent.FRIEND_REQUEST, (e) => {
   console.log('this is friend request event', e);
+});
+
+socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
+  store.dispatch(addInvitationsRecord(e));
 });
 
 export const SocketContext = createContext<Socket>(socket);
