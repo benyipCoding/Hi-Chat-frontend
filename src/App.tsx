@@ -17,6 +17,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { SocketContext, socket } from '@/context/SocketContext';
 import { Socket } from 'socket.io-client';
 import Test from './pages/Test/Test';
+import { ConfigProvider } from 'antd';
+import { theme } from '@/utils/themes/antdCustomTheme';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -34,7 +36,7 @@ const AppWithProviders: React.FC<PropsWithChildren & AppWithProvidersProps> = ({
     <ReduxProvider store={store}>
       <SocketContext.Provider value={socket}>
         <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
-          {children}
+          <ConfigProvider theme={theme}>{children}</ConfigProvider>
         </AuthContext.Provider>
       </SocketContext.Provider>
     </ReduxProvider>

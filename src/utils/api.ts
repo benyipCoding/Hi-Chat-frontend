@@ -32,12 +32,12 @@ export const getFriendList = () => {
   });
 };
 
-export const getMockFriends = () => {
-  return request({
-    method: 'get',
-    url: '/user/mockFriends',
-  });
-};
+// export const getMockFriends = () => {
+//   return request({
+//     method: 'get',
+//     url: '/user/mockFriends',
+//   });
+// };
 
 export const postLogout = () => {
   return request({

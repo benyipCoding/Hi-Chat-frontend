@@ -1,5 +1,5 @@
 import { getFriendList, getStrangerList } from '@/utils/api';
-import { User, UserWithChecked } from '@/utils/types';
+import { Invitation, User, UserWithChecked } from '@/utils/types';
 import {
   createAsyncThunk,
   createSelector,
@@ -12,18 +12,17 @@ export interface FriendsState {
   friends: User[];
   loading: boolean;
   strangers: UserWithChecked[];
+  invitations: Invitation[];
 }
 
 const initialState: FriendsState = {
   friends: [],
   loading: false,
   strangers: [],
+  invitations: [],
 };
 
 export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
-  // const friends = (payloadCreator.getState() as RootState).friends;
-  // if the friends list is already existed. Abort sending request
-  // if (friends.friends.length) return Promise.reject();
   return getFriendList();
 });
 
@@ -51,6 +50,9 @@ export const friendSlice = createSlice({
       } else {
         state.strangers.forEach((u) => (u.checked = false));
       }
+    },
+    addInvitationsRecord(state, action: PayloadAction<Invitation>) {
+      state.invitations.unshift(action.payload);
     },
   },
   extraReducers(builder) {
@@ -82,6 +84,7 @@ export const selectStrangerByName = createSelector(
   (name, strangers) => strangers.filter((s) => s?.name.includes(name))
 );
 
-export const { toggleStrangerChecked, allOrNone } = friendSlice.actions;
+export const { toggleStrangerChecked, allOrNone, addInvitationsRecord } =
+  friendSlice.actions;
 
 export default friendSlice.reducer;

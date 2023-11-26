@@ -21,16 +21,20 @@ export const socket = io(host, {
 socket.on(SocketEvent.CONNECT, () => {
   console.log('socket connect successfully!');
 });
+
 socket.on(SocketEvent.DISCONNECT, () => {
   console.log('socket has been disconnected!');
 });
+
 socket.on(SocketEvent.ERROR, (e) => {
   console.log(e.message);
   toast.error(e.message);
 });
+
 socket.on(SocketEvent.MESSAGE, (e) => {
   console.log('this is message event', e);
 });
+
 socket.on(SocketEvent.FRIEND_REQUEST, (e) => {
   console.log('this is friend request event', e);
 });

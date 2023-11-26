@@ -14,4 +14,5 @@ export type NavMenuItem = {
   iconOutlined: IconName;
   iconFilled: IconName;
   path: string;
+  badge?: number;
 };

@@ -47,3 +47,27 @@ export type Tokens = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type Invitation = {
+  avatar: string;
+  message: string;
+  createAt: Date;
+  status: FriendshipStatus;
+};
+
+export enum FriendshipStatus {
+  ACCEPT = 'accept',
+  PENDING = 'pending',
+  SENT = 'sent',
+  REJECT = 'reject',
+  SEEN = 'seen',
+}
+
+export type InvitationRecord = {
+  id: number;
+  sender: User;
+  receiver: User;
+  createAt: Date;
+  greetings: string;
+  status: FriendshipStatus;
+};

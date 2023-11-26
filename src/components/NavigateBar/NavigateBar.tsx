@@ -4,6 +4,7 @@ import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Badge } from 'antd';
 
 const NavigateBar = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -44,15 +45,17 @@ const NavigateBar = () => {
                 isCurrent && 'bg-[#00000048]'
               )}
             >
-              <DynamicComponent
-                is={isCurrent ? menu.iconFilled : menu.iconOutlined}
-                styles={[
-                  'text-[25px] lg:text-[32px] xl:text-[40px]',
-                  isCurrent && `${glowingColor}`,
-                ]}
-                resource={IconsMap}
-                inlineStyle={{ filter: `${dropShadow}` }}
-              />
+              <Badge count={menu.badge} size="small">
+                <DynamicComponent
+                  is={isCurrent ? menu.iconFilled : menu.iconOutlined}
+                  styles={[
+                    'text-[25px] lg:text-[32px] xl:text-[40px]',
+                    isCurrent && `${glowingColor}`,
+                  ]}
+                  resource={IconsMap}
+                  inlineStyle={{ filter: `${dropShadow}` }}
+                />
+              </Badge>
               <span
                 className={clsx(
                   'text-[14px] lg:hidden xl:block xl:text-[16px]',

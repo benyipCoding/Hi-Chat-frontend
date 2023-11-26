@@ -6,8 +6,10 @@ interface AvatarProps {
   fixedSize?: boolean;
 }
 
+export const defaultAvatar = '/images/avatar/2.jpeg';
+
 const Avatar: React.FC<AvatarProps> = ({
-  src = '/images/avatar/2.jpeg',
+  src = defaultAvatar,
   userName,
   fixedSize = false,
 }) => {
