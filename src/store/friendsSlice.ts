@@ -20,15 +20,12 @@ const initialState: FriendsState = {
   strangers: [],
 };
 
-export const fetchFriendsThunk = createAsyncThunk(
-  'friends/fetch',
-  (_, payloadCreator) => {
-    const friends = (payloadCreator.getState() as RootState).friends;
-    // if the friends list is already existed. Abort sending request
-    if (friends.friends.length) return Promise.reject();
-    return getFriendList();
-  }
-);
+export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
+  // const friends = (payloadCreator.getState() as RootState).friends;
+  // if the friends list is already existed. Abort sending request
+  // if (friends.friends.length) return Promise.reject();
+  return getFriendList();
+});
 
 export const fetchStrangersThunk = createAsyncThunk(
   'strangers/fetch',
