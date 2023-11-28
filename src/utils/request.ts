@@ -33,10 +33,9 @@ axiosInstance.interceptors.response.use(
   function (response) {
     // actions for success response
     // jwt tokens rotation
-    const tokens = response.headers.tokens;
-    if (tokens) {
-      const parseTokens = JSON.parse(tokens);
-      setLocalStorage(parseTokens);
+    if ('tokens' in response.data) {
+      setLocalStorage(response.data.tokens);
+      delete response.data.tokens;
     }
     return response.data;
   },

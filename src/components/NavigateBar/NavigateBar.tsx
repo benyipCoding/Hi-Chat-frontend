@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
+import { useScreenSize } from '@/hooks/useScreenSize';
 
 const NavigateBar = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -12,6 +13,7 @@ const NavigateBar = () => {
   const glowingColor: string = 'text-[#ec9131]';
   const navigate = useNavigate();
   const location = useLocation();
+  const isLarge = useScreenSize();
 
   const toggleTab = (index: number, path: string) => {
     setCurrentIndex(index);
@@ -45,7 +47,10 @@ const NavigateBar = () => {
                 isCurrent && 'bg-[#00000048]'
               )}
             >
-              <Badge count={menu.badge} size="small">
+              <Badge
+                count={menu.badge}
+                size={`${isLarge() ? 'default' : 'small'}`}
+              >
                 <DynamicComponent
                   is={isCurrent ? menu.iconFilled : menu.iconOutlined}
                   styles={[

@@ -1,5 +1,8 @@
 import { store } from '@/store';
-import { addInvitationsRecord } from '@/store/friendsSlice';
+import {
+  addInvitationsRecord,
+  fetchInvitationsThunk,
+} from '@/store/friendsSlice';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
 import { Invitation, Tokens } from '@/utils/types';
@@ -22,6 +25,7 @@ export const socket = io(host, {
 
 socket.on(SocketEvent.CONNECT, () => {
   console.log('socket connect successfully!');
+  store.dispatch(fetchInvitationsThunk());
 });
 
 socket.on(SocketEvent.DISCONNECT, () => {
@@ -30,7 +34,7 @@ socket.on(SocketEvent.DISCONNECT, () => {
 
 socket.on(SocketEvent.ERROR, (e) => {
   console.log(e.message);
-  toast.error(e.message);
+  // toast.error(e.message);
 });
 
 socket.on(SocketEvent.MESSAGE, (e) => {

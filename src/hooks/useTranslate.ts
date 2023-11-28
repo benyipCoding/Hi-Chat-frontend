@@ -1,5 +1,7 @@
+import { useScreenSize } from './useScreenSize';
+
 export function useTranslate() {
-  const isLarge = () => window.innerWidth >= 1024;
+  const isLarge = useScreenSize();
 
   const swipeToDetail = (elements: NodeListOf<HTMLDivElement>) => {
     if (isLarge() || !elements.length) return;

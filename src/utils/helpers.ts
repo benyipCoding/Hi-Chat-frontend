@@ -1,3 +1,12 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+export function formatCommentTime(date: Date) {
+  if (!date) return '';
+  return dayjs(date).fromNow();
+}
+
 export const TOKEN_KEY = 'HI_TOKEN';
 
 export function setLocalStorage(data: unknown) {
@@ -52,4 +61,9 @@ export function generateRandomColor() {
   const hexColor = '#' + redHex + greenHex + blueHex;
 
   return hexColor;
+}
+
+export function formatUserName(userName: string | undefined): string {
+  if (!userName) return '';
+  return userName[0].toUpperCase() + userName.slice(1);
 }

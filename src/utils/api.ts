@@ -1,6 +1,6 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import { request } from './request';
-import { RegisterResponse, SignInResponse, User } from './types';
+import { Invitation, RegisterResponse, SignInResponse, User } from './types';
 
 export const postRegisterUser = (data: AuthFormDefaultValues) => {
   return request<RegisterResponse>({
@@ -32,13 +32,6 @@ export const getFriendList = () => {
   });
 };
 
-// export const getMockFriends = () => {
-//   return request({
-//     method: 'get',
-//     url: '/user/mockFriends',
-//   });
-// };
-
 export const postLogout = () => {
   return request({
     method: 'post',
@@ -60,5 +53,23 @@ export const postFriendInvitation = (data: {
     method: 'post',
     url: '/friends/invitation',
     data,
+  });
+};
+
+export const getInvitations = () => {
+  return request<Invitation[]>({
+    url: '/friends/users-invitations',
+  });
+};
+
+export const getTestNormal = () => {
+  return request({
+    url: '/auth/connect-normal',
+  });
+};
+
+export const getTestSSE = () => {
+  return request({
+    url: '/auth/connect-sse',
   });
 };

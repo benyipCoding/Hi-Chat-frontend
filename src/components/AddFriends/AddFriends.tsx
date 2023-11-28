@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import UserList from '../List/UserList';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { allOrNone } from '@/store/friendsSlice';
+import { allOrNone, fetchInvitationsThunk } from '@/store/friendsSlice';
 import { Modal } from 'antd';
 import { AuthContext } from '@/context/AuthContext';
 import { postFriendInvitation } from '@/utils/api';
@@ -50,6 +50,7 @@ const AddFriends = () => {
       .finally(() => {
         setIsModalOpen(false);
         dispatch(toggleVisible(false));
+        dispatch(fetchInvitationsThunk());
       });
   };
 

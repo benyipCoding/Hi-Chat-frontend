@@ -7,11 +7,17 @@ export type RegisterResponse = { email: string; id: string; name: string };
 
 export type SignInResponse = { accessToken: string; refreshToken: string };
 
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 export type User = {
   id: string;
   name: string;
   email?: string;
   avatar?: string;
+  gender?: Gender;
 };
 
 export type UserWithChecked = User & { checked: boolean };
@@ -48,13 +54,6 @@ export type Tokens = {
   refreshToken: string;
 };
 
-// export type Invitation = {
-//   avatar: string;
-//   message: string;
-//   createAt: Date;
-//   status: FriendshipStatus;
-// };
-
 export enum FriendshipStatus {
   ACCEPT = 'accept',
   PENDING = 'pending',
@@ -68,6 +67,7 @@ export type Invitation = {
   sender: User;
   receiver: User;
   createAt: Date;
+  updateAt: Date;
   greetings: string;
   status: FriendshipStatus;
 };

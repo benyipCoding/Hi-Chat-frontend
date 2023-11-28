@@ -1,4 +1,4 @@
-import { getFriendList, getStrangerList } from '@/utils/api';
+import { getFriendList, getInvitations, getStrangerList } from '@/utils/api';
 import { Invitation, User, UserWithChecked } from '@/utils/types';
 import {
   createAsyncThunk,
@@ -26,12 +26,16 @@ export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
   return getFriendList();
 });
 
-export const fetchStrangersThunk = createAsyncThunk(
-  'strangers/fetch',
-  async () => {
-    return getStrangerList().then((res) =>
-      res.data.map((u) => ({ ...u, checked: false }))
-    );
+export const fetchStrangersThunk = createAsyncThunk('strangers/fetch', () => {
+  return getStrangerList().then((res) =>
+    res.data.map((u) => ({ ...u, checked: false }))
+  );
+});
+
+export const fetchInvitationsThunk = createAsyncThunk(
+  'invitations/fetch',
+  () => {
+    return getInvitations();
   }
 );
 
@@ -57,21 +61,25 @@ export const friendSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchFriendsThunk.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(fetchFriendsThunk.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         console.log('request fulfilled');
         state.friends = action.payload!.data;
       })
-      .addCase(fetchStrangersThunk.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(fetchStrangersThunk.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         console.log('fetch strangers fulfilled');
         state.strangers = action.payload;
+      })
+      .addCase(fetchInvitationsThunk.fulfilled, (state, action) => {
+        console.log('fetchInvitationsThunk fulfilled');
+        state.invitations = action.payload.data;
       });
   },
 });
