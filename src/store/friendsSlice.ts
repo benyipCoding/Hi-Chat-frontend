@@ -1,5 +1,10 @@
 import { getFriendList, getInvitations, getStrangerList } from '@/utils/api';
-import { Invitation, User, UserWithChecked } from '@/utils/types';
+import {
+  FriendshipStatus,
+  Invitation,
+  User,
+  UserWithChecked,
+} from '@/utils/types';
 import {
   createAsyncThunk,
   createSelector,
@@ -90,6 +95,14 @@ const selectStrangers = (state: RootState) => state.friends.strangers;
 export const selectStrangerByName = createSelector(
   [selectStrangerName, selectStrangers],
   (name, strangers) => strangers.filter((s) => s?.name.includes(name))
+);
+
+const selectUserId = (_state: RootState, userId: string) => userId;
+const selectInvitations = (state: RootState) => state.friends.invitations;
+
+export const selectInvitationsByUserId = createSelector(
+  [selectUserId, selectInvitations],
+  (userId, invitations) => invitations.filter((i) => i.receiver.id === userId)
 );
 
 export const { toggleStrangerChecked, allOrNone, addInvitationsRecord } =

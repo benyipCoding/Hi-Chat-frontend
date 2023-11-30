@@ -4,6 +4,10 @@ import UserItem from '../List/UserItem';
 import { addAlphaToHexColor } from '@/utils/helpers';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
+import ContactBadge from '../Badge/ContactBadge';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { selectInvitationsByUserId } from '@/store/friendsSlice';
 // #region
 type GetItemsParams = {
   panelStyle: React.CSSProperties;
@@ -19,6 +23,11 @@ const handleLastMessage = (lastMessage: string): string => {
   const messages = lastMessage.split(separator);
   const length = messages.length;
   return messages[length - 1];
+};
+
+const panelStyle: React.CSSProperties = {
+  borderBottom: '1px solid',
+  borderColor: `${addAlphaToHexColor('#ec9131', 0.7)}`,
 };
 
 const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
@@ -49,6 +58,7 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
               status={invitation.status}
               lastMessage={handleLastMessage(invitation.greetings)}
               sender={invitation.sender}
+              invitationId={invitation.id}
             />
           ))}
         </>
@@ -65,22 +75,24 @@ interface ContactCollapseProps {
 }
 
 const ContactCollapse: React.FC<ContactCollapseProps> = ({ invitations }) => {
-  const panelStyle: React.CSSProperties = {
-    borderBottom: '1px solid',
-    borderColor: `${addAlphaToHexColor('#ec9131', 0.7)}`,
-  };
   const { user } = useContext(AuthContext);
+  const items = getItems({ panelStyle, invitations, currentUser: user! });
+
+  const filterInvitations = useSelector((state: RootState) =>
+    selectInvitationsByUserId(state, user!.id)
+  );
 
   const onChange = (key: string | string[]) => {
     console.log(key);
   };
 
   return (
-    <Collapse
-      items={getItems({ panelStyle, invitations, currentUser: user! })}
-      onChange={onChange}
-      bordered={false}
-    />
+    <>
+      <Collapse items={items} onChange={onChange} bordered={false} />
+      {items?.map((_item, index) => (
+        <ContactBadge key={index} index={index} badgeCount={index} />
+      ))}
+    </>
   );
 };
 

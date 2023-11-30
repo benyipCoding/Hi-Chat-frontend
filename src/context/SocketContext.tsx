@@ -7,7 +7,7 @@ import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
 import { Invitation, Tokens } from '@/utils/types';
 import { createContext } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client';
 
@@ -43,10 +43,15 @@ socket.on(SocketEvent.MESSAGE, (e) => {
 
 socket.on(SocketEvent.FRIEND_REQUEST, (e) => {
   console.log('this is friend request event', e);
+  store.dispatch(fetchInvitationsThunk());
 });
 
 socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
   store.dispatch(addInvitationsRecord(e));
+});
+
+socket.on(SocketEvent.UNTREATED_INVITATIONS, (e) => {
+  console.log(SocketEvent.UNTREATED_INVITATIONS, { e });
 });
 
 export const SocketContext = createContext<Socket>(socket);

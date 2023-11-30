@@ -22,7 +22,7 @@ const ContactPage = () => {
         icon={<IoSearch />}
       />
 
-      <div className="w-full flex-1 p-2 overflow-y-auto flex flex-col gap-2">
+      <div className="w-full flex-1 p-2 overflow-y-auto flex flex-col gap-2 relative">
         {invitations.length ? (
           <ContactCollapse invitations={invitations} />
         ) : (

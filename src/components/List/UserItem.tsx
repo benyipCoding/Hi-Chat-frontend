@@ -11,6 +11,7 @@ interface UserItemProps {
   updateAt?: Date;
   status?: FriendshipStatus;
   sender?: User;
+  invitationId?: number;
 }
 
 const UserItem: React.FC<UserItemProps> = ({
@@ -19,6 +20,7 @@ const UserItem: React.FC<UserItemProps> = ({
   updateAt,
   status,
   sender,
+  invitationId,
 }) => {
   // const { swipeToDetail } = useTranslate();
   // const divs = useContext(CommonContext);
@@ -39,6 +41,7 @@ const UserItem: React.FC<UserItemProps> = ({
         updateAt={updateAt}
         status={status}
         sender={sender}
+        invitationId={invitationId}
       />
     </section>
   );

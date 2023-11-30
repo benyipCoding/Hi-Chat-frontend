@@ -1,6 +1,12 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import { request } from './request';
-import { Invitation, RegisterResponse, SignInResponse, User } from './types';
+import {
+  FriendshipStatus,
+  Invitation,
+  RegisterResponse,
+  SignInResponse,
+  User,
+} from './types';
 
 export const postRegisterUser = (data: AuthFormDefaultValues) => {
   return request<RegisterResponse>({
@@ -73,3 +79,17 @@ export const getTestSSE = () => {
     url: '/auth/connect-sse',
   });
 };
+
+export function postChangeFriendshipStatus(
+  invitationId: number,
+  status: FriendshipStatus.ACCEPT | FriendshipStatus.REJECT
+) {
+  return request({
+    method: 'post',
+    url: '/friends/changeFriendship',
+    data: {
+      id: invitationId,
+      status,
+    },
+  });
+}
