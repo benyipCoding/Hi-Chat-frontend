@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/components/Inputs';
 import { IoSearch } from 'react-icons/io5';
 import { addAlphaToHexColor } from '@/utils/helpers';
@@ -6,10 +6,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import ContactCollapse from '@/components/Collapse/ContactCollapse';
 import EmptyState from '@/components/EmptyState';
+// import { AuthContext } from '@/context/AuthContext';
+// import { selectInvitationsByUserId } from '@/store/friendsSlice';
 
 const ContactPage = () => {
   const [searchInput, setSearchInput] = useState<string>('');
   const { invitations } = useSelector((state: RootState) => state.friends);
+  // const { user } = useContext(AuthContext);
+  // const filterInvitations = useSelector((state: RootState) =>
+  //   selectInvitationsByUserId(state, user!.id)
+  // );
+
+  useEffect(() => {
+    // console.log(filterInvitations);
+  }, []);
 
   return (
     <div className="h-full flex flex-col">

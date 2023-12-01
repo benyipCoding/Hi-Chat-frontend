@@ -1,10 +1,5 @@
 import { getFriendList, getInvitations, getStrangerList } from '@/utils/api';
-import {
-  FriendshipStatus,
-  Invitation,
-  User,
-  UserWithChecked,
-} from '@/utils/types';
+import { Invitation, User, UserWithChecked } from '@/utils/types';
 import {
   createAsyncThunk,
   createSelector,
@@ -18,6 +13,7 @@ export interface FriendsState {
   loading: boolean;
   strangers: UserWithChecked[];
   invitations: Invitation[];
+  untreatedCount: number;
 }
 
 const initialState: FriendsState = {
@@ -25,6 +21,7 @@ const initialState: FriendsState = {
   loading: false,
   strangers: [],
   invitations: [],
+  untreatedCount: 0,
 };
 
 export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
@@ -63,22 +60,18 @@ export const friendSlice = createSlice({
     addInvitationsRecord(state, action: PayloadAction<Invitation>) {
       state.invitations.unshift(action.payload);
     },
+    setUntreatedCount(state, action: PayloadAction<number>) {
+      state.untreatedCount = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
-      // .addCase(fetchFriendsThunk.pending, (state) => {
-      //   state.loading = true;
-      // })
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
-        // state.loading = false;
-        console.log('request fulfilled');
+        console.log('fetchFriendsThunk fulfilled');
+        console.log(action.payload.data);
         state.friends = action.payload!.data;
       })
-      // .addCase(fetchStrangersThunk.pending, (state) => {
-      //   state.loading = true;
-      // })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
-        // state.loading = false;
         console.log('fetch strangers fulfilled');
         state.strangers = action.payload;
       })
@@ -97,15 +90,11 @@ export const selectStrangerByName = createSelector(
   (name, strangers) => strangers.filter((s) => s?.name.includes(name))
 );
 
-const selectUserId = (_state: RootState, userId: string) => userId;
-const selectInvitations = (state: RootState) => state.friends.invitations;
-
-export const selectInvitationsByUserId = createSelector(
-  [selectUserId, selectInvitations],
-  (userId, invitations) => invitations.filter((i) => i.receiver.id === userId)
-);
-
-export const { toggleStrangerChecked, allOrNone, addInvitationsRecord } =
-  friendSlice.actions;
+export const {
+  toggleStrangerChecked,
+  allOrNone,
+  addInvitationsRecord,
+  setUntreatedCount,
+} = friendSlice.actions;
 
 export default friendSlice.reducer;

@@ -5,9 +5,10 @@ import { addAlphaToHexColor } from '@/utils/helpers';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import ContactBadge from '../Badge/ContactBadge';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { selectInvitationsByUserId } from '@/store/friendsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store';
+import { setUntreatedCount } from '@/store/friendsSlice';
+import { setDefaultActiveKey } from '@/store/contactPageSlice';
 // #region
 type GetItemsParams = {
   panelStyle: React.CSSProperties;
@@ -76,21 +77,32 @@ interface ContactCollapseProps {
 
 const ContactCollapse: React.FC<ContactCollapseProps> = ({ invitations }) => {
   const { user } = useContext(AuthContext);
+  const dispatch = useDispatch<AppDispatch>();
+  const { untreatedCount } = useSelector((state: RootState) => state.friends);
   const items = getItems({ panelStyle, invitations, currentUser: user! });
-
-  const filterInvitations = useSelector((state: RootState) =>
-    selectInvitationsByUserId(state, user!.id)
+  const { defaultActiveKey } = useSelector(
+    (state: RootState) => state.contactPage
   );
 
   const onChange = (key: string | string[]) => {
-    console.log(key);
+    if (key.includes('1')) dispatch(setUntreatedCount(0));
+    dispatch(setDefaultActiveKey(key as string[]));
   };
 
   return (
     <>
-      <Collapse items={items} onChange={onChange} bordered={false} />
+      <Collapse
+        items={items}
+        onChange={onChange}
+        bordered={false}
+        defaultActiveKey={defaultActiveKey}
+      />
       {items?.map((_item, index) => (
-        <ContactBadge key={index} index={index} badgeCount={index} />
+        <ContactBadge
+          key={index}
+          index={index}
+          badgeCount={index === 1 ? untreatedCount : 0}
+        />
       ))}
     </>
   );

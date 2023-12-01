@@ -1,7 +1,9 @@
 import { store } from '@/store';
 import {
   addInvitationsRecord,
+  fetchFriendsThunk,
   fetchInvitationsThunk,
+  setUntreatedCount,
 } from '@/store/friendsSlice';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
@@ -26,6 +28,7 @@ export const socket = io(host, {
 socket.on(SocketEvent.CONNECT, () => {
   console.log('socket connect successfully!');
   store.dispatch(fetchInvitationsThunk());
+  store.dispatch(fetchFriendsThunk());
 });
 
 socket.on(SocketEvent.DISCONNECT, () => {
@@ -52,6 +55,7 @@ socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
 
 socket.on(SocketEvent.UNTREATED_INVITATIONS, (e) => {
   console.log(SocketEvent.UNTREATED_INVITATIONS, { e });
+  store.dispatch(setUntreatedCount(e.length));
 });
 
 export const SocketContext = createContext<Socket>(socket);

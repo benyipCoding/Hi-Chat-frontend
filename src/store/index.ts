@@ -3,6 +3,7 @@ import conversationReducer from './conversationSlice';
 import friendsReducer from './friendsSlice';
 import dropMenuReducer from './dropMenuSlice';
 import drawerReducer from './drawerSlice';
+import contactPageReducer from './contactPageSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     friends: friendsReducer,
     dropMenu: dropMenuReducer,
     drawer: drawerReducer,
+    contactPage: contactPageReducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),

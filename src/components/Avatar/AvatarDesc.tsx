@@ -11,7 +11,7 @@ import { IoClose } from 'react-icons/io5';
 import { postChangeFriendshipStatus } from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
-import { fetchInvitationsThunk } from '@/store/friendsSlice';
+import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
 import { toast } from 'react-toastify';
 
 interface AvatarDescProps {
@@ -49,6 +49,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
       console.log(res);
       dispatch(fetchInvitationsThunk());
       toast.success('success');
+      if (status === FriendshipStatus.ACCEPT) dispatch(fetchFriendsThunk());
     });
   };
 

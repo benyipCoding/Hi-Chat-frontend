@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
 import { useScreenSize } from '@/hooks/useScreenSize';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const NavigateBar = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -14,6 +16,7 @@ const NavigateBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLarge = useScreenSize();
+  const { untreatedCount } = useSelector((state: RootState) => state.friends);
 
   const toggleTab = (index: number, path: string) => {
     setCurrentIndex(index);
@@ -48,7 +51,7 @@ const NavigateBar = () => {
               )}
             >
               <Badge
-                count={menu.badge}
+                count={menu.label === 'Contacts' ? untreatedCount : 0}
                 size={`${isLarge() ? 'default' : 'small'}`}
               >
                 <DynamicComponent
