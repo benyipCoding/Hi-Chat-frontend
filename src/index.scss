@@ -53,3 +53,22 @@ body {
     border-radius: 10px;
   }
 }
+
+.badge {
+  &::after {
+    content: attr(data-content);
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4d4f;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    font-size: 4vw;
+  }
+}

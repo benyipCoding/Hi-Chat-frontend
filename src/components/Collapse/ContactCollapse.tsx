@@ -2,9 +2,8 @@ import { Invitation, User } from '@/utils/types';
 import { Collapse, CollapseProps } from 'antd';
 import UserItem from '../List/UserItem';
 import { addAlphaToHexColor } from '@/utils/helpers';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
-import ContactBadge from '../Badge/ContactBadge';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import { setUntreatedCount } from '@/store/friendsSlice';
@@ -89,22 +88,23 @@ const ContactCollapse: React.FC<ContactCollapseProps> = ({ invitations }) => {
     dispatch(setDefaultActiveKey(key as string[]));
   };
 
+  useEffect(() => {
+    const headers = document.querySelectorAll('.ant-collapse-header');
+    if (untreatedCount !== 0) {
+      headers[1].classList.add('badge');
+      headers[1].setAttribute('data-content', `${untreatedCount}`);
+    } else {
+      headers[1].classList.remove('badge');
+    }
+  }, [untreatedCount]);
+
   return (
-    <>
-      <Collapse
-        items={items}
-        onChange={onChange}
-        bordered={false}
-        defaultActiveKey={defaultActiveKey}
-      />
-      {items?.map((_item, index) => (
-        <ContactBadge
-          key={index}
-          index={index}
-          badgeCount={index === 1 ? untreatedCount : 0}
-        />
-      ))}
-    </>
+    <Collapse
+      items={items}
+      onChange={onChange}
+      bordered={false}
+      defaultActiveKey={defaultActiveKey}
+    />
   );
 };
 
