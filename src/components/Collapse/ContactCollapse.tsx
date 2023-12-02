@@ -13,6 +13,7 @@ type GetItemsParams = {
   panelStyle: React.CSSProperties;
   invitations: Invitation[];
   currentUser: User;
+  friendList: User[];
 };
 
 const handleLastMessage = (lastMessage: string): string => {
@@ -37,7 +38,18 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
     {
       key: '0',
       label: 'Friends',
-      children: <p>123123</p>,
+      children: (
+        <>
+          {params.friendList.map((friend) => (
+            <UserItem
+              user={friend}
+              key={friend.id}
+              showDescription={false}
+              isFriendList={true}
+            />
+          ))}
+        </>
+      ),
       style: params.panelStyle,
       headerClass: `text-lg`,
     },
@@ -72,13 +84,22 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
 
 interface ContactCollapseProps {
   invitations: Invitation[];
+  friendList: User[];
 }
 
-const ContactCollapse: React.FC<ContactCollapseProps> = ({ invitations }) => {
+const ContactCollapse: React.FC<ContactCollapseProps> = ({
+  invitations,
+  friendList,
+}) => {
   const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
   const { untreatedCount } = useSelector((state: RootState) => state.friends);
-  const items = getItems({ panelStyle, invitations, currentUser: user! });
+  const items = getItems({
+    panelStyle,
+    invitations,
+    currentUser: user!,
+    friendList,
+  });
   const { defaultActiveKey } = useSelector(
     (state: RootState) => state.contactPage
   );

@@ -1,6 +1,7 @@
 import * as Icons from '@ant-design/icons';
 import clsx from 'clsx';
 import { IconsMapType, NavMenuItem } from './types';
+import { FaRegUser, FaUser } from 'react-icons/fa';
 
 export const IconsMap: IconsMapType = {
   MessageOutlined: (_, styles) => (
@@ -21,11 +22,9 @@ export const IconsMap: IconsMapType = {
   CompassFilled: (inlineStyle, styles) => (
     <Icons.CompassFilled className={clsx(...[styles])} style={inlineStyle} />
   ),
-  ProfileOutlined: (_, styles) => (
-    <Icons.ProfileOutlined className={clsx(...[styles])} />
-  ),
+  ProfileOutlined: (_, styles) => <FaRegUser className={clsx(...[styles])} />,
   ProfileFilled: (inlineStyle, styles) => (
-    <Icons.ProfileFilled className={clsx(...[styles])} style={inlineStyle} />
+    <FaUser className={clsx(...[styles])} style={inlineStyle} />
   ),
 };
 

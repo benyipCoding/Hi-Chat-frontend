@@ -7,12 +7,15 @@ import React, { useContext, useState } from 'react';
 import { StatusMap } from './constant';
 import { FaCheck } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
-import { IoClose } from 'react-icons/io5';
+import { IoChatbubbleEllipses, IoClose } from 'react-icons/io5';
 import { postChangeFriendshipStatus } from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
 import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
 import { toast } from 'react-toastify';
+import { useTranslate } from '@/hooks/useTranslate';
+import { CommonContext } from '@/context/CommonContext';
+import { FaUserAlt } from 'react-icons/fa';
 
 interface AvatarDescProps {
   userName: string;
@@ -21,6 +24,9 @@ interface AvatarDescProps {
   updateAt?: Date;
   sender?: User;
   invitationId?: number;
+  showDescription?: boolean;
+  conversationId?: number;
+  isFriendList?: boolean;
 }
 
 const AvatarDesc: React.FC<AvatarDescProps> = ({
@@ -30,6 +36,8 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   status,
   updateAt,
   invitationId,
+  showDescription,
+  isFriendList,
 }) => {
   const { Paragraph } = Typography;
   const [ellipsis, setEllipsis] = useState<boolean>(true);
@@ -37,16 +45,26 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   const CapitalName = formatUserName(userName);
   const dispatch = useDispatch<AppDispatch>();
 
-  const toggleTextDetail = () => {
+  const { swipeToDetail } = useTranslate();
+  const divList = useContext(CommonContext);
+
+  const swipe = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    e.stopPropagation();
+    swipeToDetail(divList!);
+  };
+
+  const toggleTextDetail = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
     setEllipsis((prev) => !prev);
   };
 
   const reply = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     invitationId: number,
     status: FriendshipStatus.ACCEPT | FriendshipStatus.REJECT
   ) => {
-    postChangeFriendshipStatus(invitationId, status).then((res) => {
-      console.log(res);
+    e.stopPropagation();
+    postChangeFriendshipStatus(invitationId, status).then(() => {
       dispatch(fetchInvitationsThunk());
       toast.success('success');
       if (status === FriendshipStatus.ACCEPT) dispatch(fetchFriendsThunk());
@@ -61,13 +79,15 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
       </p>
 
       {/* greetings */}
-      <Paragraph
-        ellipsis={ellipsis ? { rows: 1, suffix: '' } : false}
-        className="flex-1 text-md flex items-center text-[white] pl-1 sm:text-lg lg:text-sm w-[60%] sm:w-[70%] lg:w-[55%]"
-        onClick={toggleTextDetail}
-      >
-        {`${formatUserName(sender?.name)}: ` + lastMessage}
-      </Paragraph>
+      {showDescription && (
+        <Paragraph
+          ellipsis={ellipsis ? { rows: 1, suffix: '' } : false}
+          className="flex-1 text-md flex items-center text-[white] pl-1 sm:text-lg lg:text-sm w-[60%] sm:w-[70%] lg:w-[55%]"
+          onClick={(e) => toggleTextDetail(e)}
+        >
+          {`${formatUserName(sender?.name)}: ` + lastMessage}
+        </Paragraph>
+      )}
 
       {/* date fromNow */}
       <div className="absolute right-0 text-gray-200">
@@ -77,35 +97,60 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
       </div>
 
       {/* button sets & invitation status */}
-      <div className="absolute right-0 bottom-[15px]">
-        {user?.id !== sender?.id && status === FriendshipStatus.SENT ? (
-          <div className="flex text-3xl">
-            <motion.div
-              whileTap={{ scale: 0.8 }}
-              className="text-green-400 z-2 absolute bottom-[-5px] right-[-5px]"
-              onClick={() => reply(invitationId!, FriendshipStatus.ACCEPT)}
+      {invitationId && (
+        <div className="absolute right-0 bottom-[15px]">
+          {user?.id !== sender?.id && status === FriendshipStatus.SENT ? (
+            <div className="flex text-3xl">
+              <motion.div
+                whileTap={{ scale: 0.8 }}
+                className="text-green-400 z-2 absolute bottom-[-5px] right-[-5px]"
+                onClick={(e) =>
+                  reply(e, invitationId!, FriendshipStatus.ACCEPT)
+                }
+              >
+                <FaCheck />
+              </motion.div>
+              <motion.div
+                whileTap={{ scale: 0.8 }}
+                className="text-rose-400 z-2 absolute bottom-[-7px] right-12"
+                onClick={(e) =>
+                  reply(e, invitationId!, FriendshipStatus.REJECT)
+                }
+              >
+                <IoClose />
+              </motion.div>
+            </div>
+          ) : (
+            <div
+              className={clsx(
+                'text-lg flex items-center font-semibold',
+                StatusMap.get(status!)
+              )}
             >
-              <FaCheck />
-            </motion.div>
-            <motion.div
-              whileTap={{ scale: 0.8 }}
-              className="text-rose-400 z-2 absolute bottom-[-7px] right-12"
-              onClick={() => reply(invitationId!, FriendshipStatus.REJECT)}
-            >
-              <IoClose />
-            </motion.div>
-          </div>
-        ) : (
-          <div
-            className={clsx(
-              'text-lg flex items-center font-semibold',
-              StatusMap.get(status!)
-            )}
+              {formatUserName(status)}
+            </div>
+          )}
+        </div>
+      )}
+      {/* when this component used for friendList. */}
+      {isFriendList && (
+        <div className="absolute right-0 bottom-[15px] text-md flex gap-4">
+          <motion.span
+            whileTap={{ scale: 0.9 }}
+            className="border p-2 rounded-full shadow-md shadow-[#98d3df76] border-[#98d3df] drop-shadow-sm text-[#98d3df] cursor-pointer"
+            onClick={(e) => swipe(e)}
           >
-            {formatUserName(status)}
-          </div>
-        )}
-      </div>
+            <FaUserAlt />
+          </motion.span>
+          <motion.span
+            whileTap={{ scale: 0.9 }}
+            className="border p-2 rounded-full shadow-md shadow-[#ec923188] border-[#ec9131] drop-shadow-sm text-[#ec9131] cursor-pointer"
+            onClick={(e) => swipe(e)}
+          >
+            <IoChatbubbleEllipses />
+          </motion.span>
+        </div>
+      )}
     </div>
   );
 };

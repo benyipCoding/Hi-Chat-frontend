@@ -78,10 +78,6 @@ export const friendSlice = createSlice({
       .addCase(fetchInvitationsThunk.fulfilled, (state, action) => {
         console.log('fetchInvitationsThunk fulfilled');
         state.invitations = action.payload.data;
-      })
-      .addCase(fetchFriendsThunk.rejected, (a, b) => {
-        console.log('fetchFriendsThunk.rejected');
-        console.log(a, b);
       });
   },
 });

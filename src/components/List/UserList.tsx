@@ -33,7 +33,7 @@ const UserList: React.FC<UserListProps> = ({ filter = '' }) => {
       {strangers.map((user, index) => (
         <motion.li
           whileTap={{ scale: 0.9 }}
-          className="h-28 relative flex flex-col justify-center items-center gap-1 sm:py-2 rounded-md hover:bg-[#0000001b] active:bg-[#0000001e]"
+          className="h-28 relative flex flex-col justify-center items-center gap-1 sm:py-2 rounded-md md:hover:bg-[#0000001b] active:bg-[#0000001e]"
           key={index}
         >
           <Avatar

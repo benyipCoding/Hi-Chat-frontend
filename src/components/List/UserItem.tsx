@@ -1,17 +1,16 @@
-// import { useContext } from 'react';
 import AvatarDesc from '../Avatar/AvatarDesc';
-// import { useTranslate } from '@/hooks/useTranslate';
 import { FriendshipStatus, User } from '@/utils/types';
-// import { CommonContext } from '@/context/CommonContext';
 import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 
 interface UserItemProps {
   user: User;
-  lastMessage: string;
+  lastMessage?: string;
   updateAt?: Date;
   status?: FriendshipStatus;
   sender?: User;
   invitationId?: number;
+  showDescription?: boolean;
+  isFriendList?: boolean;
 }
 
 const UserItem: React.FC<UserItemProps> = ({
@@ -21,14 +20,9 @@ const UserItem: React.FC<UserItemProps> = ({
   status,
   sender,
   invitationId,
+  showDescription = true,
+  isFriendList = false,
 }) => {
-  // const { swipeToDetail } = useTranslate();
-  // const divs = useContext(CommonContext);
-
-  // const swipeToFriendsProfile = (friend: User) => {
-  //   swipeToDetail(divs!);
-  //   console.log(friend);
-  // };
   return (
     <section
       className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"
@@ -37,11 +31,13 @@ const UserItem: React.FC<UserItemProps> = ({
       <Avatar src={user?.avatar || defaultAvatar} userName={user?.name} />
       <AvatarDesc
         userName={user?.name || ''}
-        lastMessage={lastMessage}
+        lastMessage={lastMessage!}
         updateAt={updateAt}
         status={status}
         sender={sender}
         invitationId={invitationId}
+        showDescription={showDescription}
+        isFriendList={isFriendList}
       />
     </section>
   );
