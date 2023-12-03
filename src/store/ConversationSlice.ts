@@ -17,12 +17,12 @@ export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
   reducers: {
-    setCurrent(state, action: PayloadAction<Conversation>) {
+    setCurrentConversation(state, action: PayloadAction<Conversation>) {
       state.currentConversation = action.payload;
     },
   },
 });
 
-export const { setCurrent } = conversationSlice.actions;
+export const { setCurrentConversation } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

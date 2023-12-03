@@ -1,6 +1,7 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import { request } from './request';
 import {
+  Conversation,
   FriendshipStatus,
   Invitation,
   RegisterResponse,
@@ -90,6 +91,16 @@ export function postChangeFriendshipStatus(
     data: {
       id: invitationId,
       status,
+    },
+  });
+}
+
+export function postCreateConversation(target: User) {
+  return request<Conversation>({
+    method: 'post',
+    url: '/conversation/create',
+    data: {
+      target,
     },
   });
 }

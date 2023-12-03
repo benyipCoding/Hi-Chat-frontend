@@ -24,13 +24,11 @@ export type UserWithChecked = User & { checked: boolean };
 
 export type Conversation = {
   id: number;
-  users: string[]; // user ids array
-  createAt: number;
-  cover: string;
-  name: string;
-  lastMessage: string;
+  creator: User;
+  recipient: User;
   lastMessageAt: Date;
-  messages: number[]; // message ids array
+  updateAt: Date;
+  createAt: Date;
 };
 
 export type Message = {

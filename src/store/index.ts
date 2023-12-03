@@ -4,6 +4,7 @@ import friendsReducer from './friendsSlice';
 import dropMenuReducer from './dropMenuSlice';
 import drawerReducer from './drawerSlice';
 import contactPageReducer from './contactPageSlice';
+import dynamicPageReducer from './dynamicPageSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     dropMenu: dropMenuReducer,
     drawer: drawerReducer,
     contactPage: contactPageReducer,
+    dynamicPage: dynamicPageReducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),

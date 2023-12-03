@@ -8,7 +8,10 @@ import { StatusMap } from './constant';
 import { FaCheck } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 import { IoChatbubbleEllipses, IoClose } from 'react-icons/io5';
-import { postChangeFriendshipStatus } from '@/utils/api';
+import {
+  postChangeFriendshipStatus,
+  postCreateConversation,
+} from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
 import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
@@ -16,6 +19,9 @@ import { toast } from 'react-toastify';
 import { useTranslate } from '@/hooks/useTranslate';
 import { CommonContext } from '@/context/CommonContext';
 import { FaUserAlt } from 'react-icons/fa';
+import { DynamicPageName } from '../DynamicPage/pageMap';
+import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
+import { setCurrentConversation } from '@/store/conversationSlice';
 
 interface AvatarDescProps {
   userName: string;
@@ -27,6 +33,7 @@ interface AvatarDescProps {
   showDescription?: boolean;
   conversationId?: number;
   isFriendList?: boolean;
+  user: User;
 }
 
 const AvatarDesc: React.FC<AvatarDescProps> = ({
@@ -38,19 +45,34 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   invitationId,
   showDescription,
   isFriendList,
+  user,
 }) => {
   const { Paragraph } = Typography;
   const [ellipsis, setEllipsis] = useState<boolean>(true);
-  const { user } = useContext(AuthContext);
+  const { user: self_user } = useContext(AuthContext);
   const CapitalName = formatUserName(userName);
   const dispatch = useDispatch<AppDispatch>();
 
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
 
-  const swipe = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const swipe = (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    pageName: DynamicPageName,
+    user: User
+  ) => {
     e.stopPropagation();
-    swipeToDetail(divList!);
+    dispatch(setCurrentPage(pageName));
+    if (pageName === DynamicPageName.CONVERSATION) {
+      postCreateConversation(user).then((res) => {
+        dispatch(setCurrentConversation(res.data));
+        dispatch(setTitle(formatUserName(user.name)));
+        swipeToDetail(divList!);
+      });
+    } else {
+      console.log('profile endpoint');
+      swipeToDetail(divList!);
+    }
   };
 
   const toggleTextDetail = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -75,7 +97,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     <div className="flex-1 rounded-sm flex flex-col border-b-[1px] border-[#98d3df80] relative text-white">
       {/* User name */}
       <p className="flex-1 text-2xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md">
-        {`${sender?.id === user?.id ? 'to ' : ''}` + CapitalName}
+        {`${sender?.id === self_user?.id ? 'to ' : ''}` + CapitalName}
       </p>
 
       {/* greetings */}
@@ -99,7 +121,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
       {/* button sets & invitation status */}
       {invitationId && (
         <div className="absolute right-0 bottom-[15px]">
-          {user?.id !== sender?.id && status === FriendshipStatus.SENT ? (
+          {self_user?.id !== sender?.id && status === FriendshipStatus.SENT ? (
             <div className="flex text-3xl">
               <motion.div
                 whileTap={{ scale: 0.8 }}
@@ -132,20 +154,21 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
           )}
         </div>
       )}
+
       {/* when this component used for friendList. */}
       {isFriendList && (
         <div className="absolute right-0 bottom-[15px] text-md flex gap-4">
           <motion.span
             whileTap={{ scale: 0.9 }}
             className="border p-2 rounded-full shadow-md shadow-[#98d3df76] border-[#98d3df] drop-shadow-sm text-[#98d3df] cursor-pointer"
-            onClick={(e) => swipe(e)}
+            onClick={(e) => swipe(e, DynamicPageName.PROFILE, user)}
           >
             <FaUserAlt />
           </motion.span>
           <motion.span
             whileTap={{ scale: 0.9 }}
             className="border p-2 rounded-full shadow-md shadow-[#ec923188] border-[#ec9131] drop-shadow-sm text-[#ec9131] cursor-pointer"
-            onClick={(e) => swipe(e)}
+            onClick={(e) => swipe(e, DynamicPageName.CONVERSATION, user)}
           >
             <IoChatbubbleEllipses />
           </motion.span>

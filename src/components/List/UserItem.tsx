@@ -38,6 +38,7 @@ const UserItem: React.FC<UserItemProps> = ({
         invitationId={invitationId}
         showDescription={showDescription}
         isFriendList={isFriendList}
+        user={user}
       />
     </section>
   );

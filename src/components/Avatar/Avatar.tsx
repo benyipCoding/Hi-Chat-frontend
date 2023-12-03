@@ -20,7 +20,7 @@ const Avatar: React.FC<AvatarProps> = ({
         !fixedSize && 'lg:w-14'
       )}
     >
-      <img src={src} alt={userName} className="m-auto sm:h-full" />
+      <img src={src} alt={userName} className="m-auto" />
     </div>
   );
 };
