@@ -70,7 +70,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
         swipeToDetail(divList!);
       });
     } else {
-      console.log('profile endpoint');
+      dispatch(setTitle(formatUserName(user.name)));
       swipeToDetail(divList!);
     }
   };

@@ -47,6 +47,7 @@ socket.on(SocketEvent.MESSAGE, (e) => {
 socket.on(SocketEvent.FRIEND_REQUEST, (e) => {
   console.log('this is friend request event', e);
   store.dispatch(fetchInvitationsThunk());
+  store.dispatch(fetchFriendsThunk());
 });
 
 socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
@@ -56,6 +57,10 @@ socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
 socket.on(SocketEvent.UNTREATED_INVITATIONS, (e) => {
   console.log(SocketEvent.UNTREATED_INVITATIONS, { e });
   store.dispatch(setUntreatedCount(e.length));
+});
+
+socket.on(SocketEvent.REFRESH_UNTREATEDCOUNT, () => {
+  socket.emit(SocketEvent.REFRESH_UNTREATEDCOUNT);
 });
 
 export const SocketContext = createContext<Socket>(socket);
