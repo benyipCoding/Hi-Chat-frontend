@@ -6,11 +6,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import ContactCollapse from '@/components/Collapse/ContactCollapse';
 import EmptyState from '@/components/EmptyState';
+import {
+  selectFriendByName,
+  selectInvitationByName,
+} from '@/store/friendsSlice';
 
 const ContactPage = () => {
   const [searchInput, setSearchInput] = useState<string>('');
-  const { invitations, friends } = useSelector(
-    (state: RootState) => state.friends
+
+  const friends = useSelector((state: RootState) =>
+    selectFriendByName(state, searchInput)
+  );
+
+  const invitations = useSelector((state: RootState) =>
+    selectInvitationByName(state, searchInput)
   );
 
   return (

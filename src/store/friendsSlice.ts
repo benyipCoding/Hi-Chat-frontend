@@ -82,12 +82,35 @@ export const friendSlice = createSlice({
   },
 });
 
-const selectStrangerName = (_state: RootState, inputVal: string) => inputVal;
+const selectUserName = (_state: RootState, inputVal: string) => inputVal;
 const selectStrangers = (state: RootState) => state.friends.strangers;
+const selectFriends = (state: RootState) => state.friends.friends;
+const selectInvitations = (state: RootState) => state.friends.invitations;
 
 export const selectStrangerByName = createSelector(
-  [selectStrangerName, selectStrangers],
-  (name, strangers) => strangers.filter((s) => s?.name.includes(name))
+  [selectUserName, selectStrangers],
+  (name, strangers) =>
+    strangers.filter(
+      (s) => s?.name.includes(name) || s.name.includes(name.toLowerCase())
+    )
+);
+export const selectFriendByName = createSelector(
+  [selectUserName, selectFriends],
+  (name, strangers) =>
+    strangers.filter(
+      (s) => s?.name.includes(name) || s.name.includes(name.toLowerCase())
+    )
+);
+export const selectInvitationByName = createSelector(
+  [selectUserName, selectInvitations],
+  (name, strangers) =>
+    strangers.filter(
+      (i) =>
+        i.sender.name.includes(name) ||
+        i.sender.name.includes(name.toLowerCase()) ||
+        i.receiver.name.includes(name) ||
+        i.receiver.name.includes(name.toLowerCase())
+    )
 );
 
 export const {
