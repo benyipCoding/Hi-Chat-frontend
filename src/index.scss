@@ -72,3 +72,25 @@ body {
     font-size: 16px;
   }
 }
+
+.triangle::before,
+.triangle-me::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 0.5rem solid;
+  border-bottom-color: transparent;
+  border-top-color: transparent;
+  top: 1.4rem;
+}
+.triangle::before {
+  border-left-color: transparent;
+  border-right-color: #475569;
+  left: -1rem;
+}
+.triangle-me::before {
+  border-right-color: transparent;
+  border-left-color: #4f46e5;
+  right: -1rem;
+}

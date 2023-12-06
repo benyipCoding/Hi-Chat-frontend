@@ -68,7 +68,6 @@ export const friendSlice = createSlice({
     builder
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
         console.log('fetchFriendsThunk fulfilled');
-        console.log(action.payload.data);
         state.friends = action.payload!.data;
       })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
