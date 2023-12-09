@@ -18,9 +18,9 @@ const Conversations = () => {
     (state: RootState) => state.conversation
   );
 
-  const onClickEmoji = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setX(e.clientX - 235);
-    setY(e.clientY - 325);
+  const onClickEmoji = (posX: number, posY: number) => {
+    setX(posX);
+    setY(posY - 5);
     dispatch(toggleEmojiPickerVisible(!isShowEmojiPicker));
   };
 
@@ -45,7 +45,7 @@ const Conversations = () => {
           'absolute opacity-0 pointer-events-none transition scale-0',
           isShowEmojiPicker && 'opacity-100 pointer-events-auto scale-100'
         )}
-        style={{ left: `${x}px`, top: `${y}px` }}
+        style={{ right: `${x}px`, top: `${y}px` }}
         onEmojiSelect={onEmojiSelect}
       />
     </>

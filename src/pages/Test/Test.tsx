@@ -2,6 +2,8 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useEffect } from 'react';
 
+const height = '255px';
+
 const Test = () => {
   useEffect(() => {
     setTimeout(() => {
@@ -9,8 +11,8 @@ const Test = () => {
         document.querySelector<HTMLElement>('em-emoji-picker');
       const shadowRoot = emojiPicker?.shadowRoot;
       const section = shadowRoot?.querySelector('section');
-      emojiPicker!.style.height = '14.1rem';
-      section!.style.height = '14.1rem';
+      emojiPicker!.style.height = height;
+      section!.style.height = height;
       const searchBar = section?.querySelector<HTMLDivElement>('.padding-lr');
       searchBar!.style.display = 'none';
       const frequent = section?.querySelector<HTMLDivElement>(

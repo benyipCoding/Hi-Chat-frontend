@@ -8,6 +8,8 @@ interface EmojiPickerProps {
   onEmojiSelect: (emo: string) => void;
 }
 
+export const pickerHeight = 255;
+
 const EmojiPicker: React.FC<EmojiPickerProps> = ({
   className,
   style,
@@ -19,8 +21,8 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({
         document.querySelector<HTMLElement>('em-emoji-picker');
       const shadowRoot = emojiPicker?.shadowRoot;
       const section = shadowRoot?.querySelector('section');
-      emojiPicker!.style.height = '14.1rem';
-      section!.style.height = '14.1rem';
+      emojiPicker!.style.height = `${pickerHeight}px`;
+      section!.style.height = `${pickerHeight}px`;
       const searchBar = section?.querySelector<HTMLDivElement>('.padding-lr');
       searchBar!.style.display = 'none';
       const frequent = section?.querySelector<HTMLDivElement>(

@@ -5,6 +5,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { motion } from 'framer-motion';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 interface InputAreaProps {
   className: string;
@@ -20,7 +21,7 @@ const InputArea: React.FC<InputAreaProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const sendMsg = () => {
-    console.log(value);
+    if (!value.trim()) return toast.error('Can not send empty message!');
     // send msg api
   };
 
