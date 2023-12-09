@@ -9,15 +9,22 @@ const avatarStyle: React.CSSProperties = {
 interface MessageBubbleProps {
   isMe?: boolean;
   createAt: Date;
+  showNotice?: boolean;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ isMe, createAt }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({
+  isMe,
+  createAt,
+  showNotice = false,
+}) => {
   return (
     <>
       {/* notice */}
-      <div className="flex justify-center text-gray-300">
-        {formatCommentTime(createAt)}
-      </div>
+      {showNotice && (
+        <div className="flex justify-center text-gray-300">
+          {formatCommentTime(createAt)}
+        </div>
+      )}
       {/* content */}
       <div
         className={clsx('flex gap-3 items-start', isMe && 'flex-row-reverse')}

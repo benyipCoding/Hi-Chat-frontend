@@ -7,6 +7,7 @@ interface InputProps {
   value: string;
   icon?: React.ReactNode;
   background?: string;
+  color?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   value,
   icon,
   background = '',
+  color,
 }) => {
   return (
     <div className={clsx('w-full relative', icon && 'p-3')}>
@@ -35,6 +37,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         style={{
           backgroundColor: `${background}`,
+          color: `${color}`,
         }}
       />
     </div>

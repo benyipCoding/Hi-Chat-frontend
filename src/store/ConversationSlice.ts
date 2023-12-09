@@ -5,12 +5,14 @@ interface ConversationState {
   conversations: Conversation[];
   loading: boolean;
   currentConversation: Conversation | null;
+  isShowEmojiPicker: boolean;
 }
 
 const initialState: ConversationState = {
   conversations: [],
   loading: false,
   currentConversation: null,
+  isShowEmojiPicker: false,
 };
 
 export const conversationSlice = createSlice({
@@ -20,9 +22,13 @@ export const conversationSlice = createSlice({
     setCurrentConversation(state, action: PayloadAction<Conversation>) {
       state.currentConversation = action.payload;
     },
+    toggleEmojiPickerVisible(state, action: PayloadAction<boolean>) {
+      state.isShowEmojiPicker = action.payload;
+    },
   },
 });
 
-export const { setCurrentConversation } = conversationSlice.actions;
+export const { setCurrentConversation, toggleEmojiPickerVisible } =
+  conversationSlice.actions;
 
 export default conversationSlice.reducer;

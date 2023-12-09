@@ -2,7 +2,17 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useEffect } from 'react';
 
-const Test = () => {
+interface EmojiPickerProps {
+  className: string;
+  style?: React.CSSProperties;
+  onEmojiSelect: (emo: string) => void;
+}
+
+const EmojiPicker: React.FC<EmojiPickerProps> = ({
+  className,
+  style,
+  onEmojiSelect,
+}) => {
   useEffect(() => {
     setTimeout(() => {
       const emojiPicker =
@@ -25,11 +35,13 @@ const Test = () => {
   }, []);
 
   return (
-    <Picker
-      data={data}
-      onEmojiSelect={(e: { native: string }) => console.log(e.native)}
-    ></Picker>
+    <div className={className} style={style}>
+      <Picker
+        data={data}
+        onEmojiSelect={(e: { native: string }) => onEmojiSelect(e.native)}
+      ></Picker>
+    </div>
   );
 };
 
-export default Test;
+export default EmojiPicker;

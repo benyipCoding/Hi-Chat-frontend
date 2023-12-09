@@ -27,7 +27,7 @@ const DynamicPage = () => {
         />
         {title}
       </BlurGlassDiv>
-      <BlurGlassDiv className="h-full rounded-md p-2 text-white flex flex-col gap-2 overflow-hidden">
+      <BlurGlassDiv className="h-full rounded-md p-2 text-white flex flex-col gap-2 overflow-hidden relative">
         {pageMap[currentPage]}
       </BlurGlassDiv>
     </div>

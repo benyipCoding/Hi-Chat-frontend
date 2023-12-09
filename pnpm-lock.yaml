@@ -8,6 +8,12 @@ dependencies:
   '@ant-design/icons':
     specifier: ^5.2.6
     version: registry.npmmirror.com/@ant-design/icons@5.2.6(react-dom@18.2.0)(react@18.2.0)
+  '@emoji-mart/data':
+    specifier: ^1.1.2
+    version: registry.npmmirror.com/@emoji-mart/data@1.1.2
+  '@emoji-mart/react':
+    specifier: ^1.1.1
+    version: registry.npmmirror.com/@emoji-mart/react@1.1.1(emoji-mart@5.5.2)(react@18.2.0)
   '@redux-devtools/extension':
     specifier: ^3.2.5
     version: registry.npmmirror.com/@redux-devtools/extension@3.2.5(redux@4.2.1)
@@ -23,6 +29,9 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: registry.npmmirror.com/clsx@2.0.0
+  emoji-mart:
+    specifier: ^5.5.2
+    version: registry.npmmirror.com/emoji-mart@5.5.2
   framer-motion:
     specifier: ^10.16.4
     version: registry.npmmirror.com/framer-motion@10.16.4(react-dom@18.2.0)(react@18.2.0)
@@ -58,6 +67,9 @@ devDependencies:
   '@types/antd':
     specifier: ^1.0.0
     version: registry.npmmirror.com/@types/antd@1.0.0(react-dom@18.2.0)(react@18.2.0)
+  '@types/emoji-mart':
+    specifier: ^3.0.14
+    version: registry.npmmirror.com/@types/emoji-mart@3.0.14
   '@types/node':
     specifier: ^20.8.8
     version: registry.npmmirror.com/@types/node@20.8.10
@@ -478,6 +490,25 @@ packages:
     name: '@ctrl/tinycolor'
     version: 3.6.1
     engines: {node: '>=10'}
+
+  registry.npmmirror.com/@emoji-mart/data@1.1.2:
+    resolution: {integrity: sha512-1HP8BxD2azjqWJvxIaWAMyTySeZY0Osr83ukYjltPVkNXeJvTz7yDrPLBtnrD5uqJ3tg4CcLuuBW09wahqL/fg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@emoji-mart/data/-/data-1.1.2.tgz}
+    name: '@emoji-mart/data'
+    version: 1.1.2
+    dev: false
+
+  registry.npmmirror.com/@emoji-mart/react@1.1.1(emoji-mart@5.5.2)(react@18.2.0):
+    resolution: {integrity: sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@emoji-mart/react/-/react-1.1.1.tgz}
+    id: registry.npmmirror.com/@emoji-mart/react/1.1.1
+    name: '@emoji-mart/react'
+    version: 1.1.1
+    peerDependencies:
+      emoji-mart: ^5.2
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      emoji-mart: registry.npmmirror.com/emoji-mart@5.5.2
+      react: registry.npmmirror.com/react@18.2.0
+    dev: false
 
   registry.npmmirror.com/@emotion/hash@0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@emotion/hash/-/hash-0.8.0.tgz}
@@ -1126,6 +1157,14 @@ packages:
     version: 7.20.3
     dependencies:
       '@babel/types': registry.npmmirror.com/@babel/types@7.23.0
+    dev: true
+
+  registry.npmmirror.com/@types/emoji-mart@3.0.14:
+    resolution: {integrity: sha512-/vMkVnet466bK37ugf2jry9ldCZklFPXYMB2m+qNo3vkP2I7L0cvtNFPKAjfcHgPg9Z8pbYqVqZn7AgsC0qf+g==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/emoji-mart/-/emoji-mart-3.0.14.tgz}
+    name: '@types/emoji-mart'
+    version: 3.0.14
+    dependencies:
+      '@types/react': registry.npmmirror.com/@types/react@18.2.34
     dev: true
 
   registry.npmmirror.com/@types/hoist-non-react-statics@3.3.4:
@@ -1881,6 +1920,12 @@ packages:
     name: electron-to-chromium
     version: 1.4.576
     dev: true
+
+  registry.npmmirror.com/emoji-mart@5.5.2:
+    resolution: {integrity: sha512-Sqc/nso4cjxhOwWJsp9xkVm8OF5c+mJLZJFoFfzRuKO+yWiN7K8c96xmtughYb0d/fZ8UC6cLIQ/p4BR6Pv3/A==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/emoji-mart/-/emoji-mart-5.5.2.tgz}
+    name: emoji-mart
+    version: 5.5.2
+    dev: false
 
   registry.npmmirror.com/engine.io-client@6.5.3:
     resolution: {integrity: sha512-9Z0qLB0NIisTRt1DZ/8U2k12RJn8yls/nXMZLn+/N8hANT3TcYjKFKcwbw5zFQiN4NTde3TSY9zb79e1ij6j9Q==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/engine.io-client/-/engine.io-client-6.5.3.tgz}
