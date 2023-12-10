@@ -1,4 +1,5 @@
 import { store } from '@/store';
+import { updateMessagesBySelf } from '@/store/conversationSlice';
 import {
   addInvitationsRecord,
   fetchFriendsThunk,
@@ -7,7 +8,7 @@ import {
 } from '@/store/friendsSlice';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
-import { Invitation, Tokens } from '@/utils/types';
+import { Invitation, Message, Tokens } from '@/utils/types';
 import { createContext } from 'react';
 // import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
@@ -61,6 +62,11 @@ socket.on(SocketEvent.UNTREATED_INVITATIONS, (e) => {
 
 socket.on(SocketEvent.REFRESH_UNTREATEDCOUNT, () => {
   socket.emit(SocketEvent.REFRESH_UNTREATEDCOUNT);
+});
+
+socket.on(SocketEvent.MESSAGE_DELIVER, (e: Message) => {
+  console.log('收到来自服务端的消息：', e);
+  store.dispatch(updateMessagesBySelf(e));
 });
 
 export const SocketContext = createContext<Socket>(socket);

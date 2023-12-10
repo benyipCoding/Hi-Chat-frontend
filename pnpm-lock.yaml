@@ -35,6 +35,9 @@ dependencies:
   framer-motion:
     specifier: ^10.16.4
     version: registry.npmmirror.com/framer-motion@10.16.4(react-dom@18.2.0)(react@18.2.0)
+  hotkeys-js:
+    specifier: ^3.13.1
+    version: registry.npmmirror.com/hotkeys-js@3.13.1
   react:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react@18.2.0
@@ -2395,6 +2398,12 @@ packages:
     version: 3.3.2
     dependencies:
       react-is: registry.npmmirror.com/react-is@16.13.1
+    dev: false
+
+  registry.npmmirror.com/hotkeys-js@3.13.1:
+    resolution: {integrity: sha512-GWOwjdd7B0BD+UGPFvXK5CxpeAXu/DzgsrAgvrNYQiNDllXpPUH4ZEWDIMH6CAuMhWtn9U3QizmuZdctTWtr7g==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/hotkeys-js/-/hotkeys-js-3.13.1.tgz}
+    name: hotkeys-js
+    version: 3.13.1
     dev: false
 
   registry.npmmirror.com/ignore@5.2.4:

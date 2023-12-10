@@ -7,4 +7,5 @@ export enum SocketEvent {
   ADD_FRIEND_REQUEST_RECORD = 'add-friend-request-record',
   UNTREATED_INVITATIONS = 'untreated-invitatons',
   REFRESH_UNTREATEDCOUNT = 'refresh-untreated-count',
+  MESSAGE_DELIVER = 'message-deliver',
 }

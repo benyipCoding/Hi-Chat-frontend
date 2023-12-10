@@ -4,14 +4,22 @@ import InputArea from '@/components/ConversationRelated/InputArea';
 import EmojiPicker from '@/components/EmojiPicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { toggleEmojiPickerVisible } from '@/store/conversationSlice';
+import {
+  fetchMessagesThunk,
+  toggleEmojiPickerVisible,
+} from '@/store/conversationSlice';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Conversations = () => {
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
+  const { messages } = useSelector((state: RootState) => state.conversation);
   const [inputValue, setInputValue] = useState<string>('');
+
+  const { currentConversation } = useSelector(
+    (state: RootState) => state.conversation
+  );
 
   const dispatch = useDispatch<AppDispatch>();
   const { isShowEmojiPicker } = useSelector(
@@ -28,9 +36,17 @@ const Conversations = () => {
     setInputValue((prev) => (prev += emo));
   };
 
+  useEffect(() => {
+    if (!currentConversation) return;
+    dispatch(fetchMessagesThunk(currentConversation.id));
+  }, [currentConversation?.id]);
+
   return (
     <>
-      <ConversationScreen className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] p-2 md:p-4 lg:p-6 overflow-y-auto flex flex-col gap-4 md:gap-6 relative" />
+      <ConversationScreen
+        className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] p-2 md:p-4 lg:p-6 overflow-y-auto flex flex-col gap-4 md:gap-6 relative"
+        messages={messages}
+      />
       <ToolBar
         className="rounded-md bg-[#0000005e] h-[6%] px-6 flex items-center text-2xl gap-6 flex-row-reverse"
         onClickEmoji={onClickEmoji}

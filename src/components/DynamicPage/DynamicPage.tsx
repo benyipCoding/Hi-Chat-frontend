@@ -1,11 +1,12 @@
 import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { LeftOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { pageMap } from './pageMap';
+import { clearCurrentConversation } from '@/store/conversationSlice';
 
 const DynamicPage = () => {
   const { swipeToList } = useTranslate();
@@ -13,8 +14,10 @@ const DynamicPage = () => {
   const { currentPage, title } = useSelector(
     (state: RootState) => state.dynamicPage
   );
+  const dispatch = useDispatch<AppDispatch>();
 
   const swipeBack = () => {
+    dispatch(clearCurrentConversation());
     swipeToList(divList!);
   };
 

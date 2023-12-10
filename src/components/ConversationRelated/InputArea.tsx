@@ -1,11 +1,17 @@
-import { AppDispatch } from '@/store';
-import { toggleEmojiPickerVisible } from '@/store/conversationSlice';
+import { AppDispatch, RootState } from '@/store';
+import {
+  toggleEmojiPickerVisible,
+  updateMessagesBySelf,
+} from '@/store/conversationSlice';
+import { postCreateMessage } from '@/utils/api';
+import { PostMsgData } from '@/utils/types';
 import { Space } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import hotkeys from 'hotkeys-js';
 
 interface InputAreaProps {
   className: string;
@@ -20,10 +26,47 @@ const InputArea: React.FC<InputAreaProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const sendMsg = () => {
-    if (!value.trim()) return toast.error('Can not send empty message!');
-    // send msg api
+  const { currentConversation } = useSelector(
+    (state: RootState) => state.conversation
+  );
+
+  const onTextareaKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.altKey) {
+      e.preventDefault();
+      (e.target as HTMLTextAreaElement).blur();
+    }
   };
+
+  const sendMsg = () => {
+    const content = value.trim();
+    if (!content) return toast.error('Can not send empty message!');
+    // send msg api
+    const data: PostMsgData = {
+      content,
+      conversationId: currentConversation!.id,
+    };
+    postCreateMessage(data)
+      .then((res) => {
+        onChange('');
+        dispatch(updateMessagesBySelf(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // setup hot key
+  useEffect(() => {
+    hotkeys.unbind('alt+s');
+    hotkeys('alt+s', (e) => {
+      e.preventDefault();
+      sendMsg();
+    });
+
+    return () => {
+      hotkeys.unbind('alt+s');
+    };
+  }, [value]);
 
   return (
     <div
@@ -31,15 +74,13 @@ const InputArea: React.FC<InputAreaProps> = ({
       onClick={() => dispatch(toggleEmojiPickerVisible(false))}
     >
       <Space.Compact className="w-full flex flex-1 gap-2">
-        <TextArea
-          style={{
-            backgroundColor: '#0000005e',
-            borderColor: 'transparent',
-            flex: 1,
-            boxSizing: 'border-box',
-          }}
+        <textarea
+          className="form-input flex-1 rounded-md bg-[#0000005e]"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onInput={(e) => {
+            onChange((e.target as HTMLTextAreaElement).value);
+          }}
+          onKeyDown={(e) => onTextareaKeydown(e)}
         />
         <motion.button
           whileTap={{ scale: 0.9 }}

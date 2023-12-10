@@ -4,6 +4,8 @@ import {
   Conversation,
   FriendshipStatus,
   Invitation,
+  Message,
+  PostMsgData,
   RegisterResponse,
   SignInResponse,
   User,
@@ -102,5 +104,20 @@ export function postCreateConversation(target: User) {
     data: {
       target,
     },
+  });
+}
+
+export function postCreateMessage(data: PostMsgData) {
+  return request<Message>({
+    method: 'post',
+    url: '/message/create',
+    data,
+  });
+}
+
+export function getMessagesByConversation(conversationId: number) {
+  return request<Message[]>({
+    url: '/message/queryMessagesByConversation',
+    params: { conversationId },
   });
 }

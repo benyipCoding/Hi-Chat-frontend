@@ -36,8 +36,13 @@ export type Message = {
   content: string;
   image?: string;
   createAt: Date;
-  sender: string;
+  sender: User;
   seenByUsers?: string[];
+};
+
+export type PostMsgData = {
+  content: string;
+  conversationId: number;
 };
 
 export type ErrorData = {
