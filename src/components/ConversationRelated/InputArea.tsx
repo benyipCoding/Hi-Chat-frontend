@@ -7,7 +7,7 @@ import { postCreateMessage } from '@/utils/api';
 import { PostMsgData } from '@/utils/types';
 import { Space } from 'antd';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -25,6 +25,7 @@ const InputArea: React.FC<InputAreaProps> = ({
   onChange,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const textarea = useRef<HTMLTextAreaElement>(null);
 
   const { currentConversation } = useSelector(
     (state: RootState) => state.conversation
@@ -34,6 +35,9 @@ const InputArea: React.FC<InputAreaProps> = ({
     if (e.altKey) {
       e.preventDefault();
       (e.target as HTMLTextAreaElement).blur();
+    }
+    if (e.key === 'Enter') {
+      sendMsg();
     }
   };
 
@@ -49,6 +53,7 @@ const InputArea: React.FC<InputAreaProps> = ({
       .then((res) => {
         onChange('');
         dispatch(updateMessagesBySelf(res.data));
+        textarea.current?.focus();
       })
       .catch((err) => {
         console.log(err);
@@ -75,6 +80,7 @@ const InputArea: React.FC<InputAreaProps> = ({
     >
       <Space.Compact className="w-full flex flex-1 gap-2">
         <textarea
+          ref={textarea}
           className="form-input flex-1 rounded-md bg-[#0000005e]"
           value={value}
           onInput={(e) => {

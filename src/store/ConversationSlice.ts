@@ -36,7 +36,6 @@ export const conversationSlice = createSlice({
       state.isShowEmojiPicker = action.payload;
     },
     updateMessagesBySelf(state, action: PayloadAction<Message>) {
-      if (!state.currentConversation) return;
       state.messages = state.messages.concat([action.payload]);
     },
     clearCurrentConversation(state) {

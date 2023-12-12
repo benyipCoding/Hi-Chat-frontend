@@ -43,19 +43,25 @@ const Conversations = () => {
 
   return (
     <>
-      <ConversationScreen
-        className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] p-2 md:p-4 lg:p-6 overflow-y-auto flex flex-col gap-4 md:gap-6 relative"
-        messages={messages}
-      />
-      <ToolBar
-        className="rounded-md bg-[#0000005e] h-[6%] px-6 flex items-center text-2xl gap-6 flex-row-reverse"
-        onClickEmoji={onClickEmoji}
-      />
-      <InputArea
-        className="rounded-md bg-[#0000005e] flex-1  p-2 flex flex-col gap-3"
-        value={inputValue}
-        onChange={setInputValue}
-      />
+      {currentConversation && (
+        <ConversationScreen
+          className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] p-2 md:p-4 lg:p-6 overflow-y-auto flex flex-col relative gap-4 md:gap-6"
+          messages={messages}
+        />
+      )}
+      {currentConversation && (
+        <ToolBar
+          className="rounded-md bg-[#0000005e] h-[6%] px-6 flex items-center text-2xl gap-6 flex-row-reverse"
+          onClickEmoji={onClickEmoji}
+        />
+      )}
+      {currentConversation && (
+        <InputArea
+          className="rounded-md bg-[#0000005e] flex-1  p-2 flex flex-col gap-3"
+          value={inputValue}
+          onChange={setInputValue}
+        />
+      )}
       <EmojiPicker
         className={clsx(
           'absolute opacity-0 pointer-events-none transition scale-0',

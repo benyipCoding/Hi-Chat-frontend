@@ -121,3 +121,11 @@ export function getMessagesByConversation(conversationId: number) {
     params: { conversationId },
   });
 }
+
+export function updateMessageReadStatus(messageId: number) {
+  return request({
+    method: 'post',
+    url: '/message/updateMessageReadStatus',
+    data: { messageId },
+  });
+}

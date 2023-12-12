@@ -6,6 +6,7 @@ import {
   fetchInvitationsThunk,
   setUntreatedCount,
 } from '@/store/friendsSlice';
+import { updateMessageReadStatus } from '@/utils/api';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
 import { Invitation, Message, Tokens } from '@/utils/types';
@@ -65,8 +66,11 @@ socket.on(SocketEvent.REFRESH_UNTREATEDCOUNT, () => {
 });
 
 socket.on(SocketEvent.MESSAGE_DELIVER, (e: Message) => {
-  console.log('收到来自服务端的消息：', e);
+  const state = store.getState();
+  if (!state.conversation.currentConversation) return;
   store.dispatch(updateMessagesBySelf(e));
+  // 添加消息已阅逻辑
+  updateMessageReadStatus(e.id);
 });
 
 export const SocketContext = createContext<Socket>(socket);
