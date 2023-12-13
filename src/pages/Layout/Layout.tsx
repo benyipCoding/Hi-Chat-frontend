@@ -7,21 +7,24 @@ import { CommonContext } from '@/context/CommonContext';
 import { useContext, useEffect, useState } from 'react';
 import { SocketContext } from '@/context/SocketContext';
 import DropMenu from '@/components/DropMenu/DropMenu';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store';
 import Drawer from '@/components/Drawer/Drawer';
 import DynamicPage from '@/components/DynamicPage/DynamicPage';
+import { fetchConversationsThunk } from '@/store/conversationSlice';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
     useState<NodeListOf<HTMLDivElement>>();
   const socket = useContext(SocketContext);
   const { isOpen } = useSelector((state: RootState) => state.dropMenu);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
     socket.connect();
+    dispatch(fetchConversationsThunk());
 
     return () => {
       socket.disconnect();

@@ -18,7 +18,7 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={clsx(
-        'w-16 sm:w-20 flex rounded-md relative overflow-hidden',
+        'w-16 sm:w-20 flex rounded-md relative overflow-hidden flex-shrink-0',
         !fixedSize && 'lg:w-14'
       )}
       style={style}

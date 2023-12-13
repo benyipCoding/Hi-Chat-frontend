@@ -129,3 +129,9 @@ export function updateMessageReadStatus(messageId: number) {
     data: { messageId },
   });
 }
+
+export function getConversationList() {
+  return request<Conversation[]>({
+    url: '/conversation/get-list',
+  });
+}

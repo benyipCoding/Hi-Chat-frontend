@@ -81,7 +81,7 @@ const InputArea: React.FC<InputAreaProps> = ({
       <Space.Compact className="w-full flex flex-1 gap-2">
         <textarea
           ref={textarea}
-          className="form-input flex-1 rounded-md bg-[#0000005e]"
+          className="form-input flex-1 rounded-md bg-[#0000005e] scroll-bar text-lg"
           value={value}
           onInput={(e) => {
             onChange((e.target as HTMLTextAreaElement).value);

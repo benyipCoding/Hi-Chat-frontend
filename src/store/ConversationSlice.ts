@@ -1,4 +1,4 @@
-import { getMessagesByConversation } from '@/utils/api';
+import { getConversationList, getMessagesByConversation } from '@/utils/api';
 import { Conversation, Message } from '@/utils/types';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -25,6 +25,13 @@ export const fetchMessagesThunk = createAsyncThunk(
   }
 );
 
+export const fetchConversationsThunk = createAsyncThunk(
+  'fetch/conversationList',
+  () => {
+    return getConversationList();
+  }
+);
+
 export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
@@ -43,9 +50,14 @@ export const conversationSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchMessagesThunk.fulfilled, (state, action) => {
-      state.messages = action.payload.data.reverse();
-    });
+    builder
+      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
+        state.messages = action.payload.data.reverse();
+      })
+      .addCase(fetchConversationsThunk.fulfilled, (state, action) => {
+        console.log(action.payload.data);
+        state.conversations = action.payload.data;
+      });
   },
 });
 

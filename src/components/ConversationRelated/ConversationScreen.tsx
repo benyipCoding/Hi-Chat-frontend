@@ -60,9 +60,11 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
   }, [messages.length]);
 
   useEffect(() => {
-    scrollToBottom('instant');
-    observer.observe(bottom.current!);
-    setIsInit(false);
+    setTimeout(() => {
+      scrollToBottom('instant');
+      observer.observe(bottom.current!);
+      setIsInit(false);
+    }, 50);
   }, []);
 
   return (

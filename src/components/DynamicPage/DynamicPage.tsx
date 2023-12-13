@@ -17,8 +17,10 @@ const DynamicPage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const swipeBack = () => {
-    dispatch(clearCurrentConversation());
     swipeToList(divList!);
+    setTimeout(() => {
+      dispatch(clearCurrentConversation());
+    }, 300);
   };
 
   return (

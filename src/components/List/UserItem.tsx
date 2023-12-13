@@ -24,10 +24,7 @@ const UserItem: React.FC<UserItemProps> = ({
   isFriendList = false,
 }) => {
   return (
-    <section
-      className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"
-      key={user?.email}
-    >
+    <section className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md">
       <Avatar src={user?.avatar || defaultAvatar} userName={user?.name} />
       <AvatarDesc
         userName={user?.name || ''}

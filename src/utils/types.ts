@@ -27,6 +27,7 @@ export type Conversation = {
   creator: User;
   recipient: User;
   lastMessageAt: Date;
+  lastMessage: Message;
   updateAt: Date;
   createAt: Date;
 };
@@ -38,6 +39,7 @@ export type Message = {
   createAt: Date;
   sender: User;
   seenByUsers?: string[];
+  senderName: string;
 };
 
 export type PostMsgData = {
