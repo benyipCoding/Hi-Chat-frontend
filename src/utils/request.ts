@@ -64,3 +64,16 @@ export default axiosInstance;
 export function request<T = string>(config: AxiosRequestConfig) {
   return axiosInstance.request<T, CustomAxiosResponse<T>>(config);
 }
+// add get stream data function
+export function requestStream(url: string, method: string = 'GET') {
+  const fullpath = baseURL + url;
+  const tokens: Tokens = JSON.parse(getLocalStorage() as string);
+
+  return fetch(fullpath, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tokens.accessToken || ''}`,
+    },
+  });
+}

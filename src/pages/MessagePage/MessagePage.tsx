@@ -28,7 +28,7 @@ const MessagePage = () => {
 
   const onClickItem = (conversation: Conversation) => {
     const targetUser =
-      conversation.creator.id === user?.id
+      conversation.creator?.id === user?.id
         ? conversation.recipient
         : conversation.creator;
     postCreateConversation(targetUser).then((res) => {
@@ -54,15 +54,16 @@ const MessagePage = () => {
           <Empty description={<div className="text-white">No data</div>} />
         </div>
       ) : (
-        <div className="px-2 overflow-y-auto flex-1 flex flex-col gap-2">
+        <div className="p-2 overflow-y-auto flex-1 flex flex-col gap-2">
           {conversations.map((conv) => (
             <ConversationItem
               user={
-                conv.creator.id === user?.id ? conv.recipient : conv.creator
+                conv.creator?.id === user?.id ? conv.recipient : conv.creator
               }
-              key={conv.id}
+              key={conv?.id}
               lastMessage={conv.lastMessage}
               onClick={() => onClickItem(conv)}
+              unReadCount={conv.unReadCount}
             />
           ))}
         </div>

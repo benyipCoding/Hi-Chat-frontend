@@ -1,5 +1,5 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
-import { request } from './request';
+import { request, requestStream } from './request';
 import {
   Conversation,
   FriendshipStatus,
@@ -10,6 +10,11 @@ import {
   SignInResponse,
   User,
 } from './types';
+import { store } from '@/store';
+import {
+  setConversations,
+  setUnreadCountForConversations,
+} from '@/store/conversationSlice';
 
 export const postRegisterUser = (data: AuthFormDefaultValues) => {
   return request<RegisterResponse>({
@@ -130,8 +135,27 @@ export function updateMessageReadStatus(messageId: number) {
   });
 }
 
-export function getConversationList() {
-  return request<Conversation[]>({
-    url: '/conversation/get-list',
-  });
+export async function getConversationList() {
+  const res = await requestStream('/conversation/get-list');
+  const reader = res.body?.getReader();
+  const decoder = new TextDecoder();
+  while (reader) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const payload = decoder
+      .decode(value)
+      .split(';')
+      .filter((str) => str !== '');
+    payload.forEach((chunk) => {
+      const data = JSON.parse(chunk);
+      if (data.type === 'conversations') {
+        store.dispatch(setConversations(data.data as Conversation[]));
+      }
+      if (data.type === 'count') {
+        store.dispatch(setUnreadCountForConversations(data.data));
+      }
+    });
+  }
+
+  return;
 }

@@ -17,6 +17,12 @@ const NavigateBar = () => {
   const location = useLocation();
   const isLarge = useScreenSize();
   const { untreatedCount } = useSelector((state: RootState) => state.friends);
+  const unReadMessageCount = useSelector((state: RootState) =>
+    state.conversation.conversations.reduce(
+      (total, conv) => total + (conv.unReadCount || 0),
+      0
+    )
+  );
 
   const toggleTab = (index: number, path: string) => {
     setCurrentIndex(index);
@@ -51,7 +57,13 @@ const NavigateBar = () => {
               )}
             >
               <Badge
-                count={menu.label === 'Contacts' ? untreatedCount : 0}
+                count={
+                  menu.label === 'Contacts'
+                    ? untreatedCount
+                    : menu.label === 'Message'
+                    ? unReadMessageCount
+                    : 0
+                }
                 size={`${isLarge() ? 'default' : 'small'}`}
               >
                 <DynamicComponent

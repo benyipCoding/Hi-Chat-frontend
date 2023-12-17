@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import Drawer from '@/components/Drawer/Drawer';
 import DynamicPage from '@/components/DynamicPage/DynamicPage';
-import { fetchConversationsThunk } from '@/store/conversationSlice';
+// import { fetchConversationsThunk } from '@/store/conversationSlice';
+import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
+import { getConversationList } from '@/utils/api';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -24,7 +26,10 @@ const Layout = () => {
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
     socket.connect();
-    dispatch(fetchConversationsThunk());
+    // dispatch(fetchConversationsThunk());
+    getConversationList();
+    dispatch(fetchInvitationsThunk());
+    dispatch(fetchFriendsThunk());
 
     return () => {
       socket.disconnect();

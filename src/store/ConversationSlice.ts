@@ -1,6 +1,11 @@
-import { getConversationList, getMessagesByConversation } from '@/utils/api';
+import { getMessagesByConversation } from '@/utils/api';
 import { Conversation, Message } from '@/utils/types';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 interface ConversationState {
   conversations: Conversation[];
@@ -8,6 +13,7 @@ interface ConversationState {
   currentConversation: Conversation | null;
   isShowEmojiPicker: boolean;
   messages: Message[];
+  unReadMessages: Message[];
 }
 
 const initialState: ConversationState = {
@@ -16,19 +22,13 @@ const initialState: ConversationState = {
   currentConversation: null,
   isShowEmojiPicker: false,
   messages: [],
+  unReadMessages: [],
 };
 
 export const fetchMessagesThunk = createAsyncThunk(
   'fetch/messagesByConvId',
   (convId: number) => {
     return getMessagesByConversation(convId);
-  }
-);
-
-export const fetchConversationsThunk = createAsyncThunk(
-  'fetch/conversationList',
-  () => {
-    return getConversationList();
   }
 );
 
@@ -48,16 +48,28 @@ export const conversationSlice = createSlice({
     clearCurrentConversation(state) {
       state.currentConversation = null;
     },
+    setConversations(state, action: PayloadAction<Conversation[]>) {
+      state.conversations = action.payload;
+    },
+    setUnreadCountForConversations(
+      state,
+      action: PayloadAction<Record<number, number>>
+    ) {
+      const keys = Object.keys(action.payload);
+      if (!keys.length) return;
+      for (const key of keys) {
+        const conversation = state.conversations.find(
+          (conv) => conv.id === +key
+        );
+        if (!conversation) continue;
+        conversation.unReadCount = action.payload[+key];
+      }
+    },
   },
   extraReducers(builder) {
-    builder
-      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
-        state.messages = action.payload.data.reverse();
-      })
-      .addCase(fetchConversationsThunk.fulfilled, (state, action) => {
-        console.log(action.payload.data);
-        state.conversations = action.payload.data;
-      });
+    builder.addCase(fetchMessagesThunk.fulfilled, (state, action) => {
+      state.messages = action.payload.data.reverse();
+    });
   },
 });
 
@@ -66,6 +78,8 @@ export const {
   toggleEmojiPickerVisible,
   updateMessagesBySelf,
   clearCurrentConversation,
+  setConversations,
+  setUnreadCountForConversations,
 } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

@@ -29,8 +29,6 @@ export const socket = io(host, {
 
 socket.on(SocketEvent.CONNECT, () => {
   console.log('socket connect successfully!');
-  store.dispatch(fetchInvitationsThunk());
-  store.dispatch(fetchFriendsThunk());
 });
 
 socket.on(SocketEvent.DISCONNECT, () => {
