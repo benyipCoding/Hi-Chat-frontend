@@ -12,8 +12,14 @@ import { AppDispatch, RootState } from '@/store';
 import Drawer from '@/components/Drawer/Drawer';
 import DynamicPage from '@/components/DynamicPage/DynamicPage';
 // import { fetchConversationsThunk } from '@/store/conversationSlice';
-import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
+import {
+  fetchFriendsThunk,
+  fetchInvitationsThunk,
+  setFriendListBadge,
+} from '@/store/friendsSlice';
 import { getConversationList } from '@/utils/api';
+import { AuthContext } from '@/context/AuthContext';
+import { FRIENDS_COUNT } from '@/utils/helpers';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -21,12 +27,13 @@ const Layout = () => {
   const socket = useContext(SocketContext);
   const { isOpen } = useSelector((state: RootState) => state.dropMenu);
   const dispatch = useDispatch<AppDispatch>();
+  const { user } = useContext(AuthContext);
+  const { friends } = useSelector((state: RootState) => state.friends);
 
   useEffect(() => {
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
     socket.connect();
-    // dispatch(fetchConversationsThunk());
     getConversationList();
     dispatch(fetchInvitationsThunk());
     dispatch(fetchFriendsThunk());
@@ -35,6 +42,20 @@ const Layout = () => {
       socket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    const friendsCount =
+      localStorage.getItem(`${user?.name}` + FRIENDS_COUNT) || 0;
+
+    if (friendsCount !== 0) {
+      dispatch(setFriendListBadge(friends.length - +friendsCount));
+    } else {
+      localStorage.setItem(
+        `${user?.name}` + FRIENDS_COUNT,
+        JSON.stringify(friends.length)
+      );
+    }
+  }, [friends.length]);
 
   return (
     <ThemeProvider theme={CommonTheme}>

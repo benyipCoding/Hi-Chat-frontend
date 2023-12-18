@@ -1,12 +1,12 @@
 import { Invitation, User } from '@/utils/types';
 import { Collapse, CollapseProps } from 'antd';
 import UserItem from '../List/UserItem';
-import { addAlphaToHexColor } from '@/utils/helpers';
+import { FRIENDS_COUNT, addAlphaToHexColor } from '@/utils/helpers';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { setUntreatedCount } from '@/store/friendsSlice';
+import { clearFriendListBadge, setUntreatedCount } from '@/store/friendsSlice';
 import { setDefaultActiveKey } from '@/store/contactPageSlice';
 // #region
 type GetItemsParams = {
@@ -93,7 +93,9 @@ const ContactCollapse: React.FC<ContactCollapseProps> = ({
 }) => {
   const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
-  const { untreatedCount } = useSelector((state: RootState) => state.friends);
+  const { untreatedCount, friendListBadge, friends } = useSelector(
+    (state: RootState) => state.friends
+  );
   const items = getItems({
     panelStyle,
     invitations,
@@ -106,6 +108,13 @@ const ContactCollapse: React.FC<ContactCollapseProps> = ({
 
   const onChange = (key: string | string[]) => {
     if (key.includes('1')) dispatch(setUntreatedCount(0));
+    if (key.includes('0')) {
+      localStorage.setItem(
+        `${user?.name}` + FRIENDS_COUNT,
+        JSON.stringify(friends.length)
+      );
+      dispatch(clearFriendListBadge());
+    }
     dispatch(setDefaultActiveKey(key as string[]));
   };
 
@@ -117,7 +126,14 @@ const ContactCollapse: React.FC<ContactCollapseProps> = ({
     } else {
       headers[1].classList.remove('badge');
     }
-  }, [untreatedCount]);
+
+    if (friendListBadge !== 0) {
+      headers[0].classList.add('badge');
+      headers[0].setAttribute('data-content', `${friendListBadge}`);
+    } else {
+      headers[0].classList.remove('badge');
+    }
+  }, [untreatedCount, friendListBadge]);
 
   return (
     <Collapse

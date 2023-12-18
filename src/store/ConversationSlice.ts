@@ -1,11 +1,6 @@
 import { getMessagesByConversation } from '@/utils/api';
 import { Conversation, Message } from '@/utils/types';
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ConversationState {
   conversations: Conversation[];

@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { AppDispatch } from '.';
 import { toggleVisible } from './drawerSlice';
+// import { FRIENDS_COUNT } from '@/utils/helpers';
 
 export type DropMenuType = {
   icon: React.ReactNode;
@@ -37,7 +38,9 @@ export const DropMenuList: DropMenuType[] = [
     label: DropMenuAction.LOGOUT,
     onClick: () => {
       postLogout()
-        .then(() => window.location.reload())
+        .then(() => {
+          window.location.reload();
+        })
         .catch((err) => console.log(err));
     },
   },

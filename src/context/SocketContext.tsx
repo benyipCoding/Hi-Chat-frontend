@@ -6,12 +6,11 @@ import {
   fetchInvitationsThunk,
   setUntreatedCount,
 } from '@/store/friendsSlice';
-import { updateMessageReadStatus } from '@/utils/api';
+import { getConversationList, updateMessageReadStatus } from '@/utils/api';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
 import { Invitation, Message, Tokens } from '@/utils/types';
 import { createContext } from 'react';
-// import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client';
 
@@ -57,18 +56,27 @@ socket.on(SocketEvent.ADD_FRIEND_REQUEST_RECORD, (e: Invitation) => {
 socket.on(SocketEvent.UNTREATED_INVITATIONS, (e) => {
   console.log(SocketEvent.UNTREATED_INVITATIONS, { e });
   store.dispatch(setUntreatedCount(e.length));
+  store.dispatch(fetchInvitationsThunk());
 });
 
 socket.on(SocketEvent.REFRESH_UNTREATEDCOUNT, () => {
   socket.emit(SocketEvent.REFRESH_UNTREATEDCOUNT);
 });
 
-socket.on(SocketEvent.MESSAGE_DELIVER, (e: Message) => {
+socket.on(SocketEvent.MESSAGE_DELIVER, async (e: Message) => {
   const state = store.getState();
-  if (!state.conversation.currentConversation) return;
   store.dispatch(updateMessagesBySelf(e));
-  // 添加消息已阅逻辑
-  updateMessageReadStatus(e.id);
+  if (
+    state.conversation.currentConversation &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state.conversation.currentConversation.id === (e as any).conversation.id
+  ) {
+    // 添加消息已阅逻辑
+    await updateMessageReadStatus(e.id);
+    getConversationList();
+  } else {
+    getConversationList();
+  }
 });
 
 export const SocketContext = createContext<Socket>(socket);

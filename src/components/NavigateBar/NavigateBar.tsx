@@ -16,7 +16,9 @@ const NavigateBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLarge = useScreenSize();
-  const { untreatedCount } = useSelector((state: RootState) => state.friends);
+  const { untreatedCount, friendListBadge } = useSelector(
+    (state: RootState) => state.friends
+  );
   const unReadMessageCount = useSelector((state: RootState) =>
     state.conversation.conversations.reduce(
       (total, conv) => total + (conv.unReadCount || 0),
@@ -59,7 +61,7 @@ const NavigateBar = () => {
               <Badge
                 count={
                   menu.label === 'Contacts'
-                    ? untreatedCount
+                    ? untreatedCount + friendListBadge
                     : menu.label === 'Message'
                     ? unReadMessageCount
                     : 0

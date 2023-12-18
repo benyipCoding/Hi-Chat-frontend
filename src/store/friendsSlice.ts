@@ -14,6 +14,7 @@ export interface FriendsState {
   strangers: UserWithChecked[];
   invitations: Invitation[];
   untreatedCount: number;
+  friendListBadge: number;
 }
 
 const initialState: FriendsState = {
@@ -22,6 +23,7 @@ const initialState: FriendsState = {
   strangers: [],
   invitations: [],
   untreatedCount: 0,
+  friendListBadge: 0,
 };
 
 export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
@@ -63,19 +65,32 @@ export const friendSlice = createSlice({
     setUntreatedCount(state, action: PayloadAction<number>) {
       state.untreatedCount = action.payload;
     },
+    clearFriendListBadge(state) {
+      state.friendListBadge = 0;
+    },
+    setFriendListBadge(state, action: PayloadAction<number>) {
+      state.friendListBadge = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
-        console.log('fetchFriendsThunk fulfilled');
+        // const friendsCount = localStorage.getItem(FRIENDS_COUNT) || 0;
+
+        // if (friendsCount !== 0) {
+        //   state.friendListBadge = action.payload!.data.length - +friendsCount;
+        // } else {
+        //   localStorage.setItem(
+        //     FRIENDS_COUNT,
+        //     JSON.stringify(action.payload.data.length)
+        //   );
+        // }
         state.friends = action.payload!.data;
       })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
-        console.log('fetch strangers fulfilled');
         state.strangers = action.payload;
       })
       .addCase(fetchInvitationsThunk.fulfilled, (state, action) => {
-        console.log('fetchInvitationsThunk fulfilled');
         state.invitations = action.payload.data;
       });
   },
@@ -117,6 +132,8 @@ export const {
   allOrNone,
   addInvitationsRecord,
   setUntreatedCount,
+  clearFriendListBadge,
+  setFriendListBadge,
 } = friendSlice.actions;
 
 export default friendSlice.reducer;

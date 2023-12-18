@@ -156,6 +156,15 @@ export async function getConversationList() {
       }
     });
   }
-
   return;
+}
+
+export function updateMessageStatusByConversationId(conversationId: number) {
+  return request({
+    url: '/conversation/set-messages-status',
+    method: 'post',
+    data: {
+      conversationId,
+    },
+  });
 }

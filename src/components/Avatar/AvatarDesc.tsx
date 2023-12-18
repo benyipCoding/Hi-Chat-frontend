@@ -14,7 +14,11 @@ import {
 } from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
-import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
+import {
+  // addFriendListBadge,
+  fetchFriendsThunk,
+  fetchInvitationsThunk,
+} from '@/store/friendsSlice';
 import { toast } from 'react-toastify';
 import { useTranslate } from '@/hooks/useTranslate';
 import { CommonContext } from '@/context/CommonContext';
@@ -52,7 +56,6 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   const { user: self_user } = useContext(AuthContext);
   const CapitalName = formatUserName(userName);
   const dispatch = useDispatch<AppDispatch>();
-
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
 
@@ -89,7 +92,10 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     postChangeFriendshipStatus(invitationId, status).then(() => {
       dispatch(fetchInvitationsThunk());
       toast.success('success');
-      if (status === FriendshipStatus.ACCEPT) dispatch(fetchFriendsThunk());
+      if (status === FriendshipStatus.ACCEPT) {
+        // dispatch(addFriendListBadge(1));
+        dispatch(fetchFriendsThunk());
+      }
     });
   };
 

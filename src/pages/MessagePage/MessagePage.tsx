@@ -6,7 +6,10 @@ import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
 import { setCurrentConversation } from '@/store/conversationSlice';
 import { setTitle } from '@/store/dynamicPageSlice';
-import { postCreateConversation } from '@/utils/api';
+import {
+  postCreateConversation,
+  updateMessageStatusByConversationId,
+} from '@/utils/api';
 import { addAlphaToHexColor, formatUserName } from '@/utils/helpers';
 import { Conversation } from '@/utils/types';
 import { Empty } from 'antd';
@@ -34,6 +37,7 @@ const MessagePage = () => {
     postCreateConversation(targetUser).then((res) => {
       dispatch(setCurrentConversation(res.data));
       dispatch(setTitle(formatUserName(targetUser.name)));
+      updateMessageStatusByConversationId(conversation.id);
       swipeToDetail(divList!);
     });
   };

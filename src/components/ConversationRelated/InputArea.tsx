@@ -3,7 +3,7 @@ import {
   toggleEmojiPickerVisible,
   updateMessagesBySelf,
 } from '@/store/conversationSlice';
-import { postCreateMessage } from '@/utils/api';
+import { getConversationList, postCreateMessage } from '@/utils/api';
 import { PostMsgData } from '@/utils/types';
 import { Space } from 'antd';
 import { motion } from 'framer-motion';
@@ -57,7 +57,8 @@ const InputArea: React.FC<InputAreaProps> = ({
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => getConversationList());
   };
 
   // setup hot key

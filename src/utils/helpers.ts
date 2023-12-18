@@ -67,3 +67,5 @@ export function formatUserName(userName: string | undefined): string {
   if (!userName) return '';
   return userName[0].toUpperCase() + userName.slice(1);
 }
+
+export const FRIENDS_COUNT = 'friends_count';
