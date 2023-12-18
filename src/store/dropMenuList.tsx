@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { AppDispatch } from '.';
 import { toggleVisible } from './drawerSlice';
+import { USER_NAME } from '@/utils/helpers';
 // import { FRIENDS_COUNT } from '@/utils/helpers';
 
 export type DropMenuType = {
@@ -39,6 +40,7 @@ export const DropMenuList: DropMenuType[] = [
     onClick: () => {
       postLogout()
         .then(() => {
+          localStorage.removeItem(USER_NAME);
           window.location.reload();
         })
         .catch((err) => console.log(err));

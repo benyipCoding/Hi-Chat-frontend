@@ -69,3 +69,4 @@ export function formatUserName(userName: string | undefined): string {
 }
 
 export const FRIENDS_COUNT = 'friends_count';
+export const USER_NAME = 'username';

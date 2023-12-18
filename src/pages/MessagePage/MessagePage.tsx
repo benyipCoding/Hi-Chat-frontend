@@ -4,7 +4,10 @@ import { AuthContext } from '@/context/AuthContext';
 import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
-import { setCurrentConversation } from '@/store/conversationSlice';
+import {
+  selectConversationsByConvName,
+  setCurrentConversation,
+} from '@/store/conversationSlice';
 import { setTitle } from '@/store/dynamicPageSlice';
 import {
   postCreateConversation,
@@ -25,8 +28,8 @@ const MessagePage = () => {
   const [searchInput, setSearchInput] = useState<string>('');
   const { user } = useContext(AuthContext);
 
-  const { conversations } = useSelector(
-    (state: RootState) => state.conversation
+  const conversations = useSelector((state: RootState) =>
+    selectConversationsByConvName(state, searchInput)
   );
 
   const onClickItem = (conversation: Conversation) => {

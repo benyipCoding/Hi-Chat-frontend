@@ -31,6 +31,7 @@ export type Conversation = {
   updateAt: Date;
   createAt: Date;
   unReadCount?: number;
+  name?: string;
 };
 
 export type Message = {

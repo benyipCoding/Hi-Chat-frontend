@@ -19,7 +19,7 @@ import {
 } from '@/store/friendsSlice';
 import { getConversationList } from '@/utils/api';
 import { AuthContext } from '@/context/AuthContext';
-import { FRIENDS_COUNT } from '@/utils/helpers';
+import { FRIENDS_COUNT, USER_NAME } from '@/utils/helpers';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -31,6 +31,7 @@ const Layout = () => {
   const { friends } = useSelector((state: RootState) => state.friends);
 
   useEffect(() => {
+    localStorage.setItem(USER_NAME, user!.name);
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
     socket.connect();

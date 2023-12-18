@@ -1,6 +1,13 @@
 import { getMessagesByConversation } from '@/utils/api';
+import { USER_NAME } from '@/utils/helpers';
 import { Conversation, Message } from '@/utils/types';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import { RootState } from '.';
 
 interface ConversationState {
   conversations: Conversation[];
@@ -44,7 +51,14 @@ export const conversationSlice = createSlice({
       state.currentConversation = null;
     },
     setConversations(state, action: PayloadAction<Conversation[]>) {
-      state.conversations = action.payload;
+      const username = localStorage.getItem(USER_NAME);
+      state.conversations = action.payload.map((conv) => ({
+        ...conv,
+        name:
+          conv.creator.name === username
+            ? conv.recipient.name
+            : conv.creator.name,
+      }));
     },
     setUnreadCountForConversations(
       state,
@@ -67,6 +81,16 @@ export const conversationSlice = createSlice({
     });
   },
 });
+
+const selectConversations = (state: RootState) =>
+  state.conversation.conversations;
+const selectConvName = (_state: RootState, name: string) => name;
+
+export const selectConversationsByConvName = createSelector(
+  [selectConvName, selectConversations],
+  (name, conversations) =>
+    conversations.filter((conv) => conv.name?.includes(name))
+);
 
 export const {
   setCurrentConversation,
