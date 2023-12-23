@@ -1,6 +1,7 @@
 import { AuthFormDefaultValues } from '@/components/Forms/AuthForm';
 import { request, requestStream } from './request';
 import {
+  ChangeNicknameDto,
   Conversation,
   FriendshipStatus,
   Invitation,
@@ -166,5 +167,13 @@ export function updateMessageStatusByConversationId(conversationId: number) {
     data: {
       conversationId,
     },
+  });
+}
+
+export function postChangeNickname(data: ChangeNicknameDto) {
+  return request<{ nickname: string }>({
+    url: '/user/changeNickname',
+    method: 'post',
+    data,
   });
 }

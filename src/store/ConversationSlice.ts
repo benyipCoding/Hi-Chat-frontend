@@ -1,5 +1,4 @@
 import { getMessagesByConversation } from '@/utils/api';
-import { USER_NAME } from '@/utils/helpers';
 import { Conversation, Message } from '@/utils/types';
 import {
   createAsyncThunk,
@@ -51,14 +50,7 @@ export const conversationSlice = createSlice({
       state.currentConversation = null;
     },
     setConversations(state, action: PayloadAction<Conversation[]>) {
-      const username = localStorage.getItem(USER_NAME);
-      state.conversations = action.payload.map((conv) => ({
-        ...conv,
-        name:
-          conv.creator.name === username
-            ? conv.recipient.name
-            : conv.creator.name,
-      }));
+      state.conversations = action.payload;
     },
     setUnreadCountForConversations(
       state,
@@ -89,7 +81,10 @@ const selectConvName = (_state: RootState, name: string) => name;
 export const selectConversationsByConvName = createSelector(
   [selectConvName, selectConversations],
   (name, conversations) =>
-    conversations.filter((conv) => conv.name?.includes(name))
+    conversations.filter(
+      (conv) =>
+        conv.name?.includes(name) || conv.name?.includes(name.toLowerCase())
+    )
 );
 
 export const {

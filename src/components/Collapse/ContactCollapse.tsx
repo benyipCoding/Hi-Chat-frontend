@@ -39,7 +39,7 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
       key: '0',
       label: 'Friends',
       children: (
-        <>
+        <div className="overflow-y-auto">
           {params.friendList.map((friend) => (
             <UserItem
               user={friend}
@@ -48,7 +48,7 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
               isFriendList={true}
             />
           ))}
-        </>
+        </div>
       ),
       style: params.panelStyle,
       headerClass: `text-lg`,
@@ -57,7 +57,7 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
       key: '1',
       label: 'Invitations',
       children: (
-        <>
+        <div className="overflow-y-auto">
           {params.invitations.map((invitation) => (
             <UserItem
               user={
@@ -73,7 +73,7 @@ const getItems: (params: GetItemsParams) => CollapseProps['items'] = (
               invitationId={invitation.id}
             />
           ))}
-        </>
+        </div>
       ),
       style: params.panelStyle,
       headerClass: `text-lg`,

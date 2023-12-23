@@ -23,7 +23,7 @@ const ContactPage = () => {
   );
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col overflow-y-auto">
       <Input
         background={`${addAlphaToHexColor('#edeff6', 0.9)}`}
         type="text"
@@ -33,8 +33,8 @@ const ContactPage = () => {
         icon={<IoSearch />}
       />
 
-      <div className="w-full flex-1 p-2 overflow-y-auto flex flex-col gap-2 relative">
-        {invitations.length ? (
+      <div className="w-full flex-1 p-2 flex flex-col gap-2 relative">
+        {invitations.length || friends.length ? (
           <ContactCollapse invitations={invitations} friendList={friends} />
         ) : (
           <EmptyState />

@@ -45,18 +45,8 @@ const AuthForm = () => {
         userName: data.userName.trim(),
         password: data.password,
       };
-      postSignIn(trimData)
-        .then(async (res) => {
-          // save token
-          setLocalStorage(res.data);
-          navigate('/messages', { replace: true, state: '/login' });
-        })
-        .catch((err: ErrorData) => {
-          toast.error(err.data);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+
+      signInHandler(trimData);
     } else {
       // register handler
       const trimData: AuthFormDefaultValues = {
@@ -65,9 +55,10 @@ const AuthForm = () => {
         email: data.email.trim(),
       };
       postRegisterUser(trimData)
-        .then((res) => {
+        .then(() => {
           console.log('Register Success');
-          toast.success(res.message);
+          // toast.success(res.message);
+          signInHandler(trimData);
         })
         .catch((err: ErrorData) => {
           console.log(err);
@@ -82,6 +73,21 @@ const AuthForm = () => {
     else setVariant('LOGIN');
     reset();
   }, [variant]);
+
+  const signInHandler = (trimData: AuthFormDefaultValues) => {
+    postSignIn(trimData)
+      .then(async (res) => {
+        // save token
+        setLocalStorage(res.data);
+        navigate('/messages', { replace: true, state: '/login' });
+      })
+      .catch((err: ErrorData) => {
+        toast.error(err.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div>

@@ -18,6 +18,7 @@ export type User = {
   email?: string;
   avatar?: string;
   gender?: Gender;
+  nickname: string;
 };
 
 export type UserWithChecked = User & { checked: boolean };
@@ -77,4 +78,9 @@ export type Invitation = {
   updateAt: Date;
   greetings: string;
   status: FriendshipStatus;
+};
+
+export type ChangeNicknameDto = {
+  targetUserId: string;
+  nickname: string;
 };

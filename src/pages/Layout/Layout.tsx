@@ -19,7 +19,9 @@ import {
 } from '@/store/friendsSlice';
 import { getConversationList } from '@/utils/api';
 import { AuthContext } from '@/context/AuthContext';
-import { FRIENDS_COUNT, USER_NAME } from '@/utils/helpers';
+import { FRIENDS_COUNT } from '@/utils/helpers';
+import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
+import { useShowExtra } from '@/hooks/useScreenSize';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -29,9 +31,9 @@ const Layout = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useContext(AuthContext);
   const { friends } = useSelector((state: RootState) => state.friends);
+  const { showExtraSideBox } = useShowExtra();
 
   useEffect(() => {
-    localStorage.setItem(USER_NAME, user!.name);
     const divList = document.querySelectorAll<HTMLDivElement>('#root>div>div');
     setTransitionDivList(divList);
     socket.connect();
@@ -62,6 +64,9 @@ const Layout = () => {
     <ThemeProvider theme={CommonTheme}>
       <CommonContext.Provider value={transitiondivList}>
         <div className="relative w-full h-full flex flex-col p-2 star-bg lg:flex-row-reverse lg:justify-end lg:gap-2 overflow-x-hidden">
+          {showExtraSideBox && (
+            <BlurGlassDiv className="w-[30%] rounded-md">1231231</BlurGlassDiv>
+          )}
           {/* DynamicPage */}
           <DynamicPage />
           {/* Header */}

@@ -1,3 +1,4 @@
+import { DynamicPageName } from '@/components/DynamicPage/pageMap';
 import { Input } from '@/components/Inputs';
 import ConversationItem from '@/components/List/ConversationItem';
 import { AuthContext } from '@/context/AuthContext';
@@ -8,13 +9,13 @@ import {
   selectConversationsByConvName,
   setCurrentConversation,
 } from '@/store/conversationSlice';
-import { setTitle } from '@/store/dynamicPageSlice';
+import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import {
   postCreateConversation,
   updateMessageStatusByConversationId,
 } from '@/utils/api';
 import { addAlphaToHexColor, formatUserName } from '@/utils/helpers';
-import { Conversation } from '@/utils/types';
+import { Conversation, User } from '@/utils/types';
 import { Empty } from 'antd';
 import clsx from 'clsx';
 import { useContext, useState } from 'react';
@@ -27,19 +28,17 @@ const MessagePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [searchInput, setSearchInput] = useState<string>('');
   const { user } = useContext(AuthContext);
+  // const { friends } = useSelector((state: RootState) => state.friends);
 
   const conversations = useSelector((state: RootState) =>
     selectConversationsByConvName(state, searchInput)
   );
 
-  const onClickItem = (conversation: Conversation) => {
-    const targetUser =
-      conversation.creator?.id === user?.id
-        ? conversation.recipient
-        : conversation.creator;
+  const onClickItem = (conversation: Conversation, targetUser: User) => {
     postCreateConversation(targetUser).then((res) => {
       dispatch(setCurrentConversation(res.data));
-      dispatch(setTitle(formatUserName(targetUser.name)));
+      dispatch(setTitle(formatUserName(conversation.name)));
+      dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
       updateMessageStatusByConversationId(conversation.id);
       swipeToDetail(divList!);
     });
@@ -62,17 +61,21 @@ const MessagePage = () => {
         </div>
       ) : (
         <div className="p-2 overflow-y-auto flex-1 flex flex-col gap-2">
-          {conversations.map((conv) => (
-            <ConversationItem
-              user={
-                conv.creator?.id === user?.id ? conv.recipient : conv.creator
-              }
-              key={conv?.id}
-              lastMessage={conv.lastMessage}
-              onClick={() => onClickItem(conv)}
-              unReadCount={conv.unReadCount}
-            />
-          ))}
+          {conversations.map((conv) => {
+            const targetUser =
+              conv.creator?.id === user?.id ? conv.recipient : conv.creator;
+
+            return (
+              <ConversationItem
+                name={conv.name!}
+                user={targetUser!}
+                key={conv?.id}
+                lastMessage={conv.lastMessage}
+                onClick={() => onClickItem(conv, targetUser)}
+                unReadCount={conv.unReadCount}
+              />
+            );
+          })}
         </div>
       )}
     </div>

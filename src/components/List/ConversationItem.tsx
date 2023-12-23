@@ -2,7 +2,7 @@ import { Conversation, Message, User } from '@/utils/types';
 import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 import { formatCommentTime, formatUserName } from '@/utils/helpers';
 import { AuthContext } from '@/context/AuthContext';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Badge } from 'antd';
 
 interface ConversationItemProps {
@@ -10,15 +10,17 @@ interface ConversationItemProps {
   lastMessage: Message;
   onClick: (conv: Conversation) => void;
   unReadCount?: number;
+  name: string;
 }
 
 const ConversationItem: React.FC<ConversationItemProps> = ({
+  name,
   user,
   lastMessage,
   onClick,
   unReadCount,
 }) => {
-  const capitalName = formatUserName(user.name);
+  const capitalName = formatUserName(name);
   const { user: currentUser } = useContext(AuthContext);
 
   return (
@@ -27,7 +29,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
       onClick={onClick as () => void}
     >
       <Badge count={unReadCount} size="default">
-        <Avatar src={user?.avatar || defaultAvatar} userName={user.name} />
+        <Avatar src={user?.avatar || defaultAvatar} userName={user?.nickname} />
       </Badge>
 
       <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white">
@@ -38,7 +40,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
 
         {/* Last message */}
         {lastMessage && (
-          <div className="pl-1 overflow-hidden whitespace-nowrap overflow-ellipsis w-[65vw] text-[#cacaca] text-md">
+          <div className="pl-1 overflow-hidden whitespace-nowrap overflow-ellipsis w-[65vw] text-[#cacaca] text-md max-w-[235px]">
             {`${
               lastMessage.senderName === currentUser?.name
                 ? 'me'

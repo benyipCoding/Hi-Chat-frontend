@@ -26,6 +26,7 @@ import { FaUserAlt } from 'react-icons/fa';
 import { DynamicPageName } from '../DynamicPage/pageMap';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { setCurrentConversation } from '@/store/conversationSlice';
+import { setTargetUser } from '@/store/profileSlice';
 
 interface AvatarDescProps {
   userName: string;
@@ -69,11 +70,12 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     if (pageName === DynamicPageName.CONVERSATION) {
       postCreateConversation(user).then((res) => {
         dispatch(setCurrentConversation(res.data));
-        dispatch(setTitle(formatUserName(user.name)));
+        dispatch(setTitle(formatUserName(user.nickname || user.name)));
         swipeToDetail(divList!);
       });
     } else {
-      dispatch(setTitle(formatUserName(user.name)));
+      dispatch(setTitle(formatUserName(user.nickname)));
+      dispatch(setTargetUser(user));
       swipeToDetail(divList!);
     }
   };

@@ -27,7 +27,7 @@ const UserItem: React.FC<UserItemProps> = ({
     <section className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md">
       <Avatar src={user?.avatar || defaultAvatar} userName={user?.name} />
       <AvatarDesc
-        userName={user?.name || ''}
+        userName={user.nickname}
         lastMessage={lastMessage!}
         updateAt={updateAt}
         status={status}

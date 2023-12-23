@@ -5,6 +5,7 @@ import dropMenuReducer from './dropMenuSlice';
 import drawerReducer from './drawerSlice';
 import contactPageReducer from './contactPageSlice';
 import dynamicPageReducer from './dynamicPageSlice';
+import profileReducer from './profileSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     drawer: drawerReducer,
     contactPage: contactPageReducer,
     dynamicPage: dynamicPageReducer,
+    profile: profileReducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),

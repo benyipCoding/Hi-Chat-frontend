@@ -75,16 +75,6 @@ export const friendSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
-        // const friendsCount = localStorage.getItem(FRIENDS_COUNT) || 0;
-
-        // if (friendsCount !== 0) {
-        //   state.friendListBadge = action.payload!.data.length - +friendsCount;
-        // } else {
-        //   localStorage.setItem(
-        //     FRIENDS_COUNT,
-        //     JSON.stringify(action.payload.data.length)
-        //   );
-        // }
         state.friends = action.payload!.data;
       })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
@@ -110,9 +100,13 @@ export const selectStrangerByName = createSelector(
 );
 export const selectFriendByName = createSelector(
   [selectUserName, selectFriends],
-  (name, strangers) =>
-    strangers.filter(
-      (s) => s?.name.includes(name) || s.name.includes(name.toLowerCase())
+  (name, friends) =>
+    friends.filter(
+      (f) =>
+        f.nickname.includes(name) ||
+        f.nickname.includes(name.toLowerCase()) ||
+        f.name.includes(name) ||
+        f.name.includes(name.toLowerCase())
     )
 );
 export const selectInvitationByName = createSelector(

@@ -1,4 +1,5 @@
 import Conversations from '@/pages/Conversations/Conversations';
+import Profile from '../Profile/Profile';
 
 export enum DynamicPageName {
   CONVERSATION = 'conversation',
@@ -7,5 +8,5 @@ export enum DynamicPageName {
 
 export const pageMap = {
   [DynamicPageName.CONVERSATION]: <Conversations />,
-  [DynamicPageName.PROFILE]: <div>profile content</div>,
+  [DynamicPageName.PROFILE]: <Profile />,
 };
