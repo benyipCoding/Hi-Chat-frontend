@@ -28,8 +28,6 @@ const MessagePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [searchInput, setSearchInput] = useState<string>('');
   const { user } = useContext(AuthContext);
-  // const { friends } = useSelector((state: RootState) => state.friends);
-
   const conversations = useSelector((state: RootState) =>
     selectConversationsByConvName(state, searchInput)
   );
