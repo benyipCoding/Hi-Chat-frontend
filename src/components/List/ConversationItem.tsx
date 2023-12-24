@@ -32,19 +32,19 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         <Avatar src={user?.avatar || defaultAvatar} userName={user?.nickname} />
       </Badge>
 
-      <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white">
+      <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white ">
         {/* User name */}
-        <p className="flex-1 text-2xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md">
+        <p className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md w-[160px] overflow-hidden whitespace-nowrap overflow-ellipsis sm:w-full lg:w-[120px] xl:w-[150px]">
           {capitalName}
         </p>
 
         {/* Last message */}
         {lastMessage && (
-          <div className="pl-1 overflow-hidden whitespace-nowrap overflow-ellipsis w-[65vw] text-[#cacaca] text-md max-w-[235px]">
+          <div className="pl-1 overflow-hidden whitespace-nowrap overflow-ellipsis w-[65vw] text-[#cacaca] text-sm max-w-[235px] h-6 flex items-center">
             {`${
               lastMessage.senderName === currentUser?.name
                 ? 'me'
-                : formatUserName(lastMessage.senderName)
+                : formatUserName(name)
             }: ${lastMessage.content}`}
           </div>
         )}

@@ -69,7 +69,7 @@ export const friendSlice = createSlice({
       state.friendListBadge = 0;
     },
     setFriendListBadge(state, action: PayloadAction<number>) {
-      state.friendListBadge = action.payload;
+      state.friendListBadge = action.payload < 0 ? 0 : action.payload;
     },
   },
   extraReducers(builder) {

@@ -177,3 +177,10 @@ export function postChangeNickname(data: ChangeNicknameDto) {
     data,
   });
 }
+
+export function postDeleteFriendship(targetUserId: string) {
+  return request({
+    url: `/friends/delete-friendship/${targetUserId}`,
+    method: 'post',
+  });
+}

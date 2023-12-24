@@ -2,7 +2,11 @@ import { AppDispatch, RootState } from '@/store';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { DynamicPageName } from '../DynamicPage/pageMap';
-import { postChangeNickname, postCreateConversation } from '@/utils/api';
+import {
+  postChangeNickname,
+  postCreateConversation,
+  postDeleteFriendship,
+} from '@/utils/api';
 import { setCurrentConversation } from '@/store/conversationSlice';
 import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 import ProfileDesc from '../Avatar/ProfileDesc';
@@ -14,6 +18,7 @@ import { Input } from '../Inputs';
 import { toast } from 'react-toastify';
 import { setTargetUser } from '@/store/profileSlice';
 import { fetchFriendsThunk } from '@/store/friendsSlice';
+import clsx from 'clsx';
 
 type DescItemType = {
   label: string;
@@ -39,6 +44,7 @@ const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalInput, setModalInput] = useState<string>('');
+  const [isDeleteContent, setIsDeleteContent] = useState<boolean>(false);
 
   const { targetUser } = useSelector((state: RootState) => state.profile);
 
@@ -51,6 +57,12 @@ const Profile = () => {
 
   const openModal = () => {
     setModalInput(targetUser?.nickname as string);
+    setIsDeleteContent(false);
+    setIsModalOpen(true);
+  };
+
+  const askTwice = () => {
+    setIsDeleteContent(true);
     setIsModalOpen(true);
   };
 
@@ -68,13 +80,12 @@ const Profile = () => {
     {
       label: 'Delete Friend',
       bg: 'bg-gradient-to-br from-rose-500 to-yellow-500',
-      onClick: () => {},
+      onClick: askTwice,
     },
   ];
 
-  const onModalConfirm = () => {
+  const changeNicknameHandler = () => {
     if (!modalInput) return toast.error('Nickname should not be empty!');
-
     postChangeNickname({ targetUserId: targetUser!.id, nickname: modalInput })
       .then((res) => {
         dispatch(
@@ -90,6 +101,25 @@ const Profile = () => {
         console.log(err);
       })
       .finally(() => setIsModalOpen(false));
+  };
+
+  const deleteFriendHandler = () => {
+    postDeleteFriendship(targetUser!.id)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsModalOpen(false));
+  };
+
+  const onModalConfirm = () => {
+    if (!isDeleteContent) {
+      changeNicknameHandler();
+    } else {
+      deleteFriendHandler();
+    }
   };
 
   return (
@@ -129,8 +159,13 @@ const Profile = () => {
       <Modal
         title={
           <p className="relative px-3 text-lg text-slate-800">
-            <span className="w-[5px] h-[80%] bg-[#0284c7] absolute left-0 rounded-full top-[50%] translate-y-[-50%]"></span>
-            Change Nickname
+            <span
+              className={clsx(
+                'w-[5px] h-[80%] absolute left-0 rounded-full top-[50%] translate-y-[-50%]',
+                isDeleteContent ? 'bg-[#f34b56]' : 'bg-[#0284c7]'
+              )}
+            ></span>
+            {isDeleteContent ? 'Tips' : 'Change Nickname'}
           </p>
         }
         open={isModalOpen}
@@ -157,12 +192,18 @@ const Profile = () => {
           </>
         }
       >
-        <Input
-          type="text"
-          placeholder="Input nickname"
-          value={modalInput}
-          onInput={(e) => setModalInput((e.target as HTMLInputElement).value)}
-        />
+        {!isDeleteContent ? (
+          <Input
+            type="text"
+            placeholder="Input nickname"
+            value={modalInput}
+            onInput={(e) => setModalInput((e.target as HTMLInputElement).value)}
+          />
+        ) : (
+          <div className="text-black">
+            {`Are you sure you want to delete ${targetUser?.nickname}?`}
+          </div>
+        )}
       </Modal>
     </div>
   );

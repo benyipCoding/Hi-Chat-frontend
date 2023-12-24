@@ -56,7 +56,7 @@ const InputArea: React.FC<InputAreaProps> = ({
         textarea.current?.focus();
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.data);
       })
       .finally(() => getConversationList());
   };
