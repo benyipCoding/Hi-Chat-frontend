@@ -36,7 +36,6 @@ socket.on(SocketEvent.DISCONNECT, () => {
 
 socket.on(SocketEvent.ERROR, (e) => {
   console.log(e.message);
-  // toast.error(e.message);
 });
 
 socket.on(SocketEvent.MESSAGE, (e) => {
