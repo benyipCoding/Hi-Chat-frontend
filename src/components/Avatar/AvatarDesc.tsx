@@ -95,7 +95,6 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
       dispatch(fetchInvitationsThunk());
       toast.success('success');
       if (status === FriendshipStatus.ACCEPT) {
-        // dispatch(addFriendListBadge(1));
         dispatch(fetchFriendsThunk());
       }
     });

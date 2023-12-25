@@ -10,7 +10,6 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import NotFound from './pages/NotFound';
 import MessagePage from './pages/MessagePage/MessagePage';
 import ContactPage from './pages/ContactPage/ContactPage';
-import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { store } from '@/store';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -19,6 +18,7 @@ import { Socket } from 'socket.io-client';
 import Test from './pages/Test/Test';
 import { ConfigProvider } from 'antd';
 import { theme } from '@/utils/themes/antdCustomTheme';
+import GroupChat from './pages/GroupChat/GroupChat';
 
 type AppWithProvidersProps = {
   user?: User;
@@ -54,7 +54,7 @@ function App() {
         <Route element={<AuthenticatedRoute children={<Layout />} />}>
           <Route path="messages" element={<MessagePage />}></Route>
           <Route path="contacts" element={<ContactPage />} />
-          <Route path="discovery" element={<DiscoveryPage />} />
+          <Route path="groupchat" element={<GroupChat />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
         <Route path="/test" element={<Test />}></Route>

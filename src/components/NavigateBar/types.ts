@@ -10,7 +10,7 @@ export type IconsMapType = {
 export type IconName = keyof IconsMapType;
 
 export type NavMenuItem = {
-  label: 'Message' | 'Contacts' | 'Discovery' | 'Profile';
+  label: 'Message' | 'Contacts' | 'Discovery' | 'Profile' | 'GroupChat';
   iconOutlined: IconName;
   iconFilled: IconName;
   path: string;
