@@ -24,6 +24,7 @@ import {
 } from '@/store/profileSlice';
 import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
 import clsx from 'clsx';
+import ProfileFormItem from './ProfileFormItem';
 
 type DescItemType = {
   label: string;
@@ -34,13 +35,13 @@ type DescItemType = {
 const descList: DescItemType[] = [
   {
     label: 'Username',
-    value: 'name',
+    value: 'displayName',
     type: 'text',
   },
   {
     label: 'Gender',
     value: 'gender',
-    type: 'text',
+    type: 'radio',
   },
   {
     label: 'Email',
@@ -61,7 +62,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const { targetUser } = useSelector((state: RootState) => state.profile);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [profileForm, setProfileForm] = useState({
-    name: user?.name,
+    displayName: user?.displayName,
     email: user?.email,
     gender: user?.gender,
   });
@@ -197,12 +198,18 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span className="w-[40%] font-semibold">{item.label} :</span>
 
               {editMode ? (
-                <input
+                // <input
+                //   name={item.value}
+                //   type={item.type}
+                //   value={(profileForm as any)[item.value]}
+                //   className="text-black box-border outline-none bg-slate-100 max-w-[180px] px-1 rounded-sm"
+                //   onInput={(e) => handleInput(e)}
+                // />
+                <ProfileFormItem
                   name={item.value}
                   type={item.type}
                   value={(profileForm as any)[item.value]}
-                  className="text-black box-border outline-none bg-slate-100 max-w-[180px] px-1"
-                  onInput={(e) => handleInput(e)}
+                  onInput={handleInput}
                 />
               ) : (
                 <span className="flex-1">

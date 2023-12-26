@@ -118,8 +118,6 @@ const ContactCollapse: React.FC<ContactCollapseProps> = ({
     dispatch(setDefaultActiveKey(key as string[]));
   };
 
-  console.log('@@@@@@@@@', invitations);
-
   useEffect(() => {
     const headers = document.querySelectorAll('.ant-collapse-header');
     if (untreatedCount !== 0) {

@@ -101,8 +101,6 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     });
   };
 
-  console.log('@@@@@', userName);
-
   return (
     <div className="flex-1 rounded-sm flex flex-col border-b-[1px] border-[#98d3df80] relative text-white">
       {/* User name */}
