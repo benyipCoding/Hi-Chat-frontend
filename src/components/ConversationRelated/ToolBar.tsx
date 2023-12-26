@@ -28,14 +28,14 @@ const ToolBar: React.FC<ToolBarProps> = ({
 
   return (
     <div className={className} ref={toolbar}>
-      <RiScreenshot2Line className="cursor-pointer" />
+      {/* <RiScreenshot2Line className="cursor-pointer" />
       <TbMicrophone
         className={clsx('cursor-pointer', modalVisible && 'text-[#ec9131]')}
         onClick={onClickMicrophone}
-      />
+      /> */}
       <MdInsertEmoticon
         className={clsx(
-          'cursor-pointer',
+          'cursor-pointer text-[30px]',
           isShowEmojiPicker && 'text-[#ec9131]'
         )}
         onClick={() =>

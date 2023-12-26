@@ -16,7 +16,11 @@ import { Modal } from 'antd';
 import { useState } from 'react';
 import { Input } from '../Inputs';
 import { toast } from 'react-toastify';
-import { setTargetUser } from '@/store/profileSlice';
+import {
+  setModalTitle,
+  setTargetUser,
+  toggleProfileModalVisible,
+} from '@/store/profileSlice';
 import { fetchFriendsThunk } from '@/store/friendsSlice';
 import clsx from 'clsx';
 
@@ -40,7 +44,11 @@ const descList: DescItemType[] = [
   },
 ];
 
-const Profile = () => {
+interface ProfileProps {
+  user?: User;
+}
+
+const Profile: React.FC<ProfileProps> = ({ user }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalInput, setModalInput] = useState<string>('');
@@ -66,6 +74,16 @@ const Profile = () => {
     setIsModalOpen(true);
   };
 
+  const editMyProfile = () => {
+    dispatch(setModalTitle('Edit My Profile'));
+    dispatch(toggleProfileModalVisible(true));
+  };
+
+  const changeAvatar = () => {
+    dispatch(setModalTitle('Change Avatar'));
+    dispatch(toggleProfileModalVisible(true));
+  };
+
   const btnList = [
     {
       label: 'Change Nickname',
@@ -83,6 +101,21 @@ const Profile = () => {
       onClick: askTwice,
     },
   ];
+
+  const selfBtnList = [
+    {
+      label: 'Edit My Profile',
+      bg: 'bg-gradient-to-br from-violet-500 to-purple-500',
+      onClick: editMyProfile,
+    },
+    {
+      label: 'Change Avatar',
+      bg: 'bg-gradient-to-bl from-amber-500 to-pink-500',
+      onClick: changeAvatar,
+    },
+  ];
+
+  const buttons = user ? selfBtnList : btnList;
 
   const changeNicknameHandler = () => {
     if (!modalInput) return toast.error('Nickname should not be empty!');
@@ -127,8 +160,8 @@ const Profile = () => {
       {/* content */}
       <div className="p-4 bg-[#0000005e] rounded-md">
         <div className="flex gap-4">
-          <Avatar src={targetUser?.avatar || defaultAvatar} />
-          <ProfileDesc />
+          <Avatar src={user?.avatar || targetUser?.avatar || defaultAvatar} />
+          <ProfileDesc user={user} />
         </div>
         <div className="mt-10 flex flex-col gap-4">
           {descList.map((item, index) => (
@@ -137,17 +170,19 @@ const Profile = () => {
               key={index}
             >
               <span className="w-[40%] font-semibold">{item.label} :</span>
-              <span className="flex-1">{targetUser![item.value]}</span>
+              <span className="flex-1">
+                {user ? user[item.value] : targetUser![item.value]}
+              </span>
             </section>
           ))}
         </div>
       </div>
       {/* btn */}
       <div className="flex flex-col lg:flex-row lg:gap-4">
-        {btnList.map((item, index) => (
+        {buttons.map((item, index) => (
           <motion.div
             whileTap={{ scale: 0.9 }}
-            className={`mt-4 rounded-full flex justify-center items-center shadow-md flex-1 ${item.bg} cursor-pointer py-2`}
+            className={`mt-4 rounded-full flex justify-center items-center shadow-lg flex-1 ${item.bg} cursor-pointer py-2 active:shadow-sm`}
             key={index}
             onClick={item.onClick}
           >

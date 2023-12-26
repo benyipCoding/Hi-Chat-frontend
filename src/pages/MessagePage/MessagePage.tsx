@@ -11,6 +11,7 @@ import {
 } from '@/store/conversationSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import {
+  getConversationList,
   postCreateConversation,
   updateMessageStatusByConversationId,
 } from '@/utils/api';
@@ -37,7 +38,9 @@ const MessagePage = () => {
       dispatch(setCurrentConversation(res.data));
       dispatch(setTitle(formatUserName(conversation.name)));
       dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
-      updateMessageStatusByConversationId(conversation.id);
+      updateMessageStatusByConversationId(conversation.id).then(() => {
+        getConversationList();
+      });
       swipeToDetail(divList!);
     });
   };

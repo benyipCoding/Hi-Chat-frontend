@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ConversationScreen from '@/components/ConversationRelated/ConversationScreen';
 import ToolBar from '@/components/ConversationRelated/ToolBar';
 import InputArea from '@/components/ConversationRelated/InputArea';
@@ -14,6 +15,31 @@ import { Modal } from 'antd';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 
+function initRecognition() {
+  if (
+    !('SpeechRecognition' in window) &&
+    !('webkitSpeechRecognition' in window)
+  )
+    return;
+  const recognition = new ((window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition)();
+  // 设置一些参数
+  recognition.lang = 'zh-CN'; //语言简体中文
+  recognition.continuous = true; // 是否连续识别
+
+  // 监听识别结果
+  recognition.onresult = function (event: any) {
+    const result = event.results[0][0].transcript;
+    console.log(result);
+  };
+  // 监听识别错误
+  recognition.onerror = (event: any) => {
+    console.error('语音识别错误:', event);
+  };
+
+  return recognition;
+}
+
 const Conversations = () => {
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
@@ -21,15 +47,14 @@ const Conversations = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [recording, setRecording] = useState<boolean>(false);
-
   const { currentConversation } = useSelector(
     (state: RootState) => state.conversation
   );
-
   const dispatch = useDispatch<AppDispatch>();
   const { isShowEmojiPicker } = useSelector(
     (state: RootState) => state.conversation
   );
+  const recognition = initRecognition();
 
   const onClickEmoji = (posX: number, posY: number) => {
     setX(posX);
@@ -49,6 +74,18 @@ const Conversations = () => {
     }
   };
 
+  const toggleRecord = () => {
+    if (!recording) {
+      console.log('开始录制');
+      recognition.start();
+    } else {
+      console.log('停止录制');
+      recognition.stop();
+    }
+
+    setRecording((prev) => !prev);
+  };
+
   useEffect(() => {
     if (!currentConversation) return;
     dispatch(fetchMessagesThunk(currentConversation.id));
@@ -58,7 +95,7 @@ const Conversations = () => {
     <>
       {currentConversation && (
         <ConversationScreen
-          className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] p-2 pt-4 md:p-4 lg:p-6 overflow-y-auto flex flex-col relative gap-4 md:gap-6"
+          className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] px-4 pt-4 overflow-y-auto flex flex-col relative gap-4 md:gap-6"
           messages={messages}
         />
       )}
@@ -95,7 +132,10 @@ const Conversations = () => {
         }
         open={modalVisible}
         onOk={() => setModalVisible(false)}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => {
+          setRecording(false);
+          setModalVisible(false);
+        }}
         footer={<></>}
         centered
         width={350}
@@ -122,15 +162,15 @@ const Conversations = () => {
               'w-full bg-gradient-to-tr from-lime-400 to-lime-500 rounded-md flex justify-center items-center py-1 mt-10 text-2xl',
               recording && 'bg-gradient-to-br from-rose-500 to-yellow-500'
             )}
-            onClick={() => setRecording((prev) => !prev)}
+            onClick={toggleRecord}
           >
             {recording ? 'Stop' : 'Start record'}
           </motion.button>
-          <div className="w-[20px] h-[45px] overflow-hidden absolute left-[50%] top-[30px] z-0 rounded-[10px] translate-x-[-50%]">
+          <div className="w-[20px] h-[44px] overflow-hidden absolute left-[50%] top-[30px] z-0 rounded-[10px] translate-x-[-50%]">
             {recording && (
               <div
-                className="w-full h-full bg-gradient-to-tr from-lime-400 to-lime-500 transition rounded-[10px]"
-                style={{ transform: `translateY(50%)` }}
+                className="w-full h-full bg-gradient-to-tr from-lime-400 to-lime-500 transition"
+                style={{ transform: `translateY(0%)` }}
               ></div>
             )}
           </div>

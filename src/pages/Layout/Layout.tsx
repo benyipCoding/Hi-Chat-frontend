@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import Drawer from '@/components/Drawer/Drawer';
 import DynamicPage from '@/components/DynamicPage/DynamicPage';
-// import { fetchConversationsThunk } from '@/store/conversationSlice';
 import {
   fetchFriendsThunk,
   fetchInvitationsThunk,
@@ -20,8 +19,9 @@ import {
 import { getConversationList } from '@/utils/api';
 import { AuthContext } from '@/context/AuthContext';
 import { FRIENDS_COUNT } from '@/utils/helpers';
-import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { useShowExtra } from '@/hooks/useScreenSize';
+import SideBox from '@/components/SideBox/SideBox';
+import ProfileModal from '@/components/Profile/ProfileModal';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -64,9 +64,7 @@ const Layout = () => {
     <ThemeProvider theme={CommonTheme}>
       <CommonContext.Provider value={transitiondivList}>
         <div className="relative w-full h-full flex flex-col p-2 star-bg lg:flex-row-reverse lg:justify-end lg:gap-2 overflow-x-hidden">
-          {showExtraSideBox && (
-            <BlurGlassDiv className="w-[30%] rounded-md">1231231</BlurGlassDiv>
-          )}
+          {showExtraSideBox && <SideBox />}
           {/* DynamicPage */}
           <DynamicPage />
           {/* Header */}
@@ -77,8 +75,10 @@ const Layout = () => {
           <NavigateBar />
           {/* DropMenu */}
           {isOpen && <DropMenu />}
-          {/* Dialog or Drawer */}
+          {/* Drawer */}
           <Drawer />
+          {/* Profile Modal */}
+          <ProfileModal />
         </div>
       </CommonContext.Provider>
     </ThemeProvider>

@@ -56,7 +56,7 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
 
   useEffect(() => {
     if (!screen.current || !isBottom || isInit) return;
-    scrollToBottom('smooth');
+    scrollToBottom('instant');
   }, [messages.length]);
 
   useEffect(() => {
