@@ -112,6 +112,7 @@ const Conversations = () => {
           className="rounded-md bg-[#0000005e] flex-1  p-2 flex flex-col gap-3"
           value={inputValue}
           onChange={setInputValue}
+          onClear={() => setInputValue('')}
         />
       )}
       <EmojiPicker

@@ -78,7 +78,12 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
           key={index}
         />
       ))}
-      <div ref={bottom}></div>
+      <div
+        ref={bottom}
+        className="text-xs opacity-0 mt-[-12px] pointer-events-none"
+      >
+        1
+      </div>
     </div>
   );
 };

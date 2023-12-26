@@ -12,17 +12,20 @@ import { RiSendPlaneFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import hotkeys from 'hotkeys-js';
+import { FaBackspace } from 'react-icons/fa';
 
 interface InputAreaProps {
   className: string;
   value: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
+  onClear: () => void;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   className,
   value,
   onChange,
+  onClear,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const textarea = useRef<HTMLTextAreaElement>(null);
@@ -79,28 +82,34 @@ const InputArea: React.FC<InputAreaProps> = ({
       className={className}
       onClick={() => dispatch(toggleEmojiPickerVisible(false))}
     >
-      <Space.Compact className="w-full flex flex-1 gap-2">
+      <Space.Compact className="w-full flex flex-1 gap-2 lg:flex-col lg:items-end">
         <textarea
           ref={textarea}
-          className="form-input flex-1 rounded-md bg-[#0000005e] scroll-bar text-lg"
+          className="form-input flex-1 rounded-md bg-[#0000005e] scroll-bar text-lg max-h-[17.6vh] lg:w-full lg:max-h-[12vh] min-h-[50px]"
           value={value}
           onInput={(e) => {
             onChange((e.target as HTMLTextAreaElement).value);
           }}
           onKeyDown={(e) => onTextareaKeydown(e)}
-          style={{
-            maxHeight: 109,
-            minHeight: 50,
-          }}
         />
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-md text-md w-14 flex justify-center items-center flex-col gap-1"
-          onClick={sendMsg}
-        >
-          <RiSendPlaneFill className="text-2xl" />
-          SEND
-        </motion.button>
+        <div className="flex">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="bg-gradient-to-br from-rose-500 to-orange-500 rounded-md text-md w-14 md:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 lg:py-2 lg:flex-row mr-4 max-lg:hidden"
+            onClick={onClear}
+          >
+            <FaBackspace className="text-xl" />
+            CLEAR
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="bg-gradient-to-t from-lime-500 to-green-500 rounded-md text-md w-14 sm:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 lg:py-2 lg:flex-row"
+            onClick={sendMsg}
+          >
+            <RiSendPlaneFill className="text-2xl" />
+            SEND
+          </motion.button>
+        </div>
       </Space.Compact>
     </div>
   );
