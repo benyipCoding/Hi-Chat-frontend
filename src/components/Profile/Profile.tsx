@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppDispatch, RootState } from '@/store';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,20 +28,24 @@ import clsx from 'clsx';
 type DescItemType = {
   label: string;
   value: keyof User;
+  type: string;
 };
 
 const descList: DescItemType[] = [
   {
     label: 'Username',
     value: 'name',
+    type: 'text',
   },
   {
     label: 'Gender',
     value: 'gender',
+    type: 'text',
   },
   {
     label: 'Email',
     value: 'email',
+    type: 'email',
   },
 ];
 
@@ -53,8 +58,13 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalInput, setModalInput] = useState<string>('');
   const [isDeleteContent, setIsDeleteContent] = useState<boolean>(false);
-
   const { targetUser } = useSelector((state: RootState) => state.profile);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [profileForm, setProfileForm] = useState({
+    name: user?.name,
+    email: user?.email,
+    gender: user?.gender,
+  });
 
   const startConversation = () => {
     postCreateConversation(targetUser!).then((res) => {
@@ -64,7 +74,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   };
 
   const openModal = () => {
-    setModalInput(targetUser?.nickname as string);
+    setModalInput((targetUser?.nickname || targetUser?.displayName) as string);
     setIsDeleteContent(false);
     setIsModalOpen(true);
   };
@@ -75,11 +85,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   };
 
   const editMyProfile = () => {
-    dispatch(setModalTitle('Edit My Profile'));
-    dispatch(toggleProfileModalVisible(true));
+    setEditMode((prev) => !prev);
+    console.log(profileForm);
+
+    // dispatch(setModalTitle('Edit My Profile'));
+    // dispatch(toggleProfileModalVisible(true));
   };
 
   const changeAvatar = () => {
+    if (editMode) return;
     dispatch(setModalTitle('Change Avatar'));
     dispatch(toggleProfileModalVisible(true));
   };
@@ -104,13 +118,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   const selfBtnList = [
     {
-      label: 'Edit My Profile',
+      label: `${editMode ? 'Confirm' : 'Edit My Profile'}`,
       bg: 'bg-gradient-to-br from-violet-500 to-purple-500',
       onClick: editMyProfile,
     },
     {
       label: 'Change Avatar',
-      bg: 'bg-gradient-to-bl from-amber-500 to-pink-500',
+      bg:
+        'bg-gradient-to-bl from-amber-500 to-pink-500' +
+        ` ${editMode && 'cursor-not-allowed opacity-60'}`,
       onClick: changeAvatar,
     },
   ];
@@ -155,6 +171,14 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     }
   };
 
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const input = e.target as HTMLInputElement;
+    setProfileForm((prev) => ({
+      ...prev,
+      [input.name]: input.value,
+    }));
+  };
+
   return (
     <div className="h-full">
       {/* content */}
@@ -170,9 +194,20 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               key={index}
             >
               <span className="w-[40%] font-semibold">{item.label} :</span>
-              <span className="flex-1">
-                {user ? user[item.value] : targetUser![item.value]}
-              </span>
+
+              {editMode ? (
+                <input
+                  name={item.value}
+                  type={item.type}
+                  value={(profileForm as any)[item.value]}
+                  className="text-black box-border outline-none bg-slate-100 max-w-[180px] px-1"
+                  onInput={(e) => handleInput(e)}
+                />
+              ) : (
+                <span className="flex-1">
+                  {user ? user[item.value] : targetUser![item.value]}
+                </span>
+              )}
             </section>
           ))}
         </div>
@@ -236,7 +271,9 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           />
         ) : (
           <div className="text-black">
-            {`Are you sure you want to delete ${targetUser?.nickname}?`}
+            {`Are you sure you want to delete ${
+              targetUser?.nickname || targetUser?.displayName
+            }?`}
           </div>
         )}
       </Modal>

@@ -29,7 +29,10 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
       onClick={onClick as () => void}
     >
       <Badge count={unReadCount} size="default">
-        <Avatar src={user?.avatar || defaultAvatar} userName={user?.nickname} />
+        <Avatar
+          src={user?.avatar || defaultAvatar}
+          userName={user?.nickname || user.displayName}
+        />
       </Badge>
 
       <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white ">

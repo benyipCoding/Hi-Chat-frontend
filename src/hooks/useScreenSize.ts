@@ -7,7 +7,7 @@ export function useScreenSize(): () => boolean {
 export function useShowExtra() {
   const [showExtraSideBox, setShowExtraSideBox] = useState<boolean>(false);
   function resizeEvent() {
-    if (window.innerWidth >= 1500) {
+    if (window.innerWidth >= 1535) {
       setShowExtraSideBox(true);
     } else {
       setShowExtraSideBox(false);
@@ -15,6 +15,7 @@ export function useShowExtra() {
   }
 
   useEffect(() => {
+    resizeEvent();
     window.addEventListener('resize', resizeEvent);
 
     return () => {

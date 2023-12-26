@@ -19,6 +19,7 @@ export type User = {
   avatar?: string;
   gender?: Gender;
   nickname: string;
+  displayName: string;
 };
 
 export type UserWithChecked = User & { checked: boolean };

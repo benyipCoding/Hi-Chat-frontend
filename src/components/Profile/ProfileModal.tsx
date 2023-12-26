@@ -38,9 +38,7 @@ const ProfileModal = () => {
           </motion.button>
         </>
       }
-    >
-      <div>123</div>
-    </Modal>
+    ></Modal>
   );
 };
 

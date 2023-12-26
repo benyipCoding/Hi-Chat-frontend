@@ -95,7 +95,9 @@ export const selectStrangerByName = createSelector(
   [selectUserName, selectStrangers],
   (name, strangers) =>
     strangers.filter(
-      (s) => s?.name.includes(name) || s.name.includes(name.toLowerCase())
+      (s) =>
+        s?.displayName.includes(name) ||
+        s.displayName.includes(name.toLowerCase())
     )
 );
 export const selectFriendByName = createSelector(
@@ -103,10 +105,10 @@ export const selectFriendByName = createSelector(
   (name, friends) =>
     friends.filter(
       (f) =>
-        f.nickname.includes(name) ||
-        f.nickname.includes(name.toLowerCase()) ||
-        f.name.includes(name) ||
-        f.name.includes(name.toLowerCase())
+        f.nickname?.includes(name) ||
+        f.nickname?.includes(name.toLowerCase()) ||
+        f.displayName.includes(name) ||
+        f.displayName.includes(name.toLowerCase())
     )
 );
 export const selectInvitationByName = createSelector(
@@ -114,10 +116,10 @@ export const selectInvitationByName = createSelector(
   (name, strangers) =>
     strangers.filter(
       (i) =>
-        i.sender.name.includes(name) ||
-        i.sender.name.includes(name.toLowerCase()) ||
-        i.receiver.name.includes(name) ||
-        i.receiver.name.includes(name.toLowerCase())
+        i.sender.displayName.includes(name) ||
+        i.sender.displayName.includes(name.toLowerCase()) ||
+        i.receiver.displayName.includes(name) ||
+        i.receiver.displayName.includes(name.toLowerCase())
     )
 );
 

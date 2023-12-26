@@ -88,6 +88,10 @@ const InputArea: React.FC<InputAreaProps> = ({
             onChange((e.target as HTMLTextAreaElement).value);
           }}
           onKeyDown={(e) => onTextareaKeydown(e)}
+          style={{
+            maxHeight: 109,
+            minHeight: 50,
+          }}
         />
         <motion.button
           whileTap={{ scale: 0.9 }}
