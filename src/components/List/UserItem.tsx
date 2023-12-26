@@ -23,6 +23,8 @@ const UserItem: React.FC<UserItemProps> = ({
   showDescription = true,
   isFriendList = false,
 }) => {
+  console.log(user);
+
   return (
     <section className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md">
       <Avatar

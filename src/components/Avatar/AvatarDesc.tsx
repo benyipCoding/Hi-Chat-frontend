@@ -27,6 +27,7 @@ import { DynamicPageName } from '../DynamicPage/pageMap';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { setCurrentConversation } from '@/store/conversationSlice';
 import { setTargetUser } from '@/store/profileSlice';
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
 interface AvatarDescProps {
   userName: string;
@@ -100,11 +101,16 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     });
   };
 
+  console.log('@@@@@', userName);
+
   return (
     <div className="flex-1 rounded-sm flex flex-col border-b-[1px] border-[#98d3df80] relative text-white">
       {/* User name */}
-      <p className="flex-1 text-2xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md">
-        {`${sender?.id === self_user?.id ? 'to ' : ''}` + CapitalName}
+      <p className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md max-w-[125px] overflow-hidden whitespace-nowrap text-ellipsis">
+        {sender?.id === self_user?.id && (
+          <FaArrowUpRightFromSquare className="mr-1 mt-1 text-sm text-gray-400" />
+        )}
+        {CapitalName}
       </p>
 
       {/* greetings */}

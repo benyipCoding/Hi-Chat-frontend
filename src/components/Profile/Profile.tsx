@@ -22,7 +22,7 @@ import {
   setTargetUser,
   toggleProfileModalVisible,
 } from '@/store/profileSlice';
-import { fetchFriendsThunk } from '@/store/friendsSlice';
+import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
 import clsx from 'clsx';
 
 type DescItemType = {
@@ -144,6 +144,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           })
         );
         dispatch(fetchFriendsThunk());
+        dispatch(fetchInvitationsThunk());
         dispatch(setTitle(res.data.nickname));
       })
       .catch((err) => {
