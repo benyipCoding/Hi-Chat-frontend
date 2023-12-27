@@ -7,14 +7,15 @@ import {
   postChangeNickname,
   postCreateConversation,
   postDeleteFriendship,
+  postUpdateUserInfo,
 } from '@/utils/api';
 import { setCurrentConversation } from '@/store/conversationSlice';
 import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 import ProfileDesc from '../Avatar/ProfileDesc';
-import { User } from '@/utils/types';
+import { UpdateUserInfoDto, User } from '@/utils/types';
 import { motion } from 'framer-motion';
 import { Modal } from 'antd';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Input } from '../Inputs';
 import { toast } from 'react-toastify';
 import {
@@ -25,6 +26,7 @@ import {
 import { fetchFriendsThunk, fetchInvitationsThunk } from '@/store/friendsSlice';
 import clsx from 'clsx';
 import ProfileFormItem from './ProfileFormItem';
+import { AuthContext } from '@/context/AuthContext';
 
 type DescItemType = {
   label: string;
@@ -61,11 +63,12 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const [isDeleteContent, setIsDeleteContent] = useState<boolean>(false);
   const { targetUser } = useSelector((state: RootState) => state.profile);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [profileForm, setProfileForm] = useState({
-    displayName: user?.displayName,
-    email: user?.email,
-    gender: user?.gender,
+  const [profileForm, setProfileForm] = useState<UpdateUserInfoDto>({
+    displayName: user!.displayName,
+    email: user!.email!,
+    gender: user!.gender!,
   });
+  const { updateAuthUser } = useContext(AuthContext);
 
   const startConversation = () => {
     postCreateConversation(targetUser!).then((res) => {
@@ -86,15 +89,30 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   };
 
   const editMyProfile = () => {
-    setEditMode((prev) => !prev);
-    console.log(profileForm);
-
-    // dispatch(setModalTitle('Edit My Profile'));
-    // dispatch(toggleProfileModalVisible(true));
+    if (editMode) {
+      postUpdateUserInfo(profileForm!)
+        .then((res) => {
+          updateAuthUser(res.data);
+          setEditMode((prev) => !prev);
+        })
+        .catch(() => {
+          toast.error('Duplicate Email or Username!');
+        });
+    } else {
+      setEditMode((prev) => !prev);
+    }
   };
 
   const changeAvatar = () => {
-    if (editMode) return;
+    if (editMode) {
+      setProfileForm({
+        displayName: user!.displayName,
+        email: user!.email!,
+        gender: user!.gender!,
+      });
+      setEditMode(false);
+      return;
+    }
     dispatch(setModalTitle('Change Avatar'));
     dispatch(toggleProfileModalVisible(true));
   };
@@ -124,10 +142,8 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       onClick: editMyProfile,
     },
     {
-      label: 'Change Avatar',
-      bg:
-        'bg-gradient-to-bl from-amber-500 to-pink-500' +
-        ` ${editMode && 'cursor-not-allowed opacity-60'}`,
+      label: `${editMode ? 'Cancel' : 'Change Avatar'}`,
+      bg: 'bg-gradient-to-bl from-amber-500 to-pink-500',
       onClick: changeAvatar,
     },
   ];
@@ -198,13 +214,6 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span className="w-[40%] font-semibold">{item.label} :</span>
 
               {editMode ? (
-                // <input
-                //   name={item.value}
-                //   type={item.type}
-                //   value={(profileForm as any)[item.value]}
-                //   className="text-black box-border outline-none bg-slate-100 max-w-[180px] px-1 rounded-sm"
-                //   onInput={(e) => handleInput(e)}
-                // />
                 <ProfileFormItem
                   name={item.value}
                   type={item.type}

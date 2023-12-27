@@ -7,7 +7,6 @@ import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageMap } from './pageMap';
 import { clearCurrentConversation } from '@/store/conversationSlice';
-import { getConversationList } from '@/utils/api';
 
 const DynamicPage = () => {
   const { swipeToList } = useTranslate();
@@ -19,7 +18,7 @@ const DynamicPage = () => {
 
   const swipeBack = () => {
     swipeToList(divList!);
-    getConversationList();
+    // getConversationList();
     setTimeout(() => {
       dispatch(clearCurrentConversation());
     }, 300);

@@ -9,6 +9,7 @@ import {
   PostMsgData,
   RegisterResponse,
   SignInResponse,
+  UpdateUserInfoDto,
   User,
 } from './types';
 import { store } from '@/store';
@@ -182,5 +183,13 @@ export function postDeleteFriendship(targetUserId: string) {
   return request({
     url: `/friends/delete-friendship/${targetUserId}`,
     method: 'post',
+  });
+}
+
+export function postUpdateUserInfo(data: UpdateUserInfoDto) {
+  return request<User>({
+    url: '/user/update-userInfo',
+    method: 'post',
+    data,
   });
 }

@@ -85,3 +85,9 @@ export type ChangeNicknameDto = {
   targetUserId: string;
   nickname: string;
 };
+
+export type UpdateUserInfoDto = {
+  displayName: string;
+  email: string;
+  gender: Gender;
+};

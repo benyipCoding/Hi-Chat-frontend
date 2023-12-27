@@ -17,7 +17,7 @@ const ProfileDesc: React.FC<ProfileDescProps> = ({ user }) => {
     <div className=" flex flex-col justify-evenly text-sm text-gray-300">
       <p className="text-3xl text-white flex items-center">
         {formatUserName(
-          user?.name || targetUser?.nickname || targetUser?.displayName
+          user?.displayName || targetUser?.nickname || targetUser?.displayName
         )}
         {displayUser?.gender === Gender.FEMALE ? (
           <FaFemale className="text-pink-300 text-xl ml-2" />

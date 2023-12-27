@@ -95,7 +95,7 @@ const InputArea: React.FC<InputAreaProps> = ({
         <div className="flex">
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="bg-gradient-to-br from-rose-500 to-orange-500 rounded-md text-md w-14 md:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 lg:py-2 lg:flex-row mr-4 max-lg:hidden"
+            className="bg-gradient-to-br from-rose-500 to-orange-500 rounded-md text-md w-14 md:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 py-[0.6vh] lg:flex-row mr-4 max-lg:hidden"
             onClick={onClear}
           >
             <FaBackspace className="text-xl" />
@@ -103,7 +103,7 @@ const InputArea: React.FC<InputAreaProps> = ({
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="bg-gradient-to-t from-lime-500 to-green-500 rounded-md text-md w-14 sm:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 lg:py-2 lg:flex-row"
+            className="bg-gradient-to-t from-lime-500 to-green-500 rounded-md text-md w-14 sm:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 py-[0.6vh] lg:flex-row"
             onClick={sendMsg}
           >
             <RiSendPlaneFill className="text-2xl" />
