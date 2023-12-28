@@ -4,6 +4,7 @@ import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { DynamicPageName } from '../DynamicPage/pageMap';
 import {
+  getConversationList,
   postChangeNickname,
   postCreateConversation,
   postDeleteFriendship,
@@ -12,7 +13,7 @@ import {
 import { setCurrentConversation } from '@/store/conversationSlice';
 import Avatar, { defaultAvatar } from '../Avatar/Avatar';
 import ProfileDesc from '../Avatar/ProfileDesc';
-import { UpdateUserInfoDto, User } from '@/utils/types';
+import { Gender, UpdateUserInfoDto, User } from '@/utils/types';
 import { motion } from 'framer-motion';
 import { Modal } from 'antd';
 import { useContext, useState } from 'react';
@@ -64,9 +65,9 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const { targetUser } = useSelector((state: RootState) => state.profile);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [profileForm, setProfileForm] = useState<UpdateUserInfoDto>({
-    displayName: user!.displayName,
-    email: user!.email!,
-    gender: user!.gender!,
+    displayName: user?.displayName || '',
+    email: user?.email || '',
+    gender: user?.gender || Gender.MALE,
   });
   const { updateAuthUser } = useContext(AuthContext);
 
@@ -106,9 +107,9 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const changeAvatar = () => {
     if (editMode) {
       setProfileForm({
-        displayName: user!.displayName,
-        email: user!.email!,
-        gender: user!.gender!,
+        displayName: user?.displayName || '',
+        email: user?.email || '',
+        gender: user?.gender || Gender.MALE,
       });
       setEditMode(false);
       return;
@@ -163,6 +164,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         dispatch(fetchFriendsThunk());
         dispatch(fetchInvitationsThunk());
         dispatch(setTitle(res.data.nickname));
+        getConversationList();
       })
       .catch((err) => {
         console.log(err);

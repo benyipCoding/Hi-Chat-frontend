@@ -34,7 +34,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         <Avatar style={avatarStyle} />
         <div
           className={clsx(
-            'relative max-w-[62vw] md:max-w-[80vw] lg:max-w-[56vw] rounded-md bg-slate-600 p-2 self-center text-lg overflow-hidden whitespace-normal',
+            'relative max-w-[58vw] md:max-w-[80vw] lg:max-w-[48vw] xl:max-w-[32vw] rounded-md bg-slate-600 p-2 self-center text-lg overflow-hidden whitespace-normal',
             isMe &&
               'bg-gradient-to-r from-violet-600 to-indigo-600 triangle-me',
             !isMe && 'triangle'
