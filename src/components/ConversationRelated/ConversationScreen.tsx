@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import MessageBubble from '../MessageBubble/MessageBubble';
 import { AppDispatch, RootState } from '@/store';
 import { toggleEmojiPickerVisible } from '@/store/conversationSlice';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Message } from '@/utils/types';
-import { AuthContext } from '@/context/AuthContext';
+// import { AuthContext } from '@/context/AuthContext';
 
 interface ConversationScreenProps {
   className: string;
@@ -24,7 +24,7 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
   const { isShowEmojiPicker } = useSelector(
     (state: RootState) => state.conversation
   );
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
   const screen = useRef<HTMLDivElement>(null);
   const bottom = useRef<HTMLDivElement>(null);
@@ -73,9 +73,10 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
         <MessageBubble
           createAt={msg.createAt}
           showNotice={false}
-          isMe={user?.id === msg.sender.id}
+          // isMe={user?.id === msg.sender.id}
           content={msg.content}
           key={index}
+          message={msg}
         />
       ))}
       <div

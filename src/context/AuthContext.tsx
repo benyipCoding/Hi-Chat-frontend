@@ -3,7 +3,7 @@ import { createContext } from 'react';
 
 type AuthContextType = {
   user?: User;
-  updateAuthUser: (data: User) => void;
+  updateAuthUser: React.Dispatch<React.SetStateAction<User | undefined>>;
 };
 
 export const AuthContext = createContext<AuthContextType>({

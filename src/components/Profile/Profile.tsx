@@ -204,7 +204,10 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       {/* content */}
       <div className="p-4 bg-[#0000005e] rounded-md">
         <div className="flex gap-4">
-          <Avatar src={user?.avatar || targetUser?.avatar || defaultAvatar} />
+          <Avatar
+            src={user?.avatar || targetUser?.avatar || defaultAvatar}
+            avatarScale={true}
+          />
           <ProfileDesc user={user} />
         </div>
         <div className="mt-10 flex flex-col gap-4">

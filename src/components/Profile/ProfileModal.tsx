@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { toggleProfileModalVisible } from '@/store/profileSlice';
 import ImgCrop from 'antd-img-crop';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { RcFile } from 'antd/es/upload';
 import { PlusOutlined } from '@ant-design/icons';
-// import { toast } from 'react-toastify';
+import { postUploadAvatar } from '@/utils/api';
+import { AuthContext } from '@/context/AuthContext';
 
 const ProfileModal = () => {
   const { profileModalVisible, modalTitle } = useSelector(
@@ -22,6 +23,7 @@ const ProfileModal = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { user, updateAuthUser } = useContext(AuthContext);
 
   const onCancelUploadAvatar = () => {
     setFileList([]);
@@ -29,9 +31,25 @@ const ProfileModal = () => {
   };
 
   const onConfirmUploadAvatar = () => {
-    console.log(fileList);
+    const avatar = fileList[0];
+    const formdata = new FormData();
+    formdata.append('avatar', avatar.originFileObj as File);
+    postUploadAvatar(formdata)
+      .then((res) => {
+        updateAuthUser({ ...user!, avatar: res.data });
+      })
+      .catch((err) => {
+        notification.error({
+          message: 'Upload avatar error',
+          description: `${err}`,
+          duration: 3,
+        });
+      })
+      .finally(() => {
+        setFileList([]);
+        dispatch(toggleProfileModalVisible(false));
+      });
   };
-  // const [api, contextHolder] = notification.useNotification();
 
   const modalProps: ModalProps = {
     title: (
@@ -99,7 +117,6 @@ const ProfileModal = () => {
     onRemove() {
       setFileList([]);
     },
-
     maxCount: 1,
     listType: 'picture-card',
     fileList,

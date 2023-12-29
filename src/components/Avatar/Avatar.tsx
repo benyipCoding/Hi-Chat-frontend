@@ -1,3 +1,4 @@
+import { Image } from 'antd';
 import clsx from 'clsx';
 
 interface AvatarProps {
@@ -5,6 +6,7 @@ interface AvatarProps {
   userName?: string;
   fixedSize?: boolean;
   style?: React.CSSProperties;
+  avatarScale?: boolean;
 }
 
 export const defaultAvatar = '/images/avatar/2.jpeg';
@@ -14,6 +16,7 @@ const Avatar: React.FC<AvatarProps> = ({
   userName,
   fixedSize = false,
   style,
+  avatarScale = false,
 }) => {
   return (
     <div
@@ -23,7 +26,11 @@ const Avatar: React.FC<AvatarProps> = ({
       )}
       style={style}
     >
-      <img src={src} alt={userName} className="m-auto" />
+      {avatarScale ? (
+        <Image src={src} className="m-auto" alt={userName} />
+      ) : (
+        <img src={src} alt={userName} className="m-auto" />
+      )}
     </div>
   );
 };

@@ -193,3 +193,11 @@ export function postUpdateUserInfo(data: UpdateUserInfoDto) {
     data,
   });
 }
+
+export function postUploadAvatar(data: FormData) {
+  return request({
+    url: '/upload/avatar',
+    method: 'post',
+    data,
+  });
+}
