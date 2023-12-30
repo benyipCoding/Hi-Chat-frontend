@@ -1,5 +1,4 @@
 import { LineWithText } from '@/utils/styles/LineWithText';
-import { CheckCircleOutlined } from '@ant-design/icons';
 import { Input } from '../Inputs';
 import { motion } from 'framer-motion';
 import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
@@ -13,6 +12,7 @@ import { AuthContext } from '@/context/AuthContext';
 import { postFriendInvitation } from '@/utils/api';
 import { toast } from 'react-toastify';
 import { toggleVisible } from '@/store/drawerSlice';
+import SearchInput from '../Inputs/SearchInput';
 
 const AddFriends = () => {
   const { user } = useContext(AuthContext);
@@ -57,18 +57,11 @@ const AddFriends = () => {
   return (
     <div className="h-full flex flex-col relative">
       {/* search input */}
-      <div className="h-[2.25rem] flex items-center w-full gap-2">
-        <Input
-          placeholder="Please input user name."
-          type="text"
-          onInput={(e) => setInputVal((e.target as HTMLInputElement).value)}
-          value={inputVal}
-        />
-        <CheckCircleOutlined
-          className="w-16 h-full bg-sky-600 flex justify-center items-center text-white rounded-md text-[1.25rem] cursor-pointer"
-          onClick={selectAllOrNone}
-        />
-      </div>
+      <SearchInput
+        inputVal={inputVal}
+        setInputVal={setInputVal}
+        onClickIcon={selectAllOrNone}
+      />
 
       <LineWithText className="mt-10 h-[.125rem] relative" color="red">
         <p className="absolute bottom-[-0.625rem] left-[50%] translate-x-[-50%] text-black w-[18.75rem] text-center text-[1rem]">

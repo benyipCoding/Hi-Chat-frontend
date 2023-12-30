@@ -27,7 +27,9 @@ const initialState: FriendsState = {
 };
 
 export const fetchFriendsThunk = createAsyncThunk('friends/fetch', () => {
-  return getFriendList();
+  return getFriendList().then((res) =>
+    res.data.map((f) => ({ ...f, groupSelected: false }))
+  );
 });
 
 export const fetchStrangersThunk = createAsyncThunk('strangers/fetch', () => {
@@ -71,11 +73,21 @@ export const friendSlice = createSlice({
     setFriendListBadge(state, action: PayloadAction<number>) {
       state.friendListBadge = action.payload < 0 ? 0 : action.payload;
     },
+    setFriendGroupSelected(
+      state,
+      action: PayloadAction<{ targetUser: User; groupSelected: boolean }>
+    ) {
+      const target = state.friends.find(
+        (f) => f.id === action.payload.targetUser.id
+      );
+      if (!target) throw new Error('TargetUser is missing!');
+      target.groupSelected = action.payload.groupSelected;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchFriendsThunk.fulfilled, (state, action) => {
-        state.friends = action.payload!.data;
+        state.friends = action.payload!;
       })
       .addCase(fetchStrangersThunk.fulfilled, (state, action) => {
         state.strangers = action.payload;
@@ -130,6 +142,7 @@ export const {
   setUntreatedCount,
   clearFriendListBadge,
   setFriendListBadge,
+  setFriendGroupSelected,
 } = friendSlice.actions;
 
 export default friendSlice.reducer;

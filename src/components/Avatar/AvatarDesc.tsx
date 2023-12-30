@@ -31,7 +31,7 @@ import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
 interface AvatarDescProps {
   userName: string;
-  lastMessage: string;
+  lastMessage?: string;
   status?: FriendshipStatus;
   updateAt?: Date;
   sender?: User;
@@ -39,7 +39,9 @@ interface AvatarDescProps {
   showDescription?: boolean;
   conversationId?: number;
   isFriendList?: boolean;
-  user: User;
+  user?: User;
+  style?: React.CSSProperties;
+  hiddenBorder?: boolean;
 }
 
 const AvatarDesc: React.FC<AvatarDescProps> = ({
@@ -52,6 +54,8 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   showDescription,
   isFriendList,
   user,
+  style,
+  hiddenBorder = false,
 }) => {
   const { Paragraph } = Typography;
   const [ellipsis, setEllipsis] = useState<boolean>(true);
@@ -102,9 +106,17 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
   };
 
   return (
-    <div className="flex-1 rounded-sm flex flex-col border-b-[1px] border-[#98d3df80] relative text-white">
+    <div
+      className={clsx(
+        'flex-1 rounded-sm flex flex-col border-b-[1px] border-[#98d3df80] relative text-white',
+        hiddenBorder && 'border-b-[0px]'
+      )}
+    >
       {/* User name */}
-      <p className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md max-w-[125px] overflow-hidden whitespace-nowrap text-ellipsis">
+      <p
+        className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md max-w-[125px] overflow-hidden whitespace-nowrap text-ellipsis"
+        style={style}
+      >
         {sender?.id === self_user?.id && (
           <FaArrowUpRightFromSquare className="mr-1 mt-1 text-sm text-gray-400" />
         )}
@@ -172,14 +184,14 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
           <motion.span
             whileTap={{ scale: 0.9 }}
             className="border p-2 rounded-full shadow-md shadow-[#98d3df76] border-[#98d3df] drop-shadow-sm text-[#98d3df] cursor-pointer"
-            onClick={(e) => swipe(e, DynamicPageName.PROFILE, user)}
+            onClick={(e) => swipe(e, DynamicPageName.PROFILE, user!)}
           >
             <FaUserAlt />
           </motion.span>
           <motion.span
             whileTap={{ scale: 0.9 }}
             className="border p-2 rounded-full shadow-md shadow-[#ec923188] border-[#ec9131] drop-shadow-sm text-[#ec9131] cursor-pointer"
-            onClick={(e) => swipe(e, DynamicPageName.CONVERSATION, user)}
+            onClick={(e) => swipe(e, DynamicPageName.CONVERSATION, user!)}
           >
             <IoChatbubbleEllipses />
           </motion.span>
