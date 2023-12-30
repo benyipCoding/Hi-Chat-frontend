@@ -20,7 +20,7 @@ export const DropMenuList: DropMenuType[] = [
     label: DropMenuAction.GROUP_CHAT,
     onClick: (dispatch: AppDispatch) => {
       dispatch(toggleVisible(true));
-      dispatch(setDrawerTitle(DropMenuAction.GROUP_CHAT));
+      dispatch(setDrawerTitle(DropMenuAction.CHOOSE));
     },
   },
   {

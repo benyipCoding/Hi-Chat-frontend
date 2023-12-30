@@ -97,4 +97,5 @@ export enum DropMenuAction {
   GROUP_CHAT = 'Group chat',
   ADD_FRIENDS = 'Add friends',
   LOGOUT = 'Logout',
+  CHOOSE = 'Choose your friends',
 }

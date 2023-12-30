@@ -1,11 +1,16 @@
-import { AppDispatch } from '@/store';
-import { toggleVisible } from '@/store/drawerSlice';
 import { Button, Empty } from 'antd';
-import { useDispatch } from 'react-redux';
 
-const EmptyState = () => {
-  const dispatch = useDispatch<AppDispatch>();
+interface EmptyStateProps {
+  label: string;
+  onClick: () => void;
+  btnLabel: string;
+}
 
+const EmptyState: React.FC<EmptyStateProps> = ({
+  label,
+  onClick,
+  btnLabel,
+}) => {
   return (
     <Empty
       image={
@@ -14,18 +19,14 @@ const EmptyState = () => {
           className="object-cover w-full"
         />
       }
-      description={
-        <span className="text-white text-lg">
-          Add friends to start chatting!
-        </span>
-      }
+      description={<span className="text-white text-lg">{label}</span>}
       className="flex-1 flex flex-col justify-center items-center"
     >
       <Button
         className="bg-gradient-to-r from-violet-600 to-indigo-600"
-        onClick={() => dispatch(toggleVisible(true))}
+        onClick={onClick}
       >
-        <span className="text-white">Start chat now</span>
+        <span className="text-white">{btnLabel}</span>
       </Button>
     </Empty>
   );
