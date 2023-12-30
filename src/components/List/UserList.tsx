@@ -29,7 +29,7 @@ const UserList: React.FC<UserListProps> = ({ filter = '' }) => {
   };
 
   return (
-    <ul className="mt-6 flex-1 overflow-y-auto scroll-bar grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2 sm:gap-3 pb-12">
+    <ul className="mt-6 flex-1 overflow-y-auto scroll-bar grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-3 pb-12">
       {strangers.map((user, index) => (
         <motion.li
           whileTap={{ scale: 0.9 }}

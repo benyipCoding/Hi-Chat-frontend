@@ -95,7 +95,7 @@ const Conversations = () => {
     <>
       {currentConversation && (
         <ConversationScreen
-          className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] px-2 pt-4 overflow-y-auto flex flex-col relative gap-4 md:gap-6"
+          className="rounded-md bg-[#0000005e] h-[75%] lg:h-[70%] px-2 xl:px-4 pt-4 overflow-y-auto flex flex-col relative gap-4 md:gap-6"
           messages={messages}
         />
       )}

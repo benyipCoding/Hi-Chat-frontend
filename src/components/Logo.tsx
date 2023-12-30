@@ -12,7 +12,11 @@ const Logo: React.FC<LogoProps> = ({ height = undefined, extraClass = '' }) => {
       className={`h-[50px] md:h-[60px] flex justify-center items-center ${extraClass}`}
       style={{ height }}
     >
-      <img src="/images/login/hi-chat.png" alt="" className="h-full" />
+      <img
+        src="/images/login/hi-chat.png"
+        alt=""
+        className="h-full drop-shadow-xl"
+      />
     </div>
   );
 };

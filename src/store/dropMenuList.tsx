@@ -5,8 +5,8 @@ import {
   WechatFilled,
 } from '@ant-design/icons';
 import { AppDispatch } from '.';
-import { toggleVisible } from './drawerSlice';
-// import { FRIENDS_COUNT } from '@/utils/helpers';
+import { setDrawerTitle, toggleVisible } from './drawerSlice';
+import { DropMenuAction } from '@/utils/types';
 
 export type DropMenuType = {
   icon: React.ReactNode;
@@ -14,23 +14,21 @@ export type DropMenuType = {
   onClick: (dispatch: AppDispatch) => void;
 };
 
-export enum DropMenuAction {
-  GROUP_CHAT = 'Group chat',
-  ADD_FRIENDS = 'Add friends',
-  LOGOUT = 'Logout',
-}
-
 export const DropMenuList: DropMenuType[] = [
   {
     icon: <WechatFilled className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.GROUP_CHAT,
-    onClick: () => {},
+    onClick: (dispatch: AppDispatch) => {
+      dispatch(toggleVisible(true));
+      dispatch(setDrawerTitle(DropMenuAction.GROUP_CHAT));
+    },
   },
   {
     icon: <UserAddOutlined className="text-[20px] sm:text-[26px]" />,
     label: DropMenuAction.ADD_FRIENDS,
     onClick: (dispatch: AppDispatch) => {
       dispatch(toggleVisible(true));
+      dispatch(setDrawerTitle(DropMenuAction.ADD_FRIENDS));
     },
   },
   {

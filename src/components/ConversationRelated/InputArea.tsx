@@ -82,17 +82,17 @@ const InputArea: React.FC<InputAreaProps> = ({
       className={className}
       onClick={() => dispatch(toggleEmojiPickerVisible(false))}
     >
-      <Space.Compact className="w-full flex flex-1 gap-2 lg:flex-col lg:items-end">
+      <Space.Compact className="w-full flex flex-1 gap-2 lg:flex-col lg:items-end justify-between">
         <textarea
           ref={textarea}
-          className="form-input flex-1 rounded-md bg-[#0000005e] scroll-bar text-lg max-h-[17.6vh] lg:w-full lg:max-h-[12vh] min-h-[50px]"
+          className="form-input flex-1 rounded-md bg-[#0000005e] scroll-bar text-lg max-h-[17.6vh] lg:w-full lg:max-h-[13vh] min-h-[50px]"
           value={value}
           onInput={(e) => {
             onChange((e.target as HTMLTextAreaElement).value);
           }}
           onKeyDown={(e) => onTextareaKeydown(e)}
         />
-        <div className="flex">
+        <div className="flex ">
           <motion.button
             whileTap={{ scale: 0.9 }}
             className="bg-gradient-to-br from-rose-500 to-orange-500 rounded-md text-md w-14 md:w-16 flex justify-center items-center flex-col gap-1 lg:w-24 py-[0.6vh] lg:flex-row mr-4 max-lg:hidden"

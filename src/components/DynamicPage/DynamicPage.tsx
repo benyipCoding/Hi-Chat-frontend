@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pageMap } from './pageMap';
 import { clearCurrentConversation } from '@/store/conversationSlice';
 import { setTitle } from '@/store/dynamicPageSlice';
+import PureLogo from '../Logo';
+import DrawerBtn from '../Drawer/DrawerBtn';
+import { useScreenSize } from '@/hooks/useScreenSize';
 
 const DynamicPage = () => {
   const { swipeToList } = useTranslate();
@@ -16,10 +19,15 @@ const DynamicPage = () => {
     (state: RootState) => state.dynamicPage
   );
   const dispatch = useDispatch<AppDispatch>();
+  const { currentConversation } = useSelector(
+    (state: RootState) => state.conversation
+  );
+  const { targetUser } = useSelector((state: RootState) => state.profile);
+
+  const isLarge = useScreenSize();
 
   const swipeBack = () => {
     swipeToList(divList!);
-    // getConversationList();
     setTimeout(() => {
       dispatch(clearCurrentConversation());
       dispatch(setTitle(''));
@@ -34,9 +42,16 @@ const DynamicPage = () => {
           onClick={swipeBack}
         />
         {title}
+        {isLarge() && <DrawerBtn />}
       </BlurGlassDiv>
       <BlurGlassDiv className="h-full rounded-md p-2 text-white flex flex-col gap-2 overflow-hidden relative">
-        {pageMap[currentPage]}
+        {!currentConversation && !targetUser ? (
+          <div className="h-full flex justify-center items-center bg-[#0000004b] rounded-md">
+            <PureLogo />
+          </div>
+        ) : (
+          pageMap[currentPage]
+        )}
       </BlurGlassDiv>
     </div>
   );

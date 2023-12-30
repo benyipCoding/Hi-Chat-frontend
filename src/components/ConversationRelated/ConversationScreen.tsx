@@ -73,7 +73,6 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
         <MessageBubble
           createAt={msg.createAt}
           showNotice={false}
-          // isMe={user?.id === msg.sender.id}
           content={msg.content}
           key={index}
           message={msg}

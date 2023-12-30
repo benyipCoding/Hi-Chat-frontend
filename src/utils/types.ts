@@ -92,3 +92,9 @@ export type UpdateUserInfoDto = {
   email: string;
   gender: Gender;
 };
+
+export enum DropMenuAction {
+  GROUP_CHAT = 'Group chat',
+  ADD_FRIENDS = 'Add friends',
+  LOGOUT = 'Logout',
+}
