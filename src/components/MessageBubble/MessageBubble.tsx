@@ -10,7 +10,6 @@ const avatarStyle: React.CSSProperties = {
 };
 
 interface MessageBubbleProps {
-  // isMe?: boolean;
   createAt: Date;
   showNotice?: boolean;
   content: string;
@@ -18,7 +17,6 @@ interface MessageBubbleProps {
 }
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({
-  // isMe,
   createAt,
   showNotice = false,
   content,
@@ -43,6 +41,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         <Avatar
           style={avatarStyle}
           src={message.sender.avatar || defaultAvatar}
+          avatarScale={true}
         />
         <div
           className={clsx(

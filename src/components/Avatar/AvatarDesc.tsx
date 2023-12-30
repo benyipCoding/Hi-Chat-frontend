@@ -73,11 +73,15 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     e.stopPropagation();
     dispatch(setCurrentPage(pageName));
     if (pageName === DynamicPageName.CONVERSATION) {
-      postCreateConversation(user).then((res) => {
-        dispatch(setCurrentConversation(res.data));
-        dispatch(setTitle(formatUserName(user.nickname || user.displayName)));
-        swipeToDetail(divList!);
-      });
+      postCreateConversation(user)
+        .then((res) => {
+          dispatch(setCurrentConversation(res.data));
+          dispatch(setTitle(formatUserName(user.nickname || user.displayName)));
+          swipeToDetail(divList!);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       dispatch(setTitle(formatUserName(user.nickname || user.displayName)));
       dispatch(setTargetUser(user));

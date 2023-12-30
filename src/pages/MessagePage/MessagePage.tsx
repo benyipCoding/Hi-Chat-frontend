@@ -34,15 +34,19 @@ const MessagePage = () => {
   );
 
   const onClickItem = (conversation: Conversation, targetUser: User) => {
-    postCreateConversation(targetUser).then((res) => {
-      dispatch(setCurrentConversation(res.data));
-      dispatch(setTitle(formatUserName(conversation.name)));
-      dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
-      updateMessageStatusByConversationId(conversation.id).then(() => {
-        getConversationList();
+    postCreateConversation(targetUser)
+      .then((res) => {
+        dispatch(setCurrentConversation(res.data));
+        dispatch(setTitle(formatUserName(conversation.name)));
+        dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
+        updateMessageStatusByConversationId(conversation.id).then(() => {
+          getConversationList();
+        });
+        swipeToDetail(divList!);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      swipeToDetail(divList!);
-    });
   };
 
   return (

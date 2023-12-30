@@ -83,6 +83,17 @@ export const friendSlice = createSlice({
       if (!target) throw new Error('TargetUser is missing!');
       target.groupSelected = action.payload.groupSelected;
     },
+    groupAllOrNone(state) {
+      const hasFalseItem = state.friends.some((f) => !f.groupSelected);
+      if (hasFalseItem) {
+        state.friends.forEach((f) => (f.groupSelected = true));
+      } else {
+        state.friends.forEach((f) => (f.groupSelected = false));
+      }
+    },
+    clearGroupSelected(state) {
+      state.friends.forEach((f) => (f.groupSelected = false));
+    },
   },
   extraReducers(builder) {
     builder
@@ -143,6 +154,8 @@ export const {
   clearFriendListBadge,
   setFriendListBadge,
   setFriendGroupSelected,
+  groupAllOrNone,
+  clearGroupSelected,
 } = friendSlice.actions;
 
 export default friendSlice.reducer;

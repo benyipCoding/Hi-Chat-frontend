@@ -3,6 +3,7 @@ import { request, requestStream } from './request';
 import {
   ChangeNicknameDto,
   Conversation,
+  CreateGroupConversationDto,
   FriendshipStatus,
   Invitation,
   Message,
@@ -12,7 +13,7 @@ import {
   UpdateUserInfoDto,
   User,
 } from './types';
-import { store } from '@/store';
+import { RootState, store } from '@/store';
 import {
   setConversations,
   setUnreadCountForConversations,
@@ -105,6 +106,14 @@ export function postChangeFriendshipStatus(
 }
 
 export function postCreateConversation(target: User) {
+  const state: RootState = store.getState();
+  const isSame =
+    target.id === state.conversation.currentConversation?.creator.id ||
+    target.id === state.conversation.currentConversation?.recipient.id;
+
+  if (state.conversation.currentConversation && isSame) {
+    return Promise.reject('Current conversation is existed');
+  }
   return request<Conversation>({
     method: 'post',
     url: '/conversation/create',
@@ -197,6 +206,14 @@ export function postUpdateUserInfo(data: UpdateUserInfoDto) {
 export function postUploadAvatar(data: FormData) {
   return request({
     url: '/upload/avatar',
+    method: 'post',
+    data,
+  });
+}
+
+export function postCreateGroupConversation(data: CreateGroupConversationDto) {
+  return request({
+    url: '/group-conversation/create-group',
     method: 'post',
     data,
   });

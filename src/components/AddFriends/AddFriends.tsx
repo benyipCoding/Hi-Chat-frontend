@@ -1,7 +1,6 @@
 import { LineWithText } from '@/utils/styles/LineWithText';
 import { Input } from '../Inputs';
 import { motion } from 'framer-motion';
-import { BlurGlassDiv } from '@/utils/styles/BlurGlassDiv';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import UserList from '../List/UserList';
@@ -13,6 +12,7 @@ import { postFriendInvitation } from '@/utils/api';
 import { toast } from 'react-toastify';
 import { toggleVisible } from '@/store/drawerSlice';
 import SearchInput from '../Inputs/SearchInput';
+import DrawerConfirmBtn from '../Buttons/DrawerConfirmBtn';
 
 const AddFriends = () => {
   const { user } = useContext(AuthContext);
@@ -72,15 +72,10 @@ const AddFriends = () => {
       {visible && <UserList filter={inputVal} />}
 
       {isShowBtn && (
-        <BlurGlassDiv className="h-14 absolute bottom-0 w-[100%] flex justify-center items-center">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            className="bg-[#0284c7] h-[70%] w-[80%] flex items-center justify-center rounded-full text-white text-[20px]"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Send invitation
-          </motion.button>
-        </BlurGlassDiv>
+        <DrawerConfirmBtn
+          onClick={() => setIsModalOpen(true)}
+          label="Send invitation"
+        />
       )}
 
       <Modal

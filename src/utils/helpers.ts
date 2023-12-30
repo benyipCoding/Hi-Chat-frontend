@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
@@ -69,3 +70,7 @@ export function formatUserName(userName: string | undefined): string {
 }
 
 export const FRIENDS_COUNT = 'friends_count';
+
+export function dropRepeat(arr: any[]): any[] {
+  return [...new Set(arr)];
+}

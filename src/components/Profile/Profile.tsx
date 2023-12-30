@@ -77,10 +77,14 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   });
 
   const startConversation = () => {
-    postCreateConversation(targetUser!).then((res) => {
-      dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
-      dispatch(setCurrentConversation(res.data));
-    });
+    postCreateConversation(targetUser!)
+      .then((res) => {
+        dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
+        dispatch(setCurrentConversation(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const openModal = () => {

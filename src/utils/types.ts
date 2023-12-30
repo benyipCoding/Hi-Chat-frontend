@@ -100,3 +100,7 @@ export enum DropMenuAction {
   LOGOUT = 'Logout',
   CHOOSE = 'Choose your friends',
 }
+
+export type CreateGroupConversationDto = {
+  members: string[];
+};
