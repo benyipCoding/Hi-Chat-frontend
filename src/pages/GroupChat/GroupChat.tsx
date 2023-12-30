@@ -1,8 +1,7 @@
 import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/Inputs';
 import { AppDispatch } from '@/store';
-import { setDrawerTitle } from '@/store/drawerSlice';
-import { toggle } from '@/store/dropMenuSlice';
+import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
 import { addAlphaToHexColor } from '@/utils/helpers';
 import { DropMenuAction } from '@/utils/types';
 import { useState } from 'react';
@@ -14,7 +13,7 @@ const GroupChat = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const startGroupChat = () => {
-    dispatch(toggle(true));
+    dispatch(toggleVisible(true));
     dispatch(setDrawerTitle(DropMenuAction.CHOOSE));
   };
 
