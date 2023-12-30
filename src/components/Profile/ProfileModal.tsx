@@ -32,6 +32,13 @@ const ProfileModal = () => {
 
   const onConfirmUploadAvatar = () => {
     const avatar = fileList[0];
+    if (!avatar) {
+      notification.warning({
+        message: 'Please chose an image to upload.',
+        duration: 3,
+      });
+      return;
+    }
     const formdata = new FormData();
     formdata.append('avatar', avatar.originFileObj as File);
     postUploadAvatar(formdata)
