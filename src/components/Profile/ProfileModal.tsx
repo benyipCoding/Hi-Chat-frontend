@@ -41,7 +41,7 @@ const ProfileModal = () => {
       .catch((err) => {
         notification.error({
           message: 'Upload avatar error',
-          description: `${err}`,
+          description: `${err.data}`,
           duration: 3,
         });
       })

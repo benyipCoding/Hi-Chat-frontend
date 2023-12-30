@@ -10,6 +10,7 @@ export type SignInResponse = { accessToken: string; refreshToken: string };
 export enum Gender {
   MALE = 'male',
   FEMALE = 'female',
+  NULL = '',
 }
 
 export type User = {

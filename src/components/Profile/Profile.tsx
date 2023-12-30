@@ -70,6 +70,11 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     gender: user?.gender || Gender.MALE,
   });
   const { updateAuthUser } = useContext(AuthContext);
+  const [originForm, setOriginForm] = useState<UpdateUserInfoDto>({
+    displayName: '',
+    email: '',
+    gender: Gender.NULL,
+  });
 
   const startConversation = () => {
     postCreateConversation(targetUser!).then((res) => {
@@ -91,6 +96,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   const editMyProfile = () => {
     if (editMode) {
+      if (
+        originForm.displayName === profileForm.displayName &&
+        originForm.email === profileForm.email &&
+        originForm.gender === profileForm.gender
+      ) {
+        setEditMode((prev) => !prev);
+        return;
+      }
+
       postUpdateUserInfo(profileForm!)
         .then((res) => {
           updateAuthUser(res.data);
@@ -101,6 +115,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         });
     } else {
       setEditMode((prev) => !prev);
+      setOriginForm(profileForm);
     }
   };
 
