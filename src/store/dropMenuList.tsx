@@ -7,6 +7,7 @@ import {
 import { AppDispatch } from '.';
 import { setDrawerTitle, toggleVisible } from './drawerSlice';
 import { DropMenuAction } from '@/utils/types';
+import { clearGroupSelected } from './friendsSlice';
 
 export type DropMenuType = {
   icon: React.ReactNode;
@@ -21,6 +22,7 @@ export const DropMenuList: DropMenuType[] = [
     onClick: (dispatch: AppDispatch) => {
       dispatch(toggleVisible(true));
       dispatch(setDrawerTitle(DropMenuAction.CHOOSE));
+      dispatch(clearGroupSelected());
     },
   },
   {

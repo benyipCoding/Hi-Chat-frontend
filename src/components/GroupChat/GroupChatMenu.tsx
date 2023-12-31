@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import { Modal, notification } from 'antd';
 import { motion } from 'framer-motion';
 import { Input } from '../Inputs';
+import { fetchGroupConvList } from '@/store/groupConversationSlice';
 
 const GroupChatMenu = () => {
   const [inputVal, setInputVal] = useState<string>('');
@@ -63,6 +64,7 @@ const GroupChatMenu = () => {
 
     postCreateGroupConversation({ members: friendsIds, groupName })
       .then(() => {
+        dispatch(fetchGroupConvList());
         dispatch(toggleVisible(false));
         dispatch(clearGroupSelected());
         setIsModalOpen(false);

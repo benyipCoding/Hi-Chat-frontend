@@ -4,6 +4,7 @@ import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/Inputs';
 import { AppDispatch, RootState } from '@/store';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
+import { clearGroupSelected } from '@/store/friendsSlice';
 import { addAlphaToHexColor } from '@/utils/helpers';
 import { DropMenuAction } from '@/utils/types';
 import { useState } from 'react';
@@ -20,6 +21,7 @@ const GroupChat = () => {
   const startGroupChat = () => {
     dispatch(toggleVisible(true));
     dispatch(setDrawerTitle(DropMenuAction.CHOOSE));
+    dispatch(clearGroupSelected());
   };
 
   const showEmptyState = groupConvList.length === 0;

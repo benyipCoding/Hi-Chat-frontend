@@ -82,17 +82,18 @@ body {
   border: 0.5rem solid;
   border-bottom-color: transparent;
   border-top-color: transparent;
-  top: 15px;
 }
 .triangle::before {
   border-left-color: transparent;
   border-right-color: #475569;
   left: -14px;
+  top: 10px;
 }
 .triangle-me::before {
   border-right-color: transparent;
   border-left-color: #4f46e5;
   right: -14px;
+  top: 15px;
 }
 
 .ant-upload-list {
