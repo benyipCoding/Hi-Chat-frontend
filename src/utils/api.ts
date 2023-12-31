@@ -5,6 +5,7 @@ import {
   Conversation,
   CreateGroupConversationDto,
   FriendshipStatus,
+  GroupConversation,
   Invitation,
   Message,
   PostMsgData,
@@ -216,5 +217,12 @@ export function postCreateGroupConversation(data: CreateGroupConversationDto) {
     url: '/group-conversation/create-group',
     method: 'post',
     data,
+  });
+}
+
+export function getGroupConversations() {
+  return request<GroupConversation[]>({
+    url: '/group-conversation/get-conv-list',
+    method: 'get',
   });
 }

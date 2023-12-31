@@ -22,6 +22,7 @@ import { FRIENDS_COUNT } from '@/utils/helpers';
 import { useShowExtra } from '@/hooks/useScreenSize';
 import SideBox from '@/components/SideBox/SideBox';
 import ProfileModal from '@/components/Profile/ProfileModal';
+import { fetchGroupConvList } from '@/store/groupConversationSlice';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -40,6 +41,7 @@ const Layout = () => {
     getConversationList();
     dispatch(fetchInvitationsThunk());
     dispatch(fetchFriendsThunk());
+    dispatch(fetchGroupConvList());
 
     return () => {
       socket.disconnect();

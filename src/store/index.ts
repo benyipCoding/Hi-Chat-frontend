@@ -6,6 +6,7 @@ import drawerReducer from './drawerSlice';
 import contactPageReducer from './contactPageSlice';
 import dynamicPageReducer from './dynamicPageSlice';
 import profileReducer from './profileSlice';
+import groupConversationReducer from './groupConversationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     contactPage: contactPageReducer,
     dynamicPage: dynamicPageReducer,
     profile: profileReducer,
+    groupConversation: groupConversationReducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware({ serializableCheck: false }),

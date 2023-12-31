@@ -35,7 +35,11 @@ export type Conversation = {
   updateAt: Date;
   createAt: Date;
   unReadCount?: number;
-  name?: string;
+  name: string;
+};
+
+export type GroupConversation = Omit<Conversation, 'recipient'> & {
+  members: User[];
 };
 
 export type Message = {
@@ -103,4 +107,5 @@ export enum DropMenuAction {
 
 export type CreateGroupConversationDto = {
   members: string[];
+  groupName: string;
 };
