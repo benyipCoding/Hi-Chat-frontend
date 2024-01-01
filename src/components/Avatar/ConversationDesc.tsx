@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthContext } from '@/context/AuthContext';
+import { RootState } from '@/store';
 import { formatCommentTime, formatUserName } from '@/utils/helpers';
 import { Message } from '@/utils/types';
 import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 interface ConversationDescProps {
   name: string;
@@ -17,6 +19,13 @@ const ConversationDesc: React.FC<ConversationDescProps> = ({
 }) => {
   const { user: currentUser } = useContext(AuthContext);
   const capitalName = formatUserName(name);
+  const { friends } = useSelector((state: RootState) => state.friends);
+
+  let nickname: string | undefined;
+  if (isGroup && lastMessage?.sender_id !== currentUser?.id) {
+    const targetUser = friends.find((f) => f.id === lastMessage?.sender_id);
+    nickname = targetUser ? targetUser.nickname : undefined;
+  }
 
   return (
     <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white">
@@ -32,9 +41,7 @@ const ConversationDesc: React.FC<ConversationDescProps> = ({
             lastMessage.senderName === currentUser?.name
               ? 'me'
               : formatUserName(
-                  isGroup
-                    ? lastMessage.senderName || lastMessage.sender_name
-                    : name
+                  isGroup ? nickname || lastMessage.sender_name : name
                 )
           }: ${lastMessage.content}`}
         </div>

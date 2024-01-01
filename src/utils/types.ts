@@ -52,6 +52,7 @@ export type Message = {
   senderName: string;
   sender_name?: string;
   create_at?: Date;
+  sender_id?: string;
 };
 
 export type PostMsgData = {
@@ -111,8 +112,3 @@ export type CreateGroupConversationDto = {
   members: string[];
   groupName: string;
 };
-
-// export type CreateGroupMessageDto = {
-//   content: string;
-//   groupConvId: number;
-// };

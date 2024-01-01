@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { store } from '@/store';
 import { updateMessagesBySelf } from '@/store/conversationSlice';
 import {
@@ -6,7 +7,12 @@ import {
   fetchInvitationsThunk,
   setUntreatedCount,
 } from '@/store/friendsSlice';
-import { getConversationList, updateMessageReadStatus } from '@/utils/api';
+import { fetchGroupConvList } from '@/store/groupConversationSlice';
+import {
+  getConversationList,
+  postUpdateGroupMessageReadStatus,
+  updateMessageReadStatus,
+} from '@/utils/api';
 import { SocketEvent } from '@/utils/enum';
 import { getLocalStorage } from '@/utils/helpers';
 import { Invitation, Message, Tokens } from '@/utils/types';
@@ -64,17 +70,37 @@ socket.on(SocketEvent.REFRESH_UNTREATEDCOUNT, () => {
 
 socket.on(SocketEvent.MESSAGE_DELIVER, async (e: Message) => {
   const state = store.getState();
-  store.dispatch(updateMessagesBySelf(e));
   if (
     state.conversation.currentConversation &&
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    state.conversation.currentConversation.id === (e as any).conversation.id
+    state.conversation.currentConversation.id === (e as any).conversation.id &&
+    state.conversation.currentConversation.name === (e as any).conversation.name
   ) {
+    store.dispatch(updateMessagesBySelf(e));
     // 添加消息已阅逻辑
     await updateMessageReadStatus(e.id);
     getConversationList();
   } else {
     getConversationList();
+  }
+});
+
+socket.on(SocketEvent.GROUP_MESSAGE_DELIVER, async (e) => {
+  // console.log('这里是客户端socket接收到群组信息', e);
+  const state = store.getState();
+  if (
+    state.conversation.currentConversation &&
+    state.conversation.currentConversation.id ===
+      (e as any).groupConversation.id &&
+    state.conversation.currentConversation.name ===
+      (e as any).groupConversation.name
+  ) {
+    store.dispatch(updateMessagesBySelf(e));
+    // 添加消息已阅逻辑
+    // await updateMessageReadStatus(e.id);
+    await postUpdateGroupMessageReadStatus(e.id);
+    store.dispatch(fetchGroupConvList());
+  } else {
+    store.dispatch(fetchGroupConvList());
   }
 });
 

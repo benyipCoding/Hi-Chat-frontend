@@ -7,9 +7,9 @@ import { AuthContext } from '@/context/AuthContext';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
-const avatarStyle: React.CSSProperties = {
-  width: '3.5rem',
-};
+// const avatarStyle: React.CSSProperties = {
+//   width: '3.5rem',
+// };
 
 interface MessageBubbleProps {
   createAt: Date;
@@ -45,7 +45,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         className={clsx('flex gap-3 items-start', isMe && 'flex-row-reverse')}
       >
         <Avatar
-          style={avatarStyle}
+          // style={avatarStyle}
           src={message.sender.avatar || defaultAvatar}
           avatarScale={true}
         />
@@ -59,7 +59,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
           )}
         >
           {!isMe && (
-            <p className="absolute top-[-20px] left-0 text-xs text-gray-300 w-20">
+            <p className="absolute top-[-20px] left-0 text-sm text-gray-300 w-20">
               {senderNickname || message.sender.displayName}
             </p>
           )}

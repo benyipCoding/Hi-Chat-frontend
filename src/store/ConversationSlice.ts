@@ -1,4 +1,7 @@
-import { getMessagesByConversation } from '@/utils/api';
+import {
+  getMessagesByConversation,
+  getMessagesByGroupConvId,
+} from '@/utils/api';
 import { Conversation, GroupConversation, Message } from '@/utils/types';
 import {
   createAsyncThunk,
@@ -35,12 +38,12 @@ export const fetchMessagesThunk = createAsyncThunk(
   }
 );
 
-// export const fetchGroupMessagesThunk = createAsyncThunk(
-//   'fetch/group-messagesByGroupConvId',
-//   (groupConvId: number) => {
-//     return;
-//   }
-// );
+export const fetchGroupMessagesThunk = createAsyncThunk(
+  'fetch/group-messagesByGroupConvId',
+  (groupConvId: number) => {
+    return getMessagesByGroupConvId(groupConvId);
+  }
+);
 
 export const conversationSlice = createSlice({
   name: 'conversation',
@@ -83,9 +86,13 @@ export const conversationSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchMessagesThunk.fulfilled, (state, action) => {
-      state.messages = action.payload.data.reverse();
-    });
+    builder
+      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
+        state.messages = action.payload.data.reverse();
+      })
+      .addCase(fetchGroupMessagesThunk.fulfilled, (state, action) => {
+        state.messages = action.payload.data.reverse();
+      });
   },
 });
 

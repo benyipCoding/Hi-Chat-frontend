@@ -21,13 +21,13 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={clsx(
-        'w-16 sm:w-20 flex rounded-md relative overflow-hidden flex-shrink-0',
+        'w-14 flex rounded-md relative overflow-hidden flex-shrink-0',
         !fixedSize && 'lg:w-14'
       )}
       style={style}
     >
       {avatarScale ? (
-        <Image src={src} className="m-auto" alt={userName} />
+        <Image src={src} alt={userName} className="m-auto" />
       ) : (
         <img src={src} alt={userName} className="m-auto" />
       )}

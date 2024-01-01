@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import hotkeys from 'hotkeys-js';
 import { FaBackspace } from 'react-icons/fa';
+import { fetchGroupConvList } from '@/store/groupConversationSlice';
 
 interface InputAreaProps {
   className: string;
@@ -57,26 +58,28 @@ const InputArea: React.FC<InputAreaProps> = ({
     };
     // send msg api
     if (isGroup) {
-      console.log('群消息创建API');
       postCreateGroupMessage(data)
         .then((res) => {
           console.log(res.data);
+          onChange('');
+          dispatch(updateMessagesBySelf(res.data));
+          textarea.current?.focus();
+          dispatch(fetchGroupConvList());
         })
         .catch((err) => {
-          console.log(err.data);
-        })
-        .finally(() => {});
+          toast.error(err.data);
+        });
     } else {
       postCreateMessage(data)
         .then((res) => {
           onChange('');
           dispatch(updateMessagesBySelf(res.data));
           textarea.current?.focus();
+          getConversationList();
         })
         .catch((err) => {
           toast.error(err.data);
-        })
-        .finally(() => getConversationList());
+        });
     }
   };
 

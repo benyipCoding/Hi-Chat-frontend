@@ -23,7 +23,6 @@ export const groupConversationSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(fetchGroupConvList.fulfilled, (state, action) => {
       state.groupConvList = action.payload.data;
-      console.log(state.groupConvList);
     });
   },
 });

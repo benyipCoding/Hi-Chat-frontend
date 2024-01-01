@@ -17,7 +17,7 @@ export type DropMenuType = {
 
 export const DropMenuList: DropMenuType[] = [
   {
-    icon: <WechatFilled className="text-[20px] sm:text-[26px]" />,
+    icon: <WechatFilled className="text-[20px]" />,
     label: DropMenuAction.GROUP_CHAT,
     onClick: (dispatch: AppDispatch) => {
       dispatch(toggleVisible(true));
@@ -26,7 +26,7 @@ export const DropMenuList: DropMenuType[] = [
     },
   },
   {
-    icon: <UserAddOutlined className="text-[20px] sm:text-[26px]" />,
+    icon: <UserAddOutlined className="text-[20px]" />,
     label: DropMenuAction.ADD_FRIENDS,
     onClick: (dispatch: AppDispatch) => {
       dispatch(toggleVisible(true));
@@ -34,7 +34,7 @@ export const DropMenuList: DropMenuType[] = [
     },
   },
   {
-    icon: <LogoutOutlined className="text-[20px] sm:text-[26px]" />,
+    icon: <LogoutOutlined className="text-[20px]" />,
     label: DropMenuAction.LOGOUT,
     onClick: () => {
       postLogout()

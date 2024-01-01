@@ -8,4 +8,5 @@ export enum SocketEvent {
   UNTREATED_INVITATIONS = 'untreated-invitatons',
   REFRESH_UNTREATEDCOUNT = 'refresh-untreated-count',
   MESSAGE_DELIVER = 'message-deliver',
+  GROUP_MESSAGE_DELIVER = 'group-message-deliver',
 }

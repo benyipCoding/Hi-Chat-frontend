@@ -5,7 +5,11 @@ import GroupItem from '@/components/List/GroupItem';
 import { CommonContext } from '@/context/CommonContext';
 import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
-import { setCurrentConversation, setIsGroup } from '@/store/conversationSlice';
+import {
+  fetchGroupMessagesThunk,
+  setCurrentConversation,
+  setIsGroup,
+} from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
@@ -20,6 +24,9 @@ const GroupChat = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { groupConvList } = useSelector(
     (state: RootState) => state.groupConversation
+  );
+  const { currentConversation } = useSelector(
+    (state: RootState) => state.conversation
   );
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
@@ -38,6 +45,13 @@ const GroupChat = () => {
     dispatch(setCurrentConversation(group));
     dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
     swipeToDetail(divList!);
+
+    if (
+      currentConversation?.id === group.id &&
+      currentConversation.name === group.name
+    )
+      return;
+    dispatch(fetchGroupMessagesThunk(group.id));
   };
 
   return (

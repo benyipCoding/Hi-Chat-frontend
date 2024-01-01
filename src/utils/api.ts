@@ -232,9 +232,22 @@ export function getGroupConversations() {
 }
 
 export function postCreateGroupMessage(data: PostMsgData) {
-  return request<Message[]>({
+  return request<Message>({
     url: '/group-message/create-group-message',
     method: 'post',
     data,
+  });
+}
+
+export function getMessagesByGroupConvId(groupConvId: number) {
+  return request<Message[]>({
+    url: `/group-message/queryMessagesByGroupConvId/${groupConvId}`,
+  });
+}
+
+export function postUpdateGroupMessageReadStatus(groupMsgId: number) {
+  return request({
+    url: `/group-message/updateMessageReadStatus/${groupMsgId}`,
+    method: 'post',
   });
 }
