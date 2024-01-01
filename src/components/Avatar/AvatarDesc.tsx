@@ -25,7 +25,7 @@ import { CommonContext } from '@/context/CommonContext';
 import { FaUserAlt } from 'react-icons/fa';
 import { DynamicPageName } from '../DynamicPage/pageMap';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
-import { setCurrentConversation } from '@/store/conversationSlice';
+import { setCurrentConversation, setIsGroup } from '@/store/conversationSlice';
 import { setTargetUser } from '@/store/profileSlice';
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
@@ -73,6 +73,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     e.stopPropagation();
     dispatch(setCurrentPage(pageName));
     if (pageName === DynamicPageName.CONVERSATION) {
+      dispatch(setIsGroup(false));
       postCreateConversation(user)
         .then((res) => {
           dispatch(setCurrentConversation(res.data));

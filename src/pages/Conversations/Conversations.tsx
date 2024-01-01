@@ -51,7 +51,7 @@ const Conversations = () => {
     (state: RootState) => state.conversation
   );
   const dispatch = useDispatch<AppDispatch>();
-  const { isShowEmojiPicker } = useSelector(
+  const { isShowEmojiPicker, isGroup } = useSelector(
     (state: RootState) => state.conversation
   );
   const recognition = initRecognition();
@@ -87,8 +87,14 @@ const Conversations = () => {
   };
 
   useEffect(() => {
-    if (!currentConversation) return;
-    dispatch(fetchMessagesThunk(currentConversation.id));
+    if (!currentConversation) {
+      return;
+    }
+    if (isGroup) {
+      console.log('获取本群组的messages');
+    } else {
+      dispatch(fetchMessagesThunk(currentConversation.id));
+    }
   }, [currentConversation?.id]);
 
   return (

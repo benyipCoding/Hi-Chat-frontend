@@ -108,12 +108,16 @@ export function postChangeFriendshipStatus(
 
 export function postCreateConversation(target: User) {
   const state: RootState = store.getState();
-  const isSame =
-    target.id === state.conversation.currentConversation?.creator.id ||
-    target.id === state.conversation.currentConversation?.recipient.id;
 
-  if (state.conversation.currentConversation && isSame) {
-    return Promise.reject('Current conversation is existed');
+  const conv = state.conversation.currentConversation as Conversation;
+
+  if (conv.recipient) {
+    const isSame =
+      target.id === conv.creator.id || target.id === conv.recipient.id;
+
+    if (state.conversation.currentConversation && isSame) {
+      return Promise.reject('Current conversation is existed');
+    }
   }
   return request<Conversation>({
     method: 'post',

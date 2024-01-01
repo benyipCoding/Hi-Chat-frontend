@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '@/store';
 import {
   selectConversationsByConvName,
   setCurrentConversation,
+  setIsGroup,
 } from '@/store/conversationSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import {
@@ -34,6 +35,7 @@ const MessagePage = () => {
   );
 
   const onClickItem = (conversation: Conversation, targetUser: User) => {
+    dispatch(setIsGroup(false));
     postCreateConversation(targetUser)
       .then((res) => {
         dispatch(setCurrentConversation(res.data));

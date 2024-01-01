@@ -1,13 +1,16 @@
-import AvatarDesc from '@/components/Avatar/AvatarDesc';
-import GroupAvatar from '@/components/Avatar/GroupAvatar';
 import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/Inputs';
+import GroupItem from '@/components/List/GroupItem';
+import { CommonContext } from '@/context/CommonContext';
+import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
+import { setCurrentConversation, setIsGroup } from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
+import { setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
 import { addAlphaToHexColor } from '@/utils/helpers';
-import { DropMenuAction } from '@/utils/types';
-import { useState } from 'react';
+import { DropMenuAction, GroupConversation } from '@/utils/types';
+import { useContext, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +20,8 @@ const GroupChat = () => {
   const { groupConvList } = useSelector(
     (state: RootState) => state.groupConversation
   );
+  const { swipeToDetail } = useTranslate();
+  const divList = useContext(CommonContext);
 
   const startGroupChat = () => {
     dispatch(toggleVisible(true));
@@ -25,6 +30,13 @@ const GroupChat = () => {
   };
 
   const showEmptyState = groupConvList.length === 0;
+
+  const clickGroupItem = (group: GroupConversation) => {
+    dispatch(setIsGroup(true));
+    swipeToDetail(divList!);
+    dispatch(setTitle(group.name));
+    dispatch(setCurrentConversation(group));
+  };
 
   return (
     <div className="h-full flex flex-col overflow-y-auto">
@@ -39,16 +51,11 @@ const GroupChat = () => {
 
       <div className="w-full flex-1 p-2 flex flex-col gap-2 relative overflow-y-auto">
         {groupConvList.map((group) => (
-          <div
+          <GroupItem
+            group={group}
             key={group.id}
-            className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"
-          >
-            <GroupAvatar members={group.members} />
-            <AvatarDesc
-              userName={group.name}
-              lastMessage={group.lastMessage?.content || ''}
-            />
-          </div>
+            onClick={() => clickGroupItem(group)}
+          />
         ))}
 
         {showEmptyState && (

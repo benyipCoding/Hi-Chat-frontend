@@ -84,7 +84,7 @@ const GroupChatMenu = () => {
         onClickIcon={selectAllOrNone}
       />
       {/* list */}
-      <div className="flex-1 overflow-y-auto flex flex-col scroll-bar rounded-md p-2 gap-2">
+      <div className="flex-1 overflow-y-auto flex flex-col scroll-bar rounded-md p-2 gap-2 pb-[60px]">
         {friends.map((friend) => (
           <ChooseFriendsItem
             user={friend}

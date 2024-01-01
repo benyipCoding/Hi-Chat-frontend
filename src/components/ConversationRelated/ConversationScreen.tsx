@@ -24,7 +24,6 @@ const ConversationScreen: React.FC<ConversationScreenProps> = ({
   const { isShowEmojiPicker } = useSelector(
     (state: RootState) => state.conversation
   );
-  // const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
   const screen = useRef<HTMLDivElement>(null);
   const bottom = useRef<HTMLDivElement>(null);

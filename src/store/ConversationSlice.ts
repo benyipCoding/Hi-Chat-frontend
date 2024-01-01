@@ -1,5 +1,5 @@
 import { getMessagesByConversation } from '@/utils/api';
-import { Conversation, Message } from '@/utils/types';
+import { Conversation, GroupConversation, Message } from '@/utils/types';
 import {
   createAsyncThunk,
   createSelector,
@@ -11,10 +11,11 @@ import { RootState } from '.';
 interface ConversationState {
   conversations: Conversation[];
   loading: boolean;
-  currentConversation: Conversation | null;
+  currentConversation: Conversation | GroupConversation | null;
   isShowEmojiPicker: boolean;
   messages: Message[];
   unReadMessages: Message[];
+  isGroup: boolean;
 }
 
 const initialState: ConversationState = {
@@ -24,6 +25,7 @@ const initialState: ConversationState = {
   isShowEmojiPicker: false,
   messages: [],
   unReadMessages: [],
+  isGroup: false,
 };
 
 export const fetchMessagesThunk = createAsyncThunk(
@@ -37,7 +39,10 @@ export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
   reducers: {
-    setCurrentConversation(state, action: PayloadAction<Conversation>) {
+    setCurrentConversation(
+      state,
+      action: PayloadAction<Conversation | GroupConversation>
+    ) {
       state.currentConversation = action.payload;
     },
     toggleEmojiPickerVisible(state, action: PayloadAction<boolean>) {
@@ -65,6 +70,9 @@ export const conversationSlice = createSlice({
         if (!conversation) continue;
         conversation.unReadCount = action.payload[+key];
       }
+    },
+    setIsGroup(state, action: PayloadAction<boolean>) {
+      state.isGroup = action.payload;
     },
   },
   extraReducers(builder) {
@@ -94,6 +102,7 @@ export const {
   clearCurrentConversation,
   setConversations,
   setUnreadCountForConversations,
+  setIsGroup,
 } = conversationSlice.actions;
 
 export default conversationSlice.reducer;
