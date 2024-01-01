@@ -3,7 +3,11 @@ import {
   toggleEmojiPickerVisible,
   updateMessagesBySelf,
 } from '@/store/conversationSlice';
-import { getConversationList, postCreateMessage } from '@/utils/api';
+import {
+  getConversationList,
+  postCreateGroupMessage,
+  postCreateMessage,
+} from '@/utils/api';
 import { PostMsgData } from '@/utils/types';
 import { Space } from 'antd';
 import { motion } from 'framer-motion';
@@ -29,7 +33,7 @@ const InputArea: React.FC<InputAreaProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const textarea = useRef<HTMLTextAreaElement>(null);
-
+  const { isGroup } = useSelector((state: RootState) => state.conversation);
   const { currentConversation } = useSelector(
     (state: RootState) => state.conversation
   );
@@ -47,21 +51,33 @@ const InputArea: React.FC<InputAreaProps> = ({
   const sendMsg = () => {
     const content = value.trim();
     if (!content) return toast.error('Can not send empty message!');
-    // send msg api
     const data: PostMsgData = {
       content,
       conversationId: currentConversation!.id,
     };
-    postCreateMessage(data)
-      .then((res) => {
-        onChange('');
-        dispatch(updateMessagesBySelf(res.data));
-        textarea.current?.focus();
-      })
-      .catch((err) => {
-        toast.error(err.data);
-      })
-      .finally(() => getConversationList());
+    // send msg api
+    if (isGroup) {
+      console.log('群消息创建API');
+      postCreateGroupMessage(data)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.data);
+        })
+        .finally(() => {});
+    } else {
+      postCreateMessage(data)
+        .then((res) => {
+          onChange('');
+          dispatch(updateMessagesBySelf(res.data));
+          textarea.current?.focus();
+        })
+        .catch((err) => {
+          toast.error(err.data);
+        })
+        .finally(() => getConversationList());
+    }
   };
 
   // setup hot key

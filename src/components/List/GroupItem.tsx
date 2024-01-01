@@ -1,6 +1,6 @@
 import { GroupConversation } from '@/utils/types';
-import AvatarDesc from '../Avatar/AvatarDesc';
 import GroupAvatar from '../Avatar/GroupAvatar';
+import ConversationDesc from '../Avatar/ConversationDesc';
 
 interface GroupItemProps {
   group: GroupConversation;
@@ -14,9 +14,10 @@ const GroupItem: React.FC<GroupItemProps> = ({ group, onClick }) => {
       onClick={onClick}
     >
       <GroupAvatar members={group.members} />
-      <AvatarDesc
-        userName={group.name}
-        lastMessage={group.lastMessage?.content || ''}
+      <ConversationDesc
+        name={group.name}
+        lastMessage={group.lastMessage}
+        isGroup={true}
       />
     </div>
   );

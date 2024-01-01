@@ -110,6 +110,8 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     });
   };
 
+  console.log('AvatarDesc内部', lastMessage);
+
   return (
     <div
       className={clsx(

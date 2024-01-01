@@ -1,3 +1,4 @@
+import { DynamicPageName } from '@/components/DynamicPage/pageMap';
 import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/Inputs';
 import GroupItem from '@/components/List/GroupItem';
@@ -6,7 +7,7 @@ import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
 import { setCurrentConversation, setIsGroup } from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
-import { setTitle } from '@/store/dynamicPageSlice';
+import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
 import { addAlphaToHexColor } from '@/utils/helpers';
 import { DropMenuAction, GroupConversation } from '@/utils/types';
@@ -33,9 +34,10 @@ const GroupChat = () => {
 
   const clickGroupItem = (group: GroupConversation) => {
     dispatch(setIsGroup(true));
-    swipeToDetail(divList!);
     dispatch(setTitle(group.name));
     dispatch(setCurrentConversation(group));
+    dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
+    swipeToDetail(divList!);
   };
 
   return (

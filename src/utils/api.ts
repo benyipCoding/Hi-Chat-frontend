@@ -111,7 +111,7 @@ export function postCreateConversation(target: User) {
 
   const conv = state.conversation.currentConversation as Conversation;
 
-  if (conv.recipient) {
+  if (conv && conv.recipient) {
     const isSame =
       target.id === conv.creator.id || target.id === conv.recipient.id;
 
@@ -228,5 +228,13 @@ export function getGroupConversations() {
   return request<GroupConversation[]>({
     url: '/group-conversation/get-conv-list',
     method: 'get',
+  });
+}
+
+export function postCreateGroupMessage(data: PostMsgData) {
+  return request<Message[]>({
+    url: '/group-message/create-group-message',
+    method: 'post',
+    data,
   });
 }

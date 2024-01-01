@@ -50,6 +50,8 @@ export type Message = {
   sender: User;
   seenByUsers?: string[];
   senderName: string;
+  sender_name?: string;
+  create_at?: Date;
 };
 
 export type PostMsgData = {
@@ -109,3 +111,8 @@ export type CreateGroupConversationDto = {
   members: string[];
   groupName: string;
 };
+
+// export type CreateGroupMessageDto = {
+//   content: string;
+//   groupConvId: number;
+// };

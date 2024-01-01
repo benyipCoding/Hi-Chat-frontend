@@ -35,6 +35,13 @@ export const fetchMessagesThunk = createAsyncThunk(
   }
 );
 
+// export const fetchGroupMessagesThunk = createAsyncThunk(
+//   'fetch/group-messagesByGroupConvId',
+//   (groupConvId: number) => {
+//     return;
+//   }
+// );
+
 export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
