@@ -7,10 +7,6 @@ import { AuthContext } from '@/context/AuthContext';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
-// const avatarStyle: React.CSSProperties = {
-//   width: '3.5rem',
-// };
-
 interface MessageBubbleProps {
   createAt: Date;
   showNotice?: boolean;

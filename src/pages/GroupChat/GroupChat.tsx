@@ -7,14 +7,16 @@ import { useTranslate } from '@/hooks/useTranslate';
 import { AppDispatch, RootState } from '@/store';
 import {
   fetchGroupMessagesThunk,
+  fetchUnReadGroupMessagesThunk,
   setCurrentConversation,
   setIsGroup,
 } from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
+import { postUpdateGroupMessageReadStatus } from '@/utils/api';
 import { addAlphaToHexColor } from '@/utils/helpers';
-import { DropMenuAction, GroupConversation } from '@/utils/types';
+import { DropMenuAction, GroupConversation, Message } from '@/utils/types';
 import { useContext, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,7 +41,10 @@ const GroupChat = () => {
 
   const showEmptyState = groupConvList.length === 0;
 
-  const clickGroupItem = (group: GroupConversation) => {
+  const clickGroupItem = async (
+    group: GroupConversation,
+    unReadMessages: Message[]
+  ) => {
     dispatch(setIsGroup(true));
     dispatch(setTitle(group.name));
     dispatch(setCurrentConversation(group));
@@ -52,6 +57,11 @@ const GroupChat = () => {
     )
       return;
     dispatch(fetchGroupMessagesThunk(group.id));
+    if (!unReadMessages.length) return;
+    for (const msg of unReadMessages) {
+      await postUpdateGroupMessageReadStatus(msg.id);
+    }
+    dispatch(fetchUnReadGroupMessagesThunk());
   };
 
   return (
@@ -70,7 +80,7 @@ const GroupChat = () => {
           <GroupItem
             group={group}
             key={group.id}
-            onClick={() => clickGroupItem(group)}
+            onClick={(unReadMessages) => clickGroupItem(group, unReadMessages)}
           />
         ))}
 

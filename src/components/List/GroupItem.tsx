@@ -1,19 +1,32 @@
-import { GroupConversation } from '@/utils/types';
+import { GroupConversation, Message } from '@/utils/types';
 import GroupAvatar from '../Avatar/GroupAvatar';
 import ConversationDesc from '../Avatar/ConversationDesc';
+import { Badge } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface GroupItemProps {
   group: GroupConversation;
-  onClick: () => void;
+  onClick: (unReadMessages: Message[]) => void;
 }
 
 const GroupItem: React.FC<GroupItemProps> = ({ group, onClick }) => {
+  const { unReadGroupMessages } = useSelector(
+    (state: RootState) => state.conversation
+  );
+
+  const unReadMessages = unReadGroupMessages.filter(
+    (msg) => msg.group_conversation_id === group.id
+  );
+
   return (
     <div
       className="flex gap-2 p-2 rounded-md cursor-pointer md:hover:bg-[#0000005e] md:hover:shadow-[#ec923134] md:hover:shadow-md"
-      onClick={onClick}
+      onClick={() => onClick(unReadMessages)}
     >
-      <GroupAvatar members={group.members} />
+      <Badge count={unReadMessages.length} size="default">
+        <GroupAvatar members={group.members} />
+      </Badge>
       <ConversationDesc
         name={group.name}
         lastMessage={group.lastMessage}

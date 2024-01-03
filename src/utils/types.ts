@@ -53,6 +53,7 @@ export type Message = {
   sender_name?: string;
   create_at?: Date;
   sender_id?: string;
+  group_conversation_id?: number;
 };
 
 export type PostMsgData = {

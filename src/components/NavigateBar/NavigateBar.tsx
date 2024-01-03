@@ -25,6 +25,9 @@ const NavigateBar = () => {
       0
     )
   );
+  const { unReadGroupMessages } = useSelector(
+    (state: RootState) => state.conversation
+  );
 
   const toggleTab = (index: number, path: string) => {
     setCurrentIndex(index);
@@ -64,6 +67,8 @@ const NavigateBar = () => {
                     ? untreatedCount + friendListBadge
                     : menu.label === 'Message'
                     ? unReadMessageCount
+                    : menu.label === 'GroupChat'
+                    ? unReadGroupMessages.length
                     : 0
                 }
                 size={`${isLarge() ? 'default' : 'small'}`}

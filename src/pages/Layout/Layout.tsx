@@ -16,13 +16,17 @@ import {
   fetchInvitationsThunk,
   setFriendListBadge,
 } from '@/store/friendsSlice';
-import { getConversationList } from '@/utils/api';
+import {
+  getConversationList,
+  getUnreadGroupMessageByUserId,
+} from '@/utils/api';
 import { AuthContext } from '@/context/AuthContext';
 import { FRIENDS_COUNT } from '@/utils/helpers';
 import { useShowExtra } from '@/hooks/useScreenSize';
 import SideBox from '@/components/SideBox/SideBox';
 import ProfileModal from '@/components/Profile/ProfileModal';
 import { fetchGroupConvList } from '@/store/groupConversationSlice';
+import { fetchUnReadGroupMessagesThunk } from '@/store/conversationSlice';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
@@ -42,6 +46,7 @@ const Layout = () => {
     dispatch(fetchInvitationsThunk());
     dispatch(fetchFriendsThunk());
     dispatch(fetchGroupConvList());
+    dispatch(fetchUnReadGroupMessagesThunk());
 
     return () => {
       socket.disconnect();

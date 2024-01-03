@@ -251,3 +251,9 @@ export function postUpdateGroupMessageReadStatus(groupMsgId: number) {
     method: 'post',
   });
 }
+
+export function getUnreadGroupMessageByUserId() {
+  return request<Message[]>({
+    url: `/group-message/getUnreadGroupMessages/`,
+  });
+}

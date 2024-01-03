@@ -1,6 +1,7 @@
 import {
   getMessagesByConversation,
   getMessagesByGroupConvId,
+  getUnreadGroupMessageByUserId,
 } from '@/utils/api';
 import { Conversation, GroupConversation, Message } from '@/utils/types';
 import {
@@ -19,6 +20,7 @@ interface ConversationState {
   messages: Message[];
   unReadMessages: Message[];
   isGroup: boolean;
+  unReadGroupMessages: Message[];
 }
 
 const initialState: ConversationState = {
@@ -29,6 +31,7 @@ const initialState: ConversationState = {
   messages: [],
   unReadMessages: [],
   isGroup: false,
+  unReadGroupMessages: [],
 };
 
 export const fetchMessagesThunk = createAsyncThunk(
@@ -42,6 +45,13 @@ export const fetchGroupMessagesThunk = createAsyncThunk(
   'fetch/group-messagesByGroupConvId',
   (groupConvId: number) => {
     return getMessagesByGroupConvId(groupConvId);
+  }
+);
+
+export const fetchUnReadGroupMessagesThunk = createAsyncThunk(
+  'fetch/unread-group-messages',
+  () => {
+    return getUnreadGroupMessageByUserId();
   }
 );
 
@@ -92,6 +102,10 @@ export const conversationSlice = createSlice({
       })
       .addCase(fetchGroupMessagesThunk.fulfilled, (state, action) => {
         state.messages = action.payload.data.reverse();
+      })
+      .addCase(fetchUnReadGroupMessagesThunk.fulfilled, (state, action) => {
+        console.log(action.payload.data);
+        state.unReadGroupMessages = action.payload.data;
       });
   },
 });
