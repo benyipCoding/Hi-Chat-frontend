@@ -14,6 +14,7 @@ import {
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
+import { selectGroupConvListByGroupName } from '@/store/groupConversationSlice';
 import { postUpdateGroupMessageReadStatus } from '@/utils/api';
 import { addAlphaToHexColor } from '@/utils/helpers';
 import { DropMenuAction, GroupConversation, Message } from '@/utils/types';
@@ -24,8 +25,8 @@ import { useDispatch, useSelector } from 'react-redux';
 const GroupChat = () => {
   const [searchInput, setSearchInput] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
-  const { groupConvList } = useSelector(
-    (state: RootState) => state.groupConversation
+  const groupConvList = useSelector((state: RootState) =>
+    selectGroupConvListByGroupName(state, searchInput)
   );
   const { currentConversation } = useSelector(
     (state: RootState) => state.conversation

@@ -1,6 +1,11 @@
 import { getGroupConversations } from '@/utils/api';
 import { GroupConversation } from '@/utils/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from '@reduxjs/toolkit';
+import { RootState } from '.';
 
 interface GroupConversationState {
   groupConvList: GroupConversation[];
@@ -15,6 +20,16 @@ const initialState: GroupConversationState = {
 export const fetchGroupConvList = createAsyncThunk('fetch/groups', () => {
   return getGroupConversations();
 });
+
+const selectGroupConvList = (state: RootState) =>
+  state.groupConversation.groupConvList;
+const selectGroupName = (_state: RootState, groupName: string) => groupName;
+
+export const selectGroupConvListByGroupName = createSelector(
+  [selectGroupName, selectGroupConvList],
+  (groupName, groupConvList) =>
+    groupConvList.filter((group) => group.name.includes(groupName))
+);
 
 export const groupConversationSlice = createSlice({
   name: 'groupConversation',
