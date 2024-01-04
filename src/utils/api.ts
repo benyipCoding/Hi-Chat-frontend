@@ -10,6 +10,7 @@ import {
   Message,
   PostMsgData,
   RegisterResponse,
+  RenameDto,
   SignInResponse,
   UpdateUserInfoDto,
   User,
@@ -254,6 +255,14 @@ export function postUpdateGroupMessageReadStatus(groupMsgId: number) {
 
 export function getUnreadGroupMessageByUserId() {
   return request<Message[]>({
-    url: `/group-message/getUnreadGroupMessages/`,
+    url: `/group-message/getUnreadGroupMessages`,
+  });
+}
+
+export function postRenameGroup(data: RenameDto) {
+  return request({
+    url: '/group-message/rename',
+    method: 'post',
+    data,
   });
 }

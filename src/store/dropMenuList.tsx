@@ -12,7 +12,7 @@ import { clearGroupSelected } from './friendsSlice';
 export type DropMenuType = {
   icon: React.ReactNode;
   label: string;
-  onClick: (dispatch: AppDispatch) => void;
+  onClick?: (dispatch: AppDispatch) => void;
 };
 
 export const DropMenuList: DropMenuType[] = [

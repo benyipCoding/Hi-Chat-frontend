@@ -12,6 +12,7 @@ import {
   setIsGroup,
 } from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
+import { setExtraPosition, setExtraVisible } from '@/store/dropMenuSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
 import { selectGroupConvListByGroupName } from '@/store/groupConversationSlice';
@@ -24,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const GroupChat = () => {
   const [searchInput, setSearchInput] = useState<string>('');
+
   const dispatch = useDispatch<AppDispatch>();
   const groupConvList = useSelector((state: RootState) =>
     selectGroupConvListByGroupName(state, searchInput)
@@ -31,6 +33,7 @@ const GroupChat = () => {
   const { currentConversation } = useSelector(
     (state: RootState) => state.conversation
   );
+  const { extraVisible } = useSelector((state: RootState) => state.dropMenu);
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
 
@@ -65,6 +68,15 @@ const GroupChat = () => {
     dispatch(fetchUnReadGroupMessagesThunk());
   };
 
+  const rightClickGroupItem = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (extraVisible) return;
+    dispatch(setExtraVisible(true));
+    dispatch(setExtraPosition({ x: e.clientX, y: e.clientY }));
+  };
+
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <Input
@@ -76,12 +88,13 @@ const GroupChat = () => {
         icon={<IoSearch />}
       />
 
-      <div className="w-full flex-1 p-2 flex flex-col gap-2 relative overflow-y-auto">
+      <div className="w-full flex-1 p-2 flex flex-col gap-2 overflow-y-auto">
         {groupConvList.map((group) => (
           <GroupItem
             group={group}
             key={group.id}
             onClick={(unReadMessages) => clickGroupItem(group, unReadMessages)}
+            onRightClick={rightClickGroupItem}
           />
         ))}
 

@@ -110,6 +110,7 @@ const InputArea: React.FC<InputAreaProps> = ({
             onChange((e.target as HTMLTextAreaElement).value);
           }}
           onKeyDown={(e) => onTextareaKeydown(e)}
+          rows={1}
         />
         <div className="flex ">
           <motion.button

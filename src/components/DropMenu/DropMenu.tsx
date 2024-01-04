@@ -10,6 +10,7 @@ function useAnimate(isOpen: boolean, menu: React.RefObject<HTMLUListElement>) {
   const { menuButtonX, menuButtonY } = useSelector(
     (state: RootState) => state.dropMenu
   );
+
   useEffect(() => {
     if (!isOpen || !menu.current) return;
     menu.current.style.right = `${window.innerWidth - menuButtonX - 40}px`;

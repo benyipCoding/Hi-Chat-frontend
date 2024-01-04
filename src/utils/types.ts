@@ -113,3 +113,8 @@ export type CreateGroupConversationDto = {
   members: string[];
   groupName: string;
 };
+
+export type RenameDto = {
+  groupName: string;
+  groupConvId: number;
+};

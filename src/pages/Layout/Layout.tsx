@@ -16,10 +16,7 @@ import {
   fetchInvitationsThunk,
   setFriendListBadge,
 } from '@/store/friendsSlice';
-import {
-  getConversationList,
-  getUnreadGroupMessageByUserId,
-} from '@/utils/api';
+import { getConversationList } from '@/utils/api';
 import { AuthContext } from '@/context/AuthContext';
 import { FRIENDS_COUNT } from '@/utils/helpers';
 import { useShowExtra } from '@/hooks/useScreenSize';
@@ -27,12 +24,17 @@ import SideBox from '@/components/SideBox/SideBox';
 import ProfileModal from '@/components/Profile/ProfileModal';
 import { fetchGroupConvList } from '@/store/groupConversationSlice';
 import { fetchUnReadGroupMessagesThunk } from '@/store/conversationSlice';
+import ExtraDropMenu from '@/components/DropMenu/ExtraDropMenu';
+import CustomModal from '@/components/Modal/CustomModal';
 
 const Layout = () => {
   const [transitiondivList, setTransitionDivList] =
     useState<NodeListOf<HTMLDivElement>>();
   const socket = useContext(SocketContext);
-  const { isOpen } = useSelector((state: RootState) => state.dropMenu);
+  const { isOpen, extraVisible } = useSelector(
+    (state: RootState) => state.dropMenu
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useContext(AuthContext);
   const { friends } = useSelector((state: RootState) => state.friends);
@@ -86,6 +88,10 @@ const Layout = () => {
           <Drawer />
           {/* Profile Modal */}
           <ProfileModal />
+          {/* extra drop menu */}
+          {extraVisible && <ExtraDropMenu />}
+          {/* custom modal */}
+          <CustomModal />
         </div>
       </CommonContext.Provider>
     </ThemeProvider>

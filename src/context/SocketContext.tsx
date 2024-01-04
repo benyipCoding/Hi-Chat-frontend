@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { store } from '@/store';
-import { updateMessagesBySelf } from '@/store/conversationSlice';
+import {
+  fetchUnReadGroupMessagesThunk,
+  updateMessagesBySelf,
+} from '@/store/conversationSlice';
 import {
   addInvitationsRecord,
   fetchFriendsThunk,
@@ -101,6 +104,7 @@ socket.on(SocketEvent.GROUP_MESSAGE_DELIVER, async (e) => {
     store.dispatch(fetchGroupConvList());
   } else {
     store.dispatch(fetchGroupConvList());
+    store.dispatch(fetchUnReadGroupMessagesThunk());
   }
 });
 

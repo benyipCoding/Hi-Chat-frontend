@@ -109,3 +109,17 @@ body {
 .center {
   align-content: center;
 }
+
+.animate-grow {
+  animation: growIn 0.2s ease-in-out;
+  transform-origin: left top;
+}
+
+@keyframes growIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
