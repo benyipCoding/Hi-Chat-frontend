@@ -11,6 +11,8 @@ export interface DropMenuState {
   extraY: number;
   customModalVisible: boolean;
   modalInput: string;
+  currentGroupConvId: number;
+  isRename: boolean;
 }
 
 const initialState: DropMenuState = {
@@ -23,6 +25,8 @@ const initialState: DropMenuState = {
   extraY: 0,
   customModalVisible: false,
   modalInput: '',
+  currentGroupConvId: 0,
+  isRename: true,
 };
 
 export const dropMenuSlice = createSlice({
@@ -49,6 +53,12 @@ export const dropMenuSlice = createSlice({
     setModalInput(state, action: PayloadAction<string>) {
       state.modalInput = action.payload;
     },
+    setCurrentGroupConvId(state, action: PayloadAction<number>) {
+      state.currentGroupConvId = action.payload;
+    },
+    setIsRename(state, action: PayloadAction<boolean>) {
+      state.isRename = action.payload;
+    },
   },
 });
 
@@ -59,6 +69,8 @@ export const {
   setExtraPosition,
   setCustomModalVisible,
   setModalInput,
+  setCurrentGroupConvId,
+  setIsRename,
 } = dropMenuSlice.actions;
 
 export default dropMenuSlice.reducer;

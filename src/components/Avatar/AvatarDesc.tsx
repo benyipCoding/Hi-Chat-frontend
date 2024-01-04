@@ -119,7 +119,7 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
     >
       {/* User name */}
       <p
-        className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md max-w-[125px] overflow-hidden whitespace-nowrap text-ellipsis"
+        className="flex-1 text-lg flex items-center pl-1 sm:text-2xl lg:text-[18px] drop-shadow-md max-w-[125px] overflow-hidden whitespace-nowrap text-ellipsis font-mono"
         style={style}
       >
         {sender?.id === self_user?.id && (

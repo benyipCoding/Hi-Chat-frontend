@@ -1,6 +1,10 @@
 import { AppDispatch, RootState } from '@/store';
 import { DropMenuType } from '@/store/dropMenuList';
-import { setCustomModalVisible, setExtraVisible } from '@/store/dropMenuSlice';
+import {
+  setCustomModalVisible,
+  setExtraVisible,
+  setIsRename,
+} from '@/store/dropMenuSlice';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDriveFileRenameOutline } from 'react-icons/md';
@@ -30,6 +34,14 @@ const ExtraDropMenu = () => {
 
   const onClickExtraMenuItem = (menu: DropMenuType) => {
     dispatch(setCustomModalVisible(true));
+    console.log(menu);
+    if (menu.label === 'Rename') {
+      console.log('这里展示重命名群内容');
+      dispatch(setIsRename(true));
+    } else {
+      console.log('这里展示删除群内容');
+      dispatch(setIsRename(false));
+    }
   };
 
   useEffect(() => {

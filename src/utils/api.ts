@@ -261,8 +261,18 @@ export function getUnreadGroupMessageByUserId() {
 
 export function postRenameGroup(data: RenameDto) {
   return request({
-    url: '/group-message/rename',
+    url: '/group-conversation/rename',
     method: 'post',
     data,
+  });
+}
+
+export function postDeleteGroup(groupConvId: number) {
+  return request({
+    url: '/group-conversation/delete-group',
+    method: 'post',
+    data: {
+      groupConvId,
+    },
   });
 }

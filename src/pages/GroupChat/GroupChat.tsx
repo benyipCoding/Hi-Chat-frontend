@@ -12,7 +12,11 @@ import {
   setIsGroup,
 } from '@/store/conversationSlice';
 import { setDrawerTitle, toggleVisible } from '@/store/drawerSlice';
-import { setExtraPosition, setExtraVisible } from '@/store/dropMenuSlice';
+import {
+  setCurrentGroupConvId,
+  setExtraPosition,
+  setExtraVisible,
+} from '@/store/dropMenuSlice';
 import { setCurrentPage, setTitle } from '@/store/dynamicPageSlice';
 import { clearGroupSelected } from '@/store/friendsSlice';
 import { selectGroupConvListByGroupName } from '@/store/groupConversationSlice';
@@ -69,12 +73,14 @@ const GroupChat = () => {
   };
 
   const rightClickGroupItem = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    groupConvId: number
   ) => {
     e.preventDefault();
     if (extraVisible) return;
     dispatch(setExtraVisible(true));
     dispatch(setExtraPosition({ x: e.clientX, y: e.clientY }));
+    dispatch(setCurrentGroupConvId(groupConvId));
   };
 
   return (
@@ -94,7 +100,7 @@ const GroupChat = () => {
             group={group}
             key={group.id}
             onClick={(unReadMessages) => clickGroupItem(group, unReadMessages)}
-            onRightClick={rightClickGroupItem}
+            onRightClick={(e) => rightClickGroupItem(e, group.id)}
           />
         ))}
 

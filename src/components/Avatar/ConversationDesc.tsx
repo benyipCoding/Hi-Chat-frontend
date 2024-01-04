@@ -30,7 +30,7 @@ const ConversationDesc: React.FC<ConversationDescProps> = ({
   return (
     <div className="flex-1 rounded-sm border-b-[1px] flex flex-col border-[#98d3df80] relative text-white">
       {/* User name */}
-      <p className="flex-1 text-xl flex items-center pl-1 sm:text-2xl lg:text-[20px] drop-shadow-md w-[160px] overflow-hidden whitespace-nowrap overflow-ellipsis sm:w-full lg:w-[120px] xl:w-[150px]">
+      <p className="flex-1 text-lg flex items-center pl-1 sm:text-xl lg:text-[18px] drop-shadow-md w-[160px] overflow-hidden whitespace-nowrap overflow-ellipsis sm:w-full lg:w-[120px] xl:w-[150px] font-sans">
         {capitalName}
       </p>
 
