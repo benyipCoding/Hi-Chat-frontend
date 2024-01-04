@@ -22,6 +22,7 @@ export type User = {
   nickname: string;
   displayName: string;
   groupSelected?: boolean;
+  display_name: string;
 };
 
 export type UserWithChecked = User & { checked: boolean };

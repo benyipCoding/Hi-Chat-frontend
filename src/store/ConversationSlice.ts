@@ -61,7 +61,7 @@ export const conversationSlice = createSlice({
   reducers: {
     setCurrentConversation(
       state,
-      action: PayloadAction<Conversation | GroupConversation>
+      action: PayloadAction<Conversation | GroupConversation | null>
     ) {
       state.currentConversation = action.payload;
     },

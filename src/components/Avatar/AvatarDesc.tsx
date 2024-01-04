@@ -84,8 +84,10 @@ const AvatarDesc: React.FC<AvatarDescProps> = ({
           console.log(err);
         });
     } else {
+      dispatch(setCurrentConversation(null));
       dispatch(setTitle(formatUserName(user.nickname || user.displayName)));
       dispatch(setTargetUser(user));
+
       swipeToDetail(divList!);
     }
   };
