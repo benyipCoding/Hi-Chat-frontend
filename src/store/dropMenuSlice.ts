@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropMenuList, DropMenuType } from './dropMenuList';
+import { User } from '@/utils/types';
 
 export interface DropMenuState {
   isOpen: boolean;
@@ -12,7 +13,8 @@ export interface DropMenuState {
   customModalVisible: boolean;
   modalInput: string;
   currentGroupConvId: number;
-  isRename: boolean;
+  modalContent: 'rename' | 'add friend' | 'delete' | '';
+  targetMember: User | null;
 }
 
 const initialState: DropMenuState = {
@@ -26,7 +28,8 @@ const initialState: DropMenuState = {
   customModalVisible: false,
   modalInput: '',
   currentGroupConvId: 0,
-  isRename: true,
+  modalContent: '',
+  targetMember: null,
 };
 
 export const dropMenuSlice = createSlice({
@@ -56,8 +59,14 @@ export const dropMenuSlice = createSlice({
     setCurrentGroupConvId(state, action: PayloadAction<number>) {
       state.currentGroupConvId = action.payload;
     },
-    setIsRename(state, action: PayloadAction<boolean>) {
-      state.isRename = action.payload;
+    setModalContent(
+      state,
+      action: PayloadAction<'rename' | 'add friend' | 'delete' | ''>
+    ) {
+      state.modalContent = action.payload;
+    },
+    setTargetMember(state, action: PayloadAction<User | null>) {
+      state.targetMember = action.payload;
     },
   },
 });
@@ -70,7 +79,8 @@ export const {
   setCustomModalVisible,
   setModalInput,
   setCurrentGroupConvId,
-  setIsRename,
+  setModalContent,
+  setTargetMember,
 } = dropMenuSlice.actions;
 
 export default dropMenuSlice.reducer;

@@ -8,16 +8,27 @@ import {
   setCurrentGroupConvId,
   setCustomModalVisible,
   setModalInput,
+  setTargetMember,
 } from '@/store/dropMenuSlice';
-import { postDeleteGroup, postRenameGroup } from '@/utils/api';
+import {
+  postDeleteGroup,
+  postFriendInvitation,
+  postRenameGroup,
+} from '@/utils/api';
 import { fetchGroupConvList } from '@/store/groupConversationSlice';
 import { setTitle } from '@/store/dynamicPageSlice';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
+import { fetchInvitationsThunk } from '@/store/friendsSlice';
 
 const CustomModal = () => {
-  const { customModalVisible, modalInput, currentGroupConvId, isRename } =
-    useSelector((state: RootState) => state.dropMenu);
+  const {
+    customModalVisible,
+    modalInput,
+    currentGroupConvId,
+    modalContent,
+    targetMember,
+  } = useSelector((state: RootState) => state.dropMenu);
 
   const dispatch = useDispatch<AppDispatch>();
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -64,13 +75,36 @@ const CustomModal = () => {
         dispatch(setModalInput(''));
       });
   };
+  const addFriendFromGroupHandler = () => {
+    postFriendInvitation({
+      userIds: [targetMember!.id],
+      greetings: modalInput,
+    })
+      .then((res) => {
+        toast.success(`${res.data} Invitations sent`);
+      })
+      .catch((err) => {
+        toast.error(err.data);
+      })
+      .finally(() => {
+        dispatch(setCustomModalVisible(false));
+        dispatch(setModalInput(''));
+        dispatch(setTargetMember(null));
+        dispatch(fetchInvitationsThunk());
+      });
+  };
 
   const onConfirm = () => {
-    if (isRename) {
-      renameHandler();
-    } else {
-      deleteHandler();
+    if (!modalInput) {
+      notification.warning({
+        message: 'Empty content',
+        duration: 3,
+      });
+      return;
     }
+    if (modalContent === 'rename') renameHandler();
+    else if (modalContent === 'delete') deleteHandler();
+    else if (modalContent === 'add friend') addFriendFromGroupHandler();
   };
 
   return (
@@ -80,10 +114,14 @@ const CustomModal = () => {
           <span
             className={clsx(
               'w-[5px] h-[80%] absolute left-0 rounded-full top-[50%] translate-y-[-50%]',
-              isRename ? 'bg-[#0284c7]' : 'bg-[red]'
+              modalContent !== 'delete' ? 'bg-[#0284c7]' : 'bg-[red]'
             )}
           ></span>
-          {isRename ? 'Rename Group' : 'Delete Group'}
+          {modalContent === 'rename'
+            ? 'Rename Group'
+            : modalContent === 'delete'
+            ? 'Delete Group'
+            : 'Send Greeting'}
         </p>
       }
       open={customModalVisible}
@@ -96,6 +134,7 @@ const CustomModal = () => {
             onClick={() => {
               dispatch(setCustomModalVisible(false));
               dispatch(setModalInput(''));
+              dispatch(setTargetMember(null));
             }}
           >
             Cancel
@@ -110,10 +149,14 @@ const CustomModal = () => {
         </>
       }
     >
-      {isRename ? (
+      {modalContent === 'rename' || modalContent === 'add friend' ? (
         <Input
           type="text"
-          placeholder="What's the name of this group"
+          placeholder={
+            modalContent === 'rename'
+              ? "What's the name of this group"
+              : 'Say hello to your friend'
+          }
           value={modalInput}
           onInput={(e) => onInput(e)}
         />

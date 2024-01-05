@@ -3,7 +3,7 @@ import { DropMenuType } from '@/store/dropMenuList';
 import {
   setCustomModalVisible,
   setExtraVisible,
-  setIsRename,
+  setModalContent,
 } from '@/store/dropMenuSlice';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,11 +36,9 @@ const ExtraDropMenu = () => {
     dispatch(setCustomModalVisible(true));
     console.log(menu);
     if (menu.label === 'Rename') {
-      console.log('这里展示重命名群内容');
-      dispatch(setIsRename(true));
+      dispatch(setModalContent('rename'));
     } else {
-      console.log('这里展示删除群内容');
-      dispatch(setIsRename(false));
+      dispatch(setModalContent('delete'));
     }
   };
 
