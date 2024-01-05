@@ -2,8 +2,8 @@ import { RootState } from '@/store';
 import clsx from 'clsx';
 import { useRef } from 'react';
 import { MdInsertEmoticon } from 'react-icons/md';
-import { RiScreenshot2Line } from 'react-icons/ri';
-import { TbMicrophone } from 'react-icons/tb';
+// import { RiScreenshot2Line } from 'react-icons/ri';
+// import { TbMicrophone } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
 import { pickerHeight } from '../EmojiPicker';
 
@@ -17,8 +17,8 @@ interface ToolBarProps {
 const ToolBar: React.FC<ToolBarProps> = ({
   className,
   onClickEmoji,
-  onClickMicrophone,
-  modalVisible,
+  // onClickMicrophone,
+  // modalVisible,
 }) => {
   const toolbar = useRef<HTMLDivElement>(null);
 

@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from '@/store';
-import { DropMenuType } from '@/store/dropMenuList';
+// import { DropMenuType } from '@/store/dropMenuList';
 import { toggle } from '@/store/dropMenuSlice';
 import { slideIn, zoomIn } from '@/utils/motion';
 import { motion } from 'framer-motion';
@@ -48,8 +48,8 @@ const DropMenu = () => {
   useAnimate(isOpen, menu);
   useClickOutSideEvent(menu, dispatch);
 
-  const clickMenuItem = async (menu: DropMenuType) => {
-    menu.onClick(dispatch);
+  const clickMenuItem = async () => {
+    // menu.onClick(dispatch);
     dispatch(toggle(false));
   };
 
@@ -68,7 +68,7 @@ const DropMenu = () => {
           whileInView="show"
           className="flex items-center gap-3 h-6 py-5 px-2 rounded-md cursor-pointer hover:bg-[#00000022] active:bg-[#00000022]"
           key={index}
-          onClick={() => clickMenuItem(menu)}
+          onClick={() => clickMenuItem()}
         >
           {menu.icon}
           {menu.label}
