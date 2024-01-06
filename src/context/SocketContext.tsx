@@ -23,9 +23,12 @@ import { createContext } from 'react';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client';
 
-const host = `${window.location.protocol}//${
-  window.location.host.split(':')[0]
-}:${import.meta.env.VITE_WEBSOCKET_PORT}`;
+const host =
+  import.meta.env.VITE_ENV === 'dev'
+    ? `${window.location.protocol}//${window.location.host.split(':')[0]}:${
+        import.meta.env.VITE_WEBSOCKET_PORT
+      }`
+    : import.meta.env.VITE_APP_BASE_URL;
 
 export const socket = io(host, {
   autoConnect: false,
