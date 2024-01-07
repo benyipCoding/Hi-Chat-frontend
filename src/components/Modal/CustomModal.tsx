@@ -101,7 +101,7 @@ const CustomModal = () => {
   };
 
   const onConfirm = () => {
-    if (!modalInput) {
+    if (!modalInput && modalContent !== 'delete') {
       notification.warning({
         message: 'Empty content',
         duration: 3,

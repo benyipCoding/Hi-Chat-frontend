@@ -9,8 +9,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
-        // target: 'https://77c9-14-19-23-100.ngrok-free.app',
+        target: 'http://139.199.77.238',
+        // target: 'http://localhost:3000',
+        ws: true,
+        changeOrigin: true,
       },
     },
     port: 3001,
