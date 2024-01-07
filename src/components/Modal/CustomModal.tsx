@@ -30,6 +30,10 @@ const CustomModal = () => {
     targetMember,
   } = useSelector((state: RootState) => state.dropMenu);
 
+  const { currentConversation } = useSelector(
+    (state: RootState) => state.conversation
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     dispatch(setModalInput((e.target as HTMLInputElement).value));
@@ -48,7 +52,9 @@ const CustomModal = () => {
     })
       .then((res) => {
         console.log(res.data);
-        dispatch(setTitle(modalInput));
+        if (currentConversation?.id === currentGroupConvId) {
+          dispatch(setTitle(modalInput));
+        }
       })
       .catch((err) => {
         console.log(err);
