@@ -15,7 +15,7 @@ import {
   UpdateUserInfoDto,
   User,
 } from './types';
-import { RootState, store } from '@/store';
+import { store } from '@/store';
 import {
   setConversations,
   setUnreadCountForConversations,
@@ -108,18 +108,17 @@ export function postChangeFriendshipStatus(
 }
 
 export function postCreateConversation(target: User) {
-  const state: RootState = store.getState();
+  // const state: RootState = store.getState();
 
-  const conv = state.conversation.currentConversation as Conversation;
+  // const conv = state.conversation.currentConversation as Conversation;
 
-  if (conv && conv.recipient) {
-    const isSame =
-      target.id === conv.creator.id || target.id === conv.recipient.id;
-
-    if (state.conversation.currentConversation && isSame) {
-      return Promise.reject('Current conversation is existed');
-    }
-  }
+  // if (conv && conv.recipient) {
+  //   const isSame =
+  //     target.id === conv.creator.id || target.id === conv.recipient.id;
+  //   if (state.conversation.currentConversation && isSame) {
+  //     return Promise.reject('Current conversation is existed');
+  //   }
+  // }
   return request<Conversation>({
     method: 'post',
     url: '/conversation/create',

@@ -59,11 +59,11 @@ const GroupChat = () => {
     dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
     swipeToDetail(divList!);
 
-    if (
-      currentConversation?.id === group.id &&
-      currentConversation.name === group.name
-    )
-      return;
+    // if (
+    //   currentConversation?.id === group.id &&
+    //   currentConversation.name === group.name
+    // )
+    //   return;
     dispatch(fetchGroupMessagesThunk(group.id));
     if (!unReadMessages.length) return;
     for (const msg of unReadMessages) {
