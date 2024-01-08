@@ -50,6 +50,8 @@ const Layout = () => {
     dispatch(fetchGroupConvList());
     dispatch(fetchUnReadGroupMessagesThunk());
 
+    console.log('success run in env:', import.meta.env.VITE_ENV);
+
     return () => {
       socket.disconnect();
     };

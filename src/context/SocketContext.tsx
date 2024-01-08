@@ -31,6 +31,7 @@ const host = import.meta.env.VITE_WEBSOCKET_URL;
 
 export const socket = io(host, {
   autoConnect: false,
+  withCredentials: true,
   auth: (cb) => {
     const token: Tokens = JSON.parse(getLocalStorage() as string);
     cb({ token: token?.accessToken });
