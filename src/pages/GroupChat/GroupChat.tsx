@@ -34,9 +34,7 @@ const GroupChat = () => {
   const groupConvList = useSelector((state: RootState) =>
     selectGroupConvListByGroupName(state, searchInput)
   );
-  const { currentConversation } = useSelector(
-    (state: RootState) => state.conversation
-  );
+
   const { extraVisible } = useSelector((state: RootState) => state.dropMenu);
   const { swipeToDetail } = useTranslate();
   const divList = useContext(CommonContext);
@@ -59,11 +57,6 @@ const GroupChat = () => {
     dispatch(setCurrentPage(DynamicPageName.CONVERSATION));
     swipeToDetail(divList!);
 
-    // if (
-    //   currentConversation?.id === group.id &&
-    //   currentConversation.name === group.name
-    // )
-    //   return;
     dispatch(fetchGroupMessagesThunk(group.id));
     if (!unReadMessages.length) return;
     for (const msg of unReadMessages) {

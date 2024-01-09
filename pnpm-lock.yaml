@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: registry.npmmirror.com/clsx@2.0.0
+  dayjs:
+    specifier: ^1.11.10
+    version: registry.npmmirror.com/dayjs@1.11.10
   emoji-mart:
     specifier: ^5.5.2
     version: registry.npmmirror.com/emoji-mart@5.5.2

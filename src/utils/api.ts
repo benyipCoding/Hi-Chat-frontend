@@ -156,21 +156,25 @@ export async function getConversationList() {
   const reader = res.body?.getReader();
   const decoder = new TextDecoder();
   while (reader) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    const payload = decoder
-      .decode(value)
-      .split(';')
-      .filter((str) => str !== '');
-    payload.forEach((chunk) => {
-      const data = JSON.parse(chunk);
-      if (data.type === 'conversations') {
-        store.dispatch(setConversations(data.data as Conversation[]));
-      }
-      if (data.type === 'count') {
-        store.dispatch(setUnreadCountForConversations(data.data));
-      }
-    });
+    try {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const payload = decoder
+        .decode(value)
+        .split(';')
+        .filter((str) => str !== '');
+      payload.forEach((chunk) => {
+        const data = JSON.parse(chunk);
+        if (data.type === 'conversations') {
+          store.dispatch(setConversations(data.data as Conversation[]));
+        }
+        if (data.type === 'count') {
+          store.dispatch(setUnreadCountForConversations(data.data));
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return;
 }

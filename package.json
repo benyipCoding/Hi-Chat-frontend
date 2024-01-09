@@ -19,6 +19,7 @@
     "antd-img-crop": "^4.18.0",
     "axios": "^1.6.0",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.10",
     "emoji-mart": "^5.5.2",
     "framer-motion": "^10.16.4",
     "hotkeys-js": "^3.13.1",
