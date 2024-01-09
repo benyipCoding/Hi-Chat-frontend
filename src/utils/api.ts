@@ -155,27 +155,27 @@ export async function getConversationList() {
   const res = await requestStream('/conversation/get-list');
   const reader = res.body?.getReader();
   const decoder = new TextDecoder();
+  let payload: string = '';
+
   while (reader) {
-    try {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const payload = decoder
-        .decode(value)
-        .split(';')
-        .filter((str) => str !== '');
-      payload.forEach((chunk) => {
-        const data = JSON.parse(chunk);
-        if (data.type === 'conversations') {
-          store.dispatch(setConversations(data.data as Conversation[]));
-        }
-        if (data.type === 'count') {
-          store.dispatch(setUnreadCountForConversations(data.data));
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const { done, value } = await reader.read();
+    if (done) break;
+    setTimeout(() => {
+      payload += decoder.decode(value);
+    });
   }
+  setTimeout(() => {
+    const dataArr = payload.split(';').filter((str) => str !== '');
+    dataArr.forEach((chunk) => {
+      const data = JSON.parse(chunk);
+      if (data.type === 'conversations') {
+        store.dispatch(setConversations(data.data as Conversation[]));
+      }
+      if (data.type === 'count') {
+        store.dispatch(setUnreadCountForConversations(data.data));
+      }
+    });
+  });
   return;
 }
 
