@@ -67,7 +67,7 @@ const MessagePage = () => {
           <Empty description={<div className="text-white">No data</div>} />
         </div>
       ) : (
-        <div className="p-2 overflow-y-auto flex-1 flex flex-col gap-2">
+        <div className="p-2 flex-1 flex flex-col gap-2 overflow-y-auto max-h-[82%]">
           {conversations.map((conv) => {
             const targetUser =
               conv.creator?.id === user?.id ? conv.recipient : conv.creator;
